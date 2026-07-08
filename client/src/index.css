@@ -1,0 +1,209 @@
+/* ─────────────────────────────────────────────────────────────────
+   AuraBella — Global Stylesheet
+   
+   Layer order:
+   1. Tailwind base reset
+   2. Tailwind component classes
+   3. Tailwind utility classes
+   4. Custom global styles & CSS variables
+   ───────────────────────────────────────────────────────────────── */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties (Design Tokens) ──────────────────────── */
+:root {
+  --color-primary:    #c44def;
+  --color-rose:       #e11d50;
+  --color-gold:       #dc8c23;
+  --color-dark-900:   #0d0a12;
+  --color-dark-800:   #16111f;
+  --color-dark-700:   #1e1830;
+  --color-text:       #f0e8ff;
+  --color-text-muted: #9d8bbb;
+  --border-color:     rgba(196, 77, 239, 0.15);
+  --glass-bg:         rgba(255, 255, 255, 0.04);
+  --glass-border:     rgba(255, 255, 255, 0.08);
+  --font-serif:       "Cormorant Garamond", Georgia, serif;
+  --font-sans:        "Poppins", Inter, system-ui, sans-serif;
+  --transition-base:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius-card:      1rem;
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover:0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Base Reset & Defaults ──────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-dark-900);
+    color: var(--color-text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Remove default button styles — we style all buttons from scratch */
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+
+  /* Remove list dots/numbers from elements with a role */
+  ul[role="list"],
+  ol[role="list"] {
+    list-style: none;
+  }
+
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ── Reusable Component Classes ─────────────────────────────────── */
+@layer components {
+
+  /* Glassmorphism card */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-base);
+  }
+
+  .glass-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(196, 77, 239, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* Brand gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #c44def 0%, #e11d50 50%, #dc8c23 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animated gradient background */
+  .gradient-bg-animated {
+    background: linear-gradient(-45deg, #0d0a12, #2a1040, #1a0830, #0d1a3a);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply relative inline-flex items-center gap-2 px-8 py-3 rounded-full font-sans font-semibold text-white text-sm tracking-wide;
+    background: linear-gradient(135deg, #c44def, #e11d50);
+    background-size: 200% 200%;
+    transition: var(--transition-base);
+    box-shadow: 0 4px 20px rgba(196, 77, 239, 0.35);
+  }
+
+  .btn-primary:hover {
+    background-position: right center;
+    box-shadow: 0 6px 30px rgba(196, 77, 239, 0.6);
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.99);
+  }
+
+  /* Outline / ghost button */
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-8 py-3 rounded-full font-sans font-medium text-sm tracking-wide;
+    color: var(--color-primary);
+    border: 1px solid rgba(196, 77, 239, 0.4);
+    background: transparent;
+    transition: var(--transition-base);
+  }
+
+  .btn-outline:hover {
+    background: rgba(196, 77, 239, 0.08);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 20px rgba(196, 77, 239, 0.2);
+  }
+
+  /* Badge / chip */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+    background: rgba(196, 77, 239, 0.12);
+    color: #e0aaff;
+    border: 1px solid rgba(196, 77, 239, 0.2);
+  }
+
+  /* Section divider */
+  .divider {
+    @apply w-16 h-0.5 mx-auto my-4;
+    background: linear-gradient(90deg, transparent, #c44def, transparent);
+  }
+
+  /* Scrollbar styling (webkit) */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--color-dark-800);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(196, 77, 239, 0.4);
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(196, 77, 239, 0.7);
+  }
+}
+
+/* ── Utility Overrides ───────────────────────────────────────────── */
+@layer utilities {
+  /* Full-screen overlay */
+  .overlay {
+    @apply fixed inset-0 z-50 bg-black/60 backdrop-blur-sm;
+  }
+
+  /* Text shadow for display headings on dark backgrounds */
+  .text-shadow-lg {
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Neon glow ring */
+  .ring-glow {
+    box-shadow: 0 0 0 2px rgba(196, 77, 239, 0.3),
+                0 0 20px rgba(196, 77, 239, 0.15);
+  }
+}
+
+/* ── Global Scrollbar (Firefox) ─────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(196, 77, 239, 0.4) var(--color-dark-800);
+}

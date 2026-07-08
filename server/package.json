@@ -1,0 +1,39 @@
+{
+  "name": "aurabella-server",
+  "version": "1.0.0",
+  "description": "AuraBella e-commerce REST API — Node.js + Express + MongoDB",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "seed": "node seed.js",
+    "lint": "echo 'No linter configured yet'"
+  },
+  "keywords": [
+    "aurabella",
+    "ecommerce",
+    "express",
+    "mongodb",
+    "api"
+  ],
+  "author": "AuraBella Team",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
