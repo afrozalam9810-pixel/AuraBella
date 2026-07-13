@@ -81,7 +81,11 @@ const productSchema = new mongoose.Schema(
         validator: function (value) {
           // If discountPrice is provided, it must be less than price
           if (value === null || value === undefined) return true;
-          return value < this.price;
+          // During findByIdAndUpdate, Mongoose binds `this` to the query
+          // rather than the document. Read the submitted price from that
+          // query so catalog edits validate correctly as well as creates.
+          const price = typeof this.get === "function" ? this.get("price") : this.price;
+          return price === undefined || price === null || value < price;
         },
         message: "Discount price ({VALUE}) must be less than the regular price",
       },
