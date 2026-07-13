@@ -73,12 +73,24 @@ const orderSchema = new mongoose.Schema(
         message: "Payment status must be pending, completed, failed, or refunded",
       },
     },
+    razorpayOrderId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+    },
+    razorpayPaymentId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+    },
     orderStatus: {
       type: String,
       default: "placed",
       enum: {
-        values: ["placed", "shipped", "delivered", "cancelled"],
-        message: "Order status must be placed, shipped, delivered, or cancelled",
+        values: ["pending_payment", "placed", "shipped", "delivered", "cancelled"],
+        message: "Order status must be pending_payment, placed, shipped, delivered, or cancelled",
       },
     },
     totalAmount: {

@@ -41,13 +41,6 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [submittingOrder, setSubmittingOrder] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [showSandboxPaymentModal, setShowSandboxPaymentModal] = useState({
-    open: false,
-    orderId: "",
-    amount: 0,
-    onSuccess: null,
-    onCancel: null,
-  });
 
   // Load profile addresses & validate query coupon on mount
   useEffect(() => {
@@ -142,7 +135,17 @@ export default function CheckoutPage() {
     if (paymentMethod === "online") {
       try {
         // 1. Create payment order in backend
-        const orderRes = await api.post("/payments/create-order", { amount: finalTotal });
+        const orderRes = await api.post("/payments/create-order", {
+          shippingAddress: {
+            line1: shippingAddress.line1,
+            line2: shippingAddress.line2 || "",
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            pincode: shippingAddress.pincode,
+            phone: shippingAddress.phone,
+          },
+          couponCode: appliedCoupon?.code,
+        });
         if (!orderRes.data || !orderRes.data.success) {
           throw new Error("Could not initialize payment transaction.");
         }
@@ -169,24 +172,8 @@ export default function CheckoutPage() {
               });
 
               if (verifyRes.data && verifyRes.data.success) {
-                // Save Order
-                const payload = {
-                  shippingAddress: {
-                    line1: shippingAddress.line1,
-                    line2: shippingAddress.line2 || "",
-                    city: shippingAddress.city,
-                    state: shippingAddress.state,
-                    pincode: shippingAddress.pincode,
-                    phone: shippingAddress.phone,
-                  },
-                  paymentMethod: "online",
-                  couponCode: appliedCoupon ? appliedCoupon.code : undefined,
-                };
-                const orderRes = await api.post("/orders", payload);
-                if (orderRes.data && orderRes.data.success) {
-                  dispatch(clearCart());
-                  navigate(`/order-success/${orderRes.data.data._id}`);
-                }
+                dispatch(clearCart());
+                navigate(`/order-success/${verifyRes.data.data._id}`);
               }
             } catch (err) {
               setErrorMsg("Payment verification failed! Please try again or select cash payment.");
@@ -209,29 +196,9 @@ export default function CheckoutPage() {
           },
         };
 
-        // If Razorpay CDN loads and key is valid, open it.
-        // Otherwise, run our Premium Interactive Sandbox Payment Modal!
-        if (scriptLoaded && orderData.keyId.startsWith("rzp_live")) {
-          const rzp = new window.Razorpay(options);
-          rzp.open();
-        } else {
-          // Open Sandbox Mock Payment Modal directly in UI
-          setShowSandboxPaymentModal({
-            open: true,
-            orderId: orderData.id,
-            amount: finalTotal,
-            onSuccess: async (paymentId, signature) => {
-              options.handler({
-                razorpay_order_id: orderData.id,
-                razorpay_payment_id: paymentId,
-                razorpay_signature: signature,
-              });
-            },
-            onCancel: () => {
-              options.modal.ondismiss();
-            }
-          });
-        }
+        if (!scriptLoaded) throw new Error("Could not load Razorpay Checkout. Please check your connection and retry.");
+        const rzp = new window.Razorpay(options);
+        rzp.open();
       } catch (err) {
         setErrorMsg(err.message || "Failed to initialize payment.");
         setSubmittingOrder(false);
@@ -637,8 +604,8 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      {/* Sandbox Mock Payment modal */}
-      {showSandboxPaymentModal.open && (
+      {/* Removed mock payment UI: real Razorpay Checkout is opened above. */}
+      {false && showSandboxPaymentModal.open && (
         <div className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in font-sans text-xs">
           <div className="glass-card max-w-sm w-full p-6 flex flex-col gap-6 relative border border-primary-500/30 animate-scale-up">
             <div className="text-center">
