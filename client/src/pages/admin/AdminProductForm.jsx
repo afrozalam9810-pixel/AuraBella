@@ -16,6 +16,7 @@ export default function AdminProductForm() {
 
   // Product Fields State
   const [productData, setProductData] = useState({
+    productId: "",
     name: "",
     brand: "",
     description: "",
@@ -70,6 +71,7 @@ export default function AdminProductForm() {
           if (res.data && res.data.success) {
             const p = res.data.data;
             setProductData({
+              productId: p.productId || "",
               name: p.name,
               brand: p.brand,
               description: p.description,
@@ -119,8 +121,9 @@ export default function AdminProductForm() {
     setErrorMsg("");
     setSuccessMsg("");
 
+    const { productId: _productId, ...productFields } = productData;
     const payload = {
-      ...productData,
+      ...productFields,
       price: Number(productData.price),
       discountPrice: productData.discountPrice ? Number(productData.discountPrice) : undefined,
       category: productData.category || undefined,
@@ -218,6 +221,18 @@ export default function AdminProductForm() {
               placeholder="AuraBella"
               className="bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-primary-400"
             />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[9px] uppercase font-semibold text-white/50">Product ID</label>
+            <input
+              type="text"
+              readOnly
+              value={productData.productId || "Generated automatically when published"}
+              className="bg-white/5 border border-white/10 rounded-xl p-3 text-white/60 focus:outline-none cursor-not-allowed"
+              aria-label="Product ID"
+            />
+            <p className="text-[9px] text-white/35">A unique ID is generated and locked by the server.</p>
           </div>
 
           <div className="flex flex-col gap-1.5">

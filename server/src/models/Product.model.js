@@ -4,6 +4,9 @@
  */
 
 const mongoose = require("mongoose");
+const { randomUUID } = require("crypto");
+
+const createProductId = () => `AB-${randomUUID().replace(/-/g, "").slice(0, 12).toUpperCase()}`;
 
 const variantSchema = new mongoose.Schema(
   {
@@ -29,6 +32,17 @@ const variantSchema = new mongoose.Schema(
 
 const productSchema = new mongoose.Schema(
   {
+    productId: {
+      type: String,
+      required: true,
+      unique: true,
+      sparse: true,
+      immutable: true,
+      default: createProductId,
+      uppercase: true,
+      trim: true,
+      match: [/^AB-[A-F0-9]{12}$/, "Product ID has an invalid format"],
+    },
     name: {
       type: String,
       required: [true, "Product name is required"],

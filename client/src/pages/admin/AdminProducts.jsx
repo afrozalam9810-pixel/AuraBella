@@ -46,6 +46,7 @@ export default function AdminProducts() {
     return (
       p.name.toLowerCase().includes(query) ||
       p.brand.toLowerCase().includes(query) ||
+      (p.productId && p.productId.toLowerCase().includes(query)) ||
       (p.category?.name && p.category.name.toLowerCase().includes(query))
     );
   });
@@ -88,7 +89,7 @@ export default function AdminProducts() {
           <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-sm" />
           <input
             type="text"
-            placeholder="Search by name, brand, or category..."
+            placeholder="Search by ID, name, brand, or category..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-xl py-2.5 pl-11 pr-4 text-white transition-colors"
@@ -112,6 +113,7 @@ export default function AdminProducts() {
                 <tr className="border-b border-white/5 text-[#9d8bbb] uppercase tracking-wider text-[10px]">
                   <th className="py-3 px-2">Image</th>
                   <th className="py-3 px-2">Name</th>
+                  <th className="py-3 px-2">Product ID</th>
                   <th className="py-3 px-2">Brand</th>
                   <th className="py-3 px-2">Category</th>
                   <th className="py-3 px-2">Price</th>
@@ -127,6 +129,7 @@ export default function AdminProducts() {
                         <img src={thumb} alt="" className="w-8 h-10 object-cover rounded bg-dark-900 border border-white/5" />
                       </td>
                       <td className="py-2.5 px-2 text-white font-semibold">{p.name}</td>
+                      <td className="py-2.5 px-2 font-mono text-[10px] text-primary-300">{p.productId || "—"}</td>
                       <td className="py-2.5 px-2 text-[#9d8bbb]">{p.brand}</td>
                       <td className="py-2.5 px-2 text-[#9d8bbb]">{p.category?.name || "Uncategorized"}</td>
                       <td className="py-2.5 px-2 text-white font-bold">
