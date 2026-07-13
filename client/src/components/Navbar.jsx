@@ -10,6 +10,7 @@ import {
   FiX,
   FiLogOut,
   FiChevronDown,
+  FiSliders,
 } from "react-icons/fi";
 import { toggleMobileMenu, closeAll } from "../store/slices/uiSlice";
 import { logout } from "../store/slices/authSlice";
@@ -150,6 +151,15 @@ export default function Navbar() {
                     >
                       <FiShoppingBag /> My Orders
                     </Link>
+                    {user?.role === "admin" && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setAccountDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs text-primary-300 hover:text-white hover:bg-white/5 transition-colors"
+                      >
+                        <FiSliders /> Admin Panel
+                      </Link>
+                    )}
                     <hr className="border-white/5 my-1" />
                     <button
                       onClick={handleLogout}
