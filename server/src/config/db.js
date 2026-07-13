@@ -52,18 +52,8 @@ function attachMongooseListeners() {
     log.error(`Connection error: ${err.message}`);
   });
 
-  // Ensure Mongoose closes cleanly when the process exits
-  process.on("SIGINT", async () => {
-    await mongoose.connection.close();
-    log.info("Connection closed on SIGINT (Ctrl+C). Goodbye 🌸");
-    process.exit(0);
-  });
-
-  process.on("SIGTERM", async () => {
-    await mongoose.connection.close();
-    log.info("Connection closed on SIGTERM. Goodbye 🌸");
-    process.exit(0);
-  });
+  // Process signal handling belongs to the HTTP bootstrap. It closes the
+  // listener before exiting, which lets the platform drain in-flight requests.
 }
 
 // ─── Main Connect Function ────────────────────────────────────────────────────

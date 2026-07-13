@@ -18,6 +18,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const healthRouter = require("./routes/health.route");
 const authRouter = require("./routes/auth.route");
@@ -165,8 +166,10 @@ const startServer = async () => {
     );
   }
 
-  // 2. Start HTTP listener
-  app.listen(PORT, () => {
+  // 2. Start HTTP listener. Railway routes traffic to the injected PORT over
+  // IPv4, so bind explicitly to all IPv4 interfaces rather than relying on
+  // the platform-specific default host.
+  const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(
       `\n\x1b[35m╔══════════════════════════════════════════╗\x1b[0m`
     );
@@ -192,6 +195,23 @@ const startServer = async () => {
       `\x1b[35m╚══════════════════════════════════════════╝\x1b[0m\n`
     );
   });
+
+  // Railway sends SIGTERM while replacing or stopping a deployment. Stop
+  // accepting new requests first, then close the database connection before
+  // exiting. This prevents in-flight requests from being dropped abruptly.
+  const shutdown = (signal) => {
+    console.log(`[Server] ${signal} received; shutting down gracefully.`);
+    server.close(async () => {
+      await mongoose.connection.close().catch((err) => {
+        console.error("[Server] Error closing MongoDB connection:", err.message);
+      });
+      process.exit(0);
+    });
+    setTimeout(() => process.exit(1), 10_000).unref();
+  };
+
+  process.once("SIGTERM", () => shutdown("SIGTERM"));
+  process.once("SIGINT", () => shutdown("SIGINT"));
 };
 
 // Kick off startup — catch any unexpected top-level errors
