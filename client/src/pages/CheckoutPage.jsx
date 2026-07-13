@@ -132,6 +132,20 @@ export default function CheckoutPage() {
     const shippingAddress = savedAddresses[selectedAddressIdx];
     setSubmittingOrder(true);
 
+    try {
+      await api.put("/cart", {
+        items: items.map((item) => ({
+          productId: item.product._id,
+          variant: item.variant,
+          qty: item.qty,
+        })),
+      });
+    } catch (err) {
+      setErrorMsg(err.response?.data?.message || "Could not synchronize your cart. Please try again.");
+      setSubmittingOrder(false);
+      return;
+    }
+
     if (paymentMethod === "online") {
       try {
         // 1. Create payment order in backend

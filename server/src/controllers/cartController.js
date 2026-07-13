@@ -214,10 +214,59 @@ const clearCart = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc Replace the authenticated user's cart with the checkout cart.
+ * @route PUT /api/cart
+ * @access Private
+ */
+const syncCart = async (req, res, next) => {
+  try {
+    const { items } = req.body;
+    if (!Array.isArray(items) || items.length === 0) {
+      res.status(400);
+      throw new Error("Cart items are required.");
+    }
+
+    const normalizedItems = items.map((item) => {
+      const qty = Number(item.qty);
+      if (!item.productId || !Number.isInteger(qty) || qty < 1) {
+        throw new Error("Each cart item needs a product ID and a valid quantity.");
+      }
+      return {
+        product: item.productId,
+        variant: {
+          size: item.variant?.size || "",
+          color: item.variant?.color || "",
+        },
+        qty,
+      };
+    });
+
+    const productIds = normalizedItems.map((item) => item.product);
+    const productsFound = await Product.countDocuments({ _id: { $in: productIds } });
+    if (productsFound !== new Set(productIds.map(String)).size) {
+      res.status(400);
+      throw new Error("One or more products in your cart are unavailable.");
+    }
+
+    const cart = await Cart.findOneAndUpdate(
+      { user: req.user._id },
+      { $set: { items: normalizedItems } },
+      { new: true, upsert: true, runValidators: true }
+    );
+
+    await cart.populate({ path: "items.product", select: "name price discountPrice brand images variants" });
+    res.status(200).json({ success: true, data: cart });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getCart,
   addToCart,
   updateCartItemQuantity,
   removeCartItem,
   clearCart,
+  syncCart,
 };
