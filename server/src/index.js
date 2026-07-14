@@ -150,16 +150,23 @@ const {
   doubleCsrfProtection,
 } = doubleCsrf({
   getSecret: () => process.env.CSRF_SECRET || "aurabella-csrf-secret-change-in-production",
-  cookieName: "__Host-psifi.x-csrf-token",
+  // Credential requests from the deployed UI reach the API cross-origin.
+  // A strict cookie is not sent with those requests, so the token header
+  // cannot be validated. `SameSite=None` + `Secure` keeps the double-submit
+  // protection intact while allowing the browser to send the CSRF cookie.
+  cookieName:
+    process.env.NODE_ENV === "production"
+      ? "__Host-psifi.x-csrf-token"
+      : "psifi.x-csrf-token",
   cookieOptions: {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
   },
   size: 64,
   ignoredMethods: ["GET", "HEAD", "OPTIONS"],
-  getTokenFromRequest: (req) => req.headers["x-csrf-token"],
+  getCsrfTokenFromRequest: (req) => req.headers["x-csrf-token"],
 });
 
 // Endpoint for the SPA to fetch a fresh CSRF token
