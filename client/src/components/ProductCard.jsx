@@ -75,7 +75,7 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
         <div className="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-col gap-1.5">
           {discountPct && (
             <span className="text-[9px] font-sans font-bold bg-rose-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">
               -{discountPct}%
@@ -87,7 +87,7 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
         <button
           onClick={handleWishlist}
           aria-label="Toggle wishlist"
-          className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 border backdrop-blur-sm ${
+          className={`absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 border backdrop-blur-sm ${
             wishlisted
               ? "bg-rose-500/90 border-rose-400/50 text-white shadow-glow-rose"
               : "bg-dark-900/60 border-white/10 text-white/60 hover:border-rose-400/50 hover:text-rose-400"
@@ -99,7 +99,7 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
         {/* Quick add to cart — slides up on hover */}
         <button
           onClick={handleAddToCart}
-          className={`absolute bottom-3 inset-x-3 flex items-center justify-center gap-1.5 py-2 rounded-full text-[11px] font-sans font-semibold uppercase tracking-wider transition-all duration-300 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 ${
+          className={`absolute bottom-2 inset-x-2 sm:bottom-3 sm:inset-x-3 flex items-center justify-center gap-1.5 py-2 rounded-full text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-wider transition-all duration-300 sm:translate-y-4 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 ${
             addedToCart
               ? "bg-green-600 text-white"
               : "bg-brand-gradient text-white shadow-glow-violet"
@@ -129,7 +129,7 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
         )}
 
         {/* Price row */}
-        <div className="flex items-baseline gap-2 mt-2">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mt-2">
           <span className="font-sans font-bold text-sm md:text-base text-white">
             ₹{displayPrice.toLocaleString("en-IN")}
           </span>

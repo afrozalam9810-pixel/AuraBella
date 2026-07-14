@@ -90,16 +90,16 @@ export default function Footer() {
           <p className="font-sans text-xs text-[#9d8bbb] leading-relaxed">
             Subscribe to our newsletter to receive exclusive updates, priority launches, and 10% discount on your first order.
           </p>
-          <form className="flex w-full max-w-sm mt-1">
+          <form className="flex flex-col min-[420px]:flex-row w-full max-w-sm mt-1">
             <input
               type="email"
               placeholder="Enter your email"
               required
-              className="w-full text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-l-full py-2.5 px-4 text-white font-sans transition-colors"
+              className="w-full text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-full min-[420px]:rounded-r-none py-2.5 px-4 text-white font-sans transition-colors"
             />
             <button
               type="submit"
-              className="btn-primary rounded-none rounded-r-full px-6 py-2.5 font-semibold text-xs tracking-wide shadow-none"
+              className="btn-primary rounded-full min-[420px]:rounded-none min-[420px]:rounded-r-full px-6 py-2.5 font-semibold text-xs tracking-wide shadow-none mt-2 min-[420px]:mt-0"
             >
               Join
             </button>
@@ -109,7 +109,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 border-t border-white/5 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-[10px] md:text-xs text-white/30">
         <p>&copy; {new Date().getFullYear()} AuraBella Inc. All rights reserved.</p>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
           <a href="#" className="hover:text-white/60 transition-colors">Privacy Policy</a>
           <a href="#" className="hover:text-white/60 transition-colors">Terms of Service</a>
           <a href="#" className="hover:text-white/60 transition-colors">Cookie Settings</a>

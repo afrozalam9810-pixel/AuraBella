@@ -86,6 +86,21 @@ html.light .gradient-bg-animated { background: linear-gradient(-45deg, #f8f5fb, 
     color: var(--color-text);
     min-height: 100vh;
     line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    min-width: 0;
   }
 
   /* Remove default button styles — we style all buttons from scratch */
@@ -150,7 +165,7 @@ html.light .gradient-bg-animated { background: linear-gradient(-45deg, #f8f5fb, 
 
   /* Primary CTA button */
   .btn-primary {
-    @apply relative inline-flex items-center gap-2 px-8 py-3 rounded-full font-sans font-semibold text-white text-sm tracking-wide;
+    @apply relative inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3 rounded-full font-sans font-semibold text-white text-sm tracking-wide;
     background: linear-gradient(135deg, #c44def, #e11d50);
     background-size: 200% 200%;
     transition: var(--transition-base);
@@ -169,7 +184,7 @@ html.light .gradient-bg-animated { background: linear-gradient(-45deg, #f8f5fb, 
 
   /* Outline / ghost button */
   .btn-outline {
-    @apply inline-flex items-center gap-2 px-8 py-3 rounded-full font-sans font-medium text-sm tracking-wide;
+    @apply inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3 rounded-full font-sans font-medium text-sm tracking-wide;
     color: var(--color-primary);
     border: 1px solid rgba(196, 77, 239, 0.4);
     background: transparent;
@@ -238,6 +253,18 @@ html.light .gradient-bg-animated { background: linear-gradient(-45deg, #f8f5fb, 
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(196, 77, 239, 0.4) var(--color-dark-800);
+}
+
+@media (max-width: 640px) {
+  .glass-card:hover,
+  .btn-primary:hover {
+    transform: none;
+  }
+
+  .badge {
+    max-width: 100%;
+    white-space: normal;
+  }
 }
 
 /* ── Invoice & Print Styles ──────────────────────────────────────── */

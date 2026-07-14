@@ -128,13 +128,13 @@ export default function CartPage() {
   const finalTotal = Math.max(0, totalAmount - discount);
 
   return (
-    <div className="min-h-[75vh] max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <div className="min-h-[75vh] max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
       <h1 className="font-display font-bold text-3xl md:text-5xl text-white uppercase tracking-wider mb-8 text-center md:text-left">
         Shopping Bag
       </h1>
 
       {items.length === 0 ? (
-        <div className="glass-card p-16 text-center max-w-xl mx-auto flex flex-col gap-6 items-center">
+        <div className="glass-card p-8 sm:p-16 text-center max-w-xl mx-auto flex flex-col gap-6 items-center">
           <span className="text-5xl">🛍️</span>
           <div>
             <h3 className="font-display font-bold text-xl md:text-2xl text-white">Your bag is empty</h3>
@@ -154,14 +154,14 @@ export default function CartPage() {
               const price = item.product.discountPrice ?? item.product.price;
               const thumbnail = item.product.images?.[0] || "https://placehold.co/100x120/1e1830/f0e8ff?text=Product";
               return (
-                <div key={item.itemId} className="glass-card p-4 flex gap-4 md:gap-6 items-center justify-between">
-                  <div className="flex gap-4 items-center">
+                <div key={item.itemId} className="glass-card p-4 flex flex-col min-[520px]:flex-row gap-4 md:gap-6 min-[520px]:items-center justify-between">
+                  <div className="flex gap-4 items-center min-w-0">
                     {/* Item Thumbnail */}
                     <div className="w-16 h-20 md:w-20 md:h-24 rounded-lg overflow-hidden border border-white/5 flex-shrink-0 bg-dark-900">
                       <img src={thumbnail} alt={item.product.name} className="w-full h-full object-cover" />
                     </div>
                     {/* Item Info */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 min-w-0">
                       <Link to={`/product/${item.product._id}`} className="font-sans text-xs md:text-sm font-semibold text-white/90 hover:text-primary-300 transition-colors line-clamp-1">
                         {item.product.name}
                       </Link>
@@ -175,7 +175,7 @@ export default function CartPage() {
                   </div>
 
                   {/* Quantity and Actions */}
-                  <div className="flex items-center gap-4 md:gap-8">
+                  <div className="flex items-center justify-between min-[520px]:justify-end gap-4 md:gap-8">
                     {/* Qty Selector */}
                     <div className="flex items-center border border-white/10 rounded-full py-1.5 px-3 bg-white/5">
                       <button onClick={() => handleUpdateQty(item.itemId, item.qty, false)} className="text-xs hover:text-primary-400 transition-colors text-white/60">
@@ -220,13 +220,13 @@ export default function CartPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                <form onSubmit={handleApplyCoupon} className="flex flex-col min-[420px]:flex-row gap-2">
                   <input
                     type="text"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                     placeholder="Enter Coupon (e.g. WELCOME10)"
-                    className="flex-grow text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-xl px-4 py-2.5 text-white font-sans transition-colors"
+                    className="w-full min-[420px]:flex-grow text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-xl px-4 py-2.5 text-white font-sans transition-colors"
                   />
                   <button
                     type="submit"

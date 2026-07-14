@@ -260,11 +260,11 @@ export default function ProductDetailPage() {
     : null;
 
   return (
-    <div className="min-h-screen bg-dark-900 text-white py-12 px-4 md:px-8">
+    <div className="min-h-screen bg-dark-900 text-white py-8 md:py-12 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         
         {/* Upper product summary section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start mb-12 md:mb-16">
           
           {/* 1. Image Gallery with hover-zoom and thumbnails */}
           <div className="flex flex-col gap-4">
@@ -295,7 +295,7 @@ export default function ProductDetailPage() {
 
             {/* Thumbnail Selection */}
             {product.images && product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-2 sm:gap-4">
                 {product.images.map((img, idx) => (
                   <button
                     key={idx}
@@ -319,12 +319,12 @@ export default function ProductDetailPage() {
               <span className="badge text-[10px] tracking-widest uppercase mb-2">
                 ✦ {product.brand}
               </span>
-              <h1 className="font-display font-bold text-3xl md:text-5xl text-white tracking-wide mt-2">
+              <h1 className="font-display font-bold text-3xl md:text-5xl text-white tracking-wide leading-tight mt-2 break-words">
                 {product.name}
               </h1>
 
               {/* Rating Summary */}
-              <div className="flex items-center gap-2 mt-3 text-sm text-[#9d8bbb]">
+              <div className="flex flex-wrap items-center gap-2 mt-3 text-sm text-[#9d8bbb]">
                 <div className="flex items-center text-champagne-400">
                   <FiStar className="fill-current text-xs" />
                   <span className="font-sans font-bold text-white ml-1.5">{product.avgRating || "0.0"}</span>
@@ -337,7 +337,7 @@ export default function ProductDetailPage() {
             <hr className="border-white/5" />
 
             {/* Pricing Section */}
-            <div className="flex items-baseline gap-4">
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
               <span className="font-sans font-bold text-3xl text-white">
                 ₹{displayPrice.toLocaleString("en-IN")}
               </span>
@@ -421,7 +421,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Qty Selector & Stock status */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <span className="font-sans text-xs text-white/60 font-semibold uppercase tracking-wider">Quantity:</span>
               <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-2.5 py-1">
                 <button
@@ -450,24 +450,24 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Action buttons */}
-            <div className="flex items-center gap-4 mt-2">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-[1fr_1fr_auto] gap-3 sm:gap-4 mt-2">
               <button
                 disabled={currentCombinationStock <= 0}
                 onClick={() => handleAddToCart(false)}
-                className="btn-outline flex-grow justify-center py-3.5 border-white/20 text-white hover:border-primary-400 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="btn-outline w-full justify-center py-3.5 border-white/20 text-white hover:border-primary-400 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <FiShoppingBag className="text-sm" /> Add to Bag
               </button>
               <button
                 disabled={currentCombinationStock <= 0}
                 onClick={() => handleAddToCart(true)}
-                className="btn-primary flex-grow justify-center py-3.5 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="btn-primary w-full justify-center py-3.5 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Buy Now
               </button>
               <button
                 onClick={handleWishlistToggle}
-                className={`w-12 h-12 flex items-center justify-center rounded-full border transition-all ${
+                className={`w-full min-[420px]:w-12 h-12 flex items-center justify-center rounded-full border transition-all ${
                   isWishlisted
                     ? "bg-rose-500 border-rose-400 text-white shadow-glow-rose"
                     : "border-white/10 hover:border-white/30 text-white/60 hover:text-white"
@@ -482,10 +482,10 @@ export default function ProductDetailPage() {
         {/* Lower tabs section */}
         <div className="mb-20">
           {/* Tab selectors */}
-          <div className="flex border-b border-white/5 mb-8">
+          <div className="flex border-b border-white/5 mb-8 overflow-x-auto custom-scrollbar">
             <button
               onClick={() => setActiveTab("description")}
-              className={`pb-4 px-6 font-display font-semibold text-sm uppercase tracking-wider relative transition-all ${
+              className={`pb-4 px-4 sm:px-6 font-display font-semibold text-sm uppercase tracking-wider relative transition-all whitespace-nowrap ${
                 activeTab === "description" ? "text-primary-300" : "text-[#9d8bbb] hover:text-white"
               }`}
             >
@@ -496,7 +496,7 @@ export default function ProductDetailPage() {
             </button>
             <button
               onClick={() => setActiveTab("reviews")}
-              className={`pb-4 px-6 font-display font-semibold text-sm uppercase tracking-wider relative transition-all ${
+              className={`pb-4 px-4 sm:px-6 font-display font-semibold text-sm uppercase tracking-wider relative transition-all whitespace-nowrap ${
                 activeTab === "reviews" ? "text-primary-300" : "text-[#9d8bbb] hover:text-white"
               }`}
             >
@@ -562,7 +562,7 @@ export default function ProductDetailPage() {
                   {[5, 4, 3, 2, 1].map((stars) => {
                     const pct = ratingBreakdown[stars] || 0;
                     return (
-                      <div key={stars} className="flex items-center gap-3 text-xs font-sans text-[#9d8bbb]">
+                      <div key={stars} className="flex items-center gap-2 sm:gap-3 text-xs font-sans text-[#9d8bbb]">
                         <span className="w-3 text-right">{stars}</span>
                         <FiStar className="text-[10px] text-champagne-400 fill-current" />
                         <div className="flex-grow h-2 bg-white/5 rounded-full overflow-hidden">
@@ -597,7 +597,7 @@ export default function ProductDetailPage() {
 
                     <form onSubmit={handleReviewSubmit} className="flex flex-col gap-4">
                       {/* Rating selection */}
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-3">
                         <span className="text-xs font-sans font-semibold text-[#9d8bbb]">Your Rating:</span>
                         <div className="flex items-center gap-1">
                           {[1, 2, 3, 4, 5].map((val) => (
@@ -656,7 +656,7 @@ export default function ProductDetailPage() {
                   ) : (
                     product.reviews.map((r) => (
                       <div key={r._id} className="glass-card p-5 flex flex-col gap-3">
-                        <div className="flex items-center justify-between gap-4">
+                        <div className="flex flex-wrap items-center justify-between gap-4">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs uppercase text-primary-300">
                               {r.user?.name?.charAt(0) || "U"}
@@ -696,7 +696,7 @@ export default function ProductDetailPage() {
         {/* Related products Carousel / List */}
         {relatedProducts.length > 0 && (
           <section className="border-t border-white/5 pt-16">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between gap-4 mb-8">
               <div>
                 <span className="badge text-[10px] tracking-widest uppercase mb-2 inline-block">
                   ✦ Curated Recommendations
@@ -707,7 +707,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
               {relatedProducts.map((p) => (
                 <ProductCard key={p._id} product={p} />
               ))}

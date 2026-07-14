@@ -30,7 +30,7 @@ export default function OrderSuccessPage() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center py-16 px-4">
-      <div className="glass-card p-8 md:p-12 text-center max-w-2xl flex flex-col gap-6 items-center">
+      <div className="glass-card p-5 sm:p-8 md:p-12 text-center max-w-2xl w-full flex flex-col gap-6 items-center">
         <div className="w-20 h-20 bg-green-500/10 border border-green-500/20 rounded-full flex items-center justify-center text-green-400 text-4xl shadow-glow-rose mb-2">
           ✓
         </div>
@@ -52,8 +52,8 @@ export default function OrderSuccessPage() {
             <h4 className="font-semibold text-white uppercase tracking-wider text-[10px]">Order Summary</h4>
             <div className="flex flex-col gap-2.5 max-h-[160px] overflow-y-auto custom-scrollbar pr-2">
               {order.items?.map((item) => (
-                <div key={item._id} className="flex justify-between items-center text-white/80">
-                  <span className="line-clamp-1 max-w-[280px]">
+                <div key={item._id} className="flex justify-between items-center gap-3 text-white/80">
+                  <span className="line-clamp-1 max-w-[280px] min-w-0">
                     {item.product?.name} <span className="text-white/40">({item.variant?.size})</span> x {item.qty}
                   </span>
                   <span className="font-semibold text-white">₹{(item.priceAtPurchase * item.qty).toLocaleString("en-IN")}</span>
@@ -64,13 +64,13 @@ export default function OrderSuccessPage() {
             <hr className="border-white/5" />
 
             <div className="flex flex-col gap-2 text-[#9d8bbb]">
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <span>Shipping Status</span>
                 <span className="text-white capitalize flex items-center gap-1">
                   <FiTruck /> {order.orderStatus}
                 </span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <span>Delivery Address</span>
                 <span className="text-white text-right max-w-[200px] truncate">
                   {order.shippingAddress?.line1}, {order.shippingAddress?.city}

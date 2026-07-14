@@ -146,7 +146,7 @@ function HeroCarousel() {
   const isRight = slide.align === "right";
 
   return (
-    <section className="relative w-full h-[55vh] md:h-[85vh] overflow-hidden rounded-none">
+    <section className="relative w-full min-h-[520px] h-[68vh] md:h-[85vh] overflow-hidden rounded-none">
       {/* Background images */}
       {HERO_SLIDES.map((s, i) => (
         <div
@@ -165,7 +165,7 @@ function HeroCarousel() {
       ))}
 
       {/* Content */}
-      <div className={`absolute inset-0 flex items-center px-6 md:px-20 ${isRight ? "justify-end" : "justify-start"}`}>
+      <div className={`absolute inset-0 flex items-center px-4 sm:px-6 md:px-20 ${isRight ? "justify-end" : "justify-start"}`}>
         <div
           className={`max-w-xl text-left transition-all duration-700 ${animating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
         >
@@ -181,8 +181,8 @@ function HeroCarousel() {
           <p className="font-sans text-sm md:text-base text-white/70 max-w-md mb-8 leading-relaxed">
             {slide.subtitle}
           </p>
-          <div className="flex items-center gap-4">
-            <Link to={slide.ctaLink} className="btn-primary text-sm py-3 px-8">
+          <div className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-3 min-[420px]:gap-4">
+            <Link to={slide.ctaLink} className="btn-primary text-sm py-3 px-6 sm:px-8">
               {slide.cta}
             </Link>
             <Link to="/" className="btn-outline text-sm py-3 px-6 border-white/20 text-white hover:border-white/50">
@@ -195,13 +195,13 @@ function HeroCarousel() {
       {/* Prev / Next arrows */}
       <button
         onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary-300 hover:-translate-y-1/2 hover:scale-110 transition-transform border-white/10 z-10"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary-300 hover:-translate-y-1/2 hover:scale-110 transition-transform border-white/10 z-10"
       >
         <FiChevronLeft className="text-lg" />
       </button>
       <button
         onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary-300 hover:-translate-y-1/2 hover:scale-110 transition-transform border-white/10 z-10"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full glass-card flex items-center justify-center text-white hover:text-primary-300 hover:-translate-y-1/2 hover:scale-110 transition-transform border-white/10 z-10"
       >
         <FiChevronRight className="text-lg" />
       </button>
@@ -232,14 +232,14 @@ function HeroCarousel() {
 // ─── Section Header ───────────────────────────────────────────────────────────
 function SectionHeader({ badge, title, subtitle, cta, ctaLink }) {
   return (
-    <div className="flex items-end justify-between mb-8">
+    <div className="flex items-end justify-between gap-4 mb-8">
       <div>
         {badge && (
           <span className="badge text-[10px] tracking-widest uppercase mb-2 inline-block">
             {badge}
           </span>
         )}
-        <h2 className="font-display font-bold text-2xl md:text-4xl text-white tracking-wide">
+        <h2 className="font-display font-bold text-2xl md:text-4xl text-white tracking-wide leading-tight">
           {title}
         </h2>
         {subtitle && (
@@ -335,7 +335,7 @@ export default function HomePage() {
           subtitle="Four worlds of luxury, one destination."
         />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
@@ -356,7 +356,7 @@ export default function HomePage() {
                 <span className="font-sans text-[10px] text-white/50 uppercase tracking-widest block mb-1">
                   {cat.count}
                 </span>
-                <h3 className="font-display font-bold text-xl md:text-2xl text-white tracking-wide group-hover:gradient-text transition-all">
+                <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl text-white tracking-wide group-hover:gradient-text transition-all">
                   {cat.name}
                 </h3>
                 <span className="inline-block mt-2 text-[10px] font-sans font-semibold text-primary-300 uppercase tracking-wider opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
@@ -383,7 +383,7 @@ export default function HomePage() {
       {/* ── Brand Promise Strip ── */}
       <section className="border-y border-white/5 bg-dark-800/60 py-8 md:py-10">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 min-[430px]:grid-cols-2 md:grid-cols-4 gap-5 md:gap-8">
             {PROMISES.map((p) => (
               <div key={p.label} className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-xl bg-primary-500/10 border border-primary-400/15 flex items-center justify-center text-primary-300 flex-shrink-0">
@@ -414,7 +414,7 @@ export default function HomePage() {
       {/* ── 5. Newsletter CTA Banner ── */}
       <section className="px-4 md:px-8 pb-20">
         <div
-          className="max-w-7xl mx-auto rounded-3xl overflow-hidden relative py-16 md:py-20 px-8 md:px-16 text-center"
+          className="max-w-7xl mx-auto rounded-2xl md:rounded-3xl overflow-hidden relative py-12 md:py-20 px-4 sm:px-8 md:px-16 text-center"
           style={{
             background: "linear-gradient(135deg, #2a1040 0%, #1a0830 40%, #1e0a1a 100%)",
             border: "1px solid rgba(196,77,239,0.2)",
@@ -436,7 +436,7 @@ export default function HomePage() {
           </p>
 
           <form
-            className="flex flex-col sm:flex-row items-center gap-3 max-w-sm mx-auto"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 max-w-sm mx-auto"
             onSubmit={(e) => e.preventDefault()}
           >
             <input

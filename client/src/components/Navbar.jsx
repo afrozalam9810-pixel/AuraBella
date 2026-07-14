@@ -57,7 +57,7 @@ export default function Navbar() {
         ✦ Free shipping on orders above ₹2000 | Use Code: AURA10 ✦
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 py-3 md:py-4 flex items-center justify-between gap-2 sm:gap-4">
         {/* Mobile Menu Icon */}
         <button
           onClick={() => dispatch(toggleMobileMenu())}
@@ -68,8 +68,8 @@ export default function Navbar() {
         </button>
 
         {/* Brand Logo */}
-        <Link to="/" onClick={() => dispatch(closeAll())} className="flex-shrink-0">
-          <span className="font-display font-bold text-2xl md:text-3xl tracking-wider text-white gradient-text">
+        <Link to="/" onClick={() => dispatch(closeAll())} className="flex-shrink-0 min-w-0">
+          <span className="font-display font-bold text-xl min-[380px]:text-2xl md:text-3xl tracking-wider text-white gradient-text">
             AuraBella
           </span>
         </Link>
@@ -103,14 +103,14 @@ export default function Navbar() {
         </form>
 
         {/* Actions Menu */}
-        <div className="flex items-center gap-4 md:gap-6 text-white text-lg">
+        <div className="flex items-center gap-2.5 sm:gap-4 md:gap-6 text-white text-lg flex-shrink-0">
           {/* Mobile Search Button (routes to home or opens search modal, here redirect to home) */}
           <Link to="/" className="md:hidden hover:text-primary-400 transition-colors">
             <FiSearch />
           </Link>
 
           {/* Wishlist */}
-          <Link to="/wishlist" className="hover:text-primary-400 transition-colors relative">
+          <Link to="/wishlist" className="hidden min-[380px]:inline-flex hover:text-primary-400 transition-colors relative">
             <FiHeart />
           </Link>
 
@@ -135,7 +135,7 @@ export default function Navbar() {
           </button>
 
           {/* Account Dropdown */}
-          <div className="relative">
+          <div className="relative hidden min-[380px]:block">
             {isAuthenticated ? (
               <div className="relative">
                 <button
@@ -196,7 +196,19 @@ export default function Navbar() {
 
       {/* Mobile Drawer menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[88px] bg-dark-900 border-b border-white/5 py-6 px-6 shadow-card animate-slide-up">
+        <div className="md:hidden fixed inset-x-0 top-[76px] sm:top-[88px] bg-dark-900 border-b border-white/5 py-6 px-6 shadow-card animate-slide-up">
+          <form onSubmit={handleSearchSubmit} className="flex items-center relative mb-5">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full text-xs bg-white/5 border border-white/10 focus:border-primary-400 focus:outline-none rounded-full py-3 pl-4 pr-10 text-white font-sans transition-all duration-300"
+            />
+            <button type="submit" className="absolute right-3 text-white/50 hover:text-primary-400 transition-colors">
+              <FiSearch />
+            </button>
+          </form>
           {/* Categories Links */}
           <nav className="flex flex-col gap-4 font-sans text-sm font-semibold tracking-wide">
             {NAVIGATION_LINKS.map((link) => (
@@ -209,6 +221,20 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            <Link
+              to="/wishlist"
+              onClick={() => dispatch(closeAll())}
+              className="text-[#f0e8ff]/85 hover:text-white py-2 border-b border-white/5"
+            >
+              Wishlist
+            </Link>
+            <Link
+              to={isAuthenticated ? "/account" : "/login"}
+              onClick={() => dispatch(closeAll())}
+              className="text-[#f0e8ff]/85 hover:text-white py-2 border-b border-white/5"
+            >
+              {isAuthenticated ? "Account" : "Sign In"}
+            </Link>
           </nav>
         </div>
       )}

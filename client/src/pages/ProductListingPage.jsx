@@ -161,15 +161,15 @@ export default function ProductListingPage() {
   }, [currentCategoryContext]);
 
   return (
-    <div className="min-h-screen bg-dark-900 text-white py-12 px-4 md:px-8">
+    <div className="min-h-screen bg-dark-900 text-white py-8 md:py-12 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Banner/Header */}
         <div className="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between border-b border-white/5 pb-8 gap-4">
           <div>
-            <span className="badge text-[10px] tracking-widest uppercase mb-2 block w-fit">
+            <span className="badge text-[10px] tracking-widest uppercase mb-2 inline-flex w-fit">
               ✦ Collections
             </span>
-            <h1 className="font-display font-bold text-3xl md:text-5xl uppercase tracking-wider">
+            <h1 className="font-display font-bold text-3xl md:text-5xl uppercase tracking-wider leading-tight break-words">
               {currentCategoryContext 
                 ? currentCategoryContext.type === "sub"
                   ? `${currentCategoryContext.parent.name} — ${currentCategoryContext.category.name}`
@@ -189,7 +189,7 @@ export default function ProductListingPage() {
         </div>
 
         {/* Toolbar (Mobile Filter toggle and Sorting) */}
-        <div className="flex items-center justify-between gap-4 bg-dark-800/40 border border-white/5 p-4 rounded-2xl mb-8">
+        <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-4 bg-dark-800/40 border border-white/5 p-4 rounded-2xl mb-8">
           <button
             onClick={() => setIsFilterDrawerOpen(true)}
             className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider hover:text-primary-300 transition-colors md:hidden"
@@ -205,12 +205,12 @@ export default function ProductListingPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full min-[420px]:w-auto">
             <label className="text-xs text-[#9d8bbb] font-sans hidden sm:inline">Sort By:</label>
             <select
               value={activeSort}
               onChange={(e) => updateQueryParam("sort", e.target.value)}
-              className="bg-dark-900 border border-white/10 hover:border-white/20 focus:border-primary-400 rounded-xl px-4 py-2 text-xs font-semibold tracking-wider font-sans focus:outline-none transition-colors"
+              className="w-full min-[420px]:w-auto bg-dark-900 border border-white/10 hover:border-white/20 focus:border-primary-400 rounded-xl px-4 py-2 text-xs font-semibold tracking-wider font-sans focus:outline-none transition-colors"
             >
               <option value="newest">Newest</option>
               <option value="popular">Popularity</option>
@@ -292,11 +292,11 @@ export default function ProductListingPage() {
           {/* 2. Products Grid Panel */}
           <div className="md:col-span-3">
             {loading ? (
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
                 {renderSkeletons()}
               </div>
             ) : products.length === 0 ? (
-              <div className="glass-card p-16 text-center flex flex-col gap-6 items-center">
+              <div className="glass-card p-8 sm:p-16 text-center flex flex-col gap-6 items-center">
                 <span className="text-5xl">🌸</span>
                 <div>
                   <h3 className="font-display font-bold text-xl md:text-2xl text-white">No products found</h3>
@@ -313,7 +313,7 @@ export default function ProductListingPage() {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
                   {products.map((product) => (
                     <ProductCard key={product._id} product={product} />
                   ))}
@@ -321,7 +321,7 @@ export default function ProductListingPage() {
 
                 {/* Pagination Controls */}
                 {totalPages > 1 && (
-                  <div className="flex items-center justify-center gap-2 mt-12 border-t border-white/5 pt-8">
+                  <div className="flex items-center justify-center gap-2 mt-12 border-t border-white/5 pt-8 overflow-x-auto custom-scrollbar px-1">
                     <button
                       onClick={() => updateQueryParam("page", activePage - 1)}
                       disabled={activePage === 1}
@@ -372,7 +372,7 @@ export default function ProductListingPage() {
           />
 
           {/* Drawer Panel */}
-          <div className="relative w-full max-h-[85vh] bg-dark-800 border-t border-white/10 rounded-t-3xl overflow-y-auto p-6 flex flex-col gap-6 z-10 custom-scrollbar animate-slide-up">
+          <div className="relative w-full max-h-[85vh] bg-dark-800 border-t border-white/10 rounded-t-3xl overflow-y-auto p-4 sm:p-6 flex flex-col gap-6 z-10 custom-scrollbar animate-slide-up">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
               <h3 className="font-display font-bold text-lg uppercase tracking-wide">Filters</h3>
               <button
@@ -415,7 +415,7 @@ export default function ProductListingPage() {
               <h4 className="font-sans font-semibold text-xs uppercase tracking-wider text-white/60">
                 Price Range
               </h4>
-              <div className="flex items-center gap-2">
+              <div className="grid grid-cols-1 min-[420px]:grid-cols-[1fr_auto_1fr] items-center gap-2">
                 <div className="relative flex-grow">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-white/40">₹</span>
                   <input

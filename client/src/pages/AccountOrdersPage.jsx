@@ -38,7 +38,7 @@ export default function AccountOrdersPage() {
   }
 
   return (
-    <div className="min-h-[60vh] max-w-4xl mx-auto px-4 md:px-8 py-12">
+    <div className="min-h-[60vh] max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
       <h1 className="font-display font-bold text-3xl md:text-5xl text-white uppercase tracking-wider mb-2">
         My Orders
       </h1>
@@ -53,7 +53,7 @@ export default function AccountOrdersPage() {
       )}
 
       {orders.length === 0 ? (
-        <div className="glass-card p-16 text-center flex flex-col gap-6 items-center">
+        <div className="glass-card p-8 sm:p-16 text-center flex flex-col gap-6 items-center">
           <FiPackage className="text-5xl text-white/20" />
           <div>
             <h3 className="font-display font-bold text-xl text-white">No orders yet</h3>
@@ -71,9 +71,9 @@ export default function AccountOrdersPage() {
               <Link
                 key={order._id}
                 to={`/account/orders/${order._id}`}
-                className="glass-card p-5 flex items-center gap-4 justify-between group border border-white/5 bg-white/5 hover:border-primary-400/30 transition-all duration-300"
+                className="glass-card p-4 sm:p-5 flex flex-col min-[520px]:flex-row min-[520px]:items-center gap-4 justify-between group border border-white/5 bg-white/5 hover:border-primary-400/30 transition-all duration-300"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 min-w-0 w-full min-[520px]:w-auto">
                   {/* Thumbnail stack */}
                   <div className="flex -space-x-3">
                     {hasItems && order.items.slice(0, 2).map((item, idx) => {
@@ -103,7 +103,7 @@ export default function AccountOrdersPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 flex-shrink-0">
+                <div className="flex items-center justify-between min-[520px]:justify-end gap-4 flex-shrink-0 w-full min-[520px]:w-auto">
                   <div className="text-right hidden sm:block">
                     <span className="font-sans font-bold text-sm text-white">₹{order.totalAmount.toLocaleString("en-IN")}</span>
                   </div>

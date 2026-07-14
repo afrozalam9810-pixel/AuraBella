@@ -14,9 +14,9 @@ export default function AdminLayout() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-dark-900 text-white flex flex-col md:flex-row">
+    <div className="min-h-screen bg-dark-900 text-white flex flex-col md:flex-row overflow-x-hidden">
       {/* Admin Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-dark-800 border-r border-white/5 py-8 px-4 flex flex-col gap-6 md:min-h-screen">
+      <aside className="w-full md:w-64 bg-dark-800 border-r border-white/5 py-5 md:py-8 px-4 flex flex-col gap-5 md:gap-6 md:min-h-screen">
         <div className="px-3">
           <span className="badge text-[9px] tracking-widest uppercase mb-1">
             ✦ AuraBella Control
@@ -28,14 +28,14 @@ export default function AdminLayout() {
 
         <hr className="border-white/5" />
 
-        <nav className="flex flex-col gap-1.5 flex-grow">
+        <nav className="flex md:flex-col gap-1.5 flex-grow overflow-x-auto md:overflow-visible custom-scrollbar pb-1 md:pb-0">
           {SIDEBAR_ITEMS.map((item) => {
             const active = location.pathname === item.path;
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3.5 px-4 py-3 rounded-xl font-sans text-xs font-semibold uppercase tracking-wider transition-all ${
+                className={`flex flex-shrink-0 items-center gap-2.5 md:gap-3.5 px-4 py-3 rounded-xl font-sans text-xs font-semibold uppercase tracking-wider transition-all ${
                   active
                     ? "bg-brand-gradient text-white shadow-glow-violet border-transparent"
                     : "text-[#9d8bbb] hover:bg-white/5 hover:text-white"
@@ -59,7 +59,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Admin Pages Panel */}
-      <main className="flex-grow p-6 md:p-10 max-w-7xl overflow-x-hidden">
+      <main className="flex-grow w-full min-w-0 p-4 sm:p-6 md:p-10 max-w-7xl overflow-x-hidden">
         <Outlet />
       </main>
     </div>

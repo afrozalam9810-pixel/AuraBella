@@ -268,7 +268,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900 text-white py-12 px-4 md:px-8">
+    <div className="min-h-screen bg-dark-900 text-white py-8 md:py-12 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="font-display font-bold text-3xl md:text-5xl text-white uppercase tracking-wider mb-10 text-center md:text-left">
           Checkout
@@ -287,19 +287,19 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2 flex flex-col gap-6">
             
             {/* PROGRESS STEPS INDICATOR BAR */}
-            <div className="flex justify-between items-center relative pb-6 border-b border-white/5 mb-4">
-              <div className="flex items-center gap-2.5">
+            <div className="flex justify-between items-center relative pb-6 border-b border-white/5 mb-4 overflow-hidden">
+              <div className="flex items-center gap-2 min-w-0">
                 <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${activeStep >= 1 ? "bg-brand-gradient text-white shadow-glow-violet" : "bg-white/5 text-white/40"}`}>
                   1
                 </div>
-                <span className={`text-xs font-semibold uppercase tracking-wider ${activeStep >= 1 ? "text-white" : "text-white/40"}`}>Shipping</span>
+                <span className={`text-[10px] sm:text-xs font-semibold uppercase tracking-wider ${activeStep >= 1 ? "text-white" : "text-white/40"}`}>Shipping</span>
               </div>
-              <div className="flex-grow h-0.5 bg-white/5 mx-4" />
-              <div className="flex items-center gap-2.5">
+              <div className="flex-grow h-0.5 bg-white/5 mx-2 sm:mx-4 min-w-6" />
+              <div className="flex items-center gap-2 min-w-0">
                 <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${activeStep >= 2 ? "bg-brand-gradient text-white shadow-glow-violet" : "bg-white/5 text-white/40"}`}>
                   2
                 </div>
-                <span className={`text-xs font-semibold uppercase tracking-wider ${activeStep >= 2 ? "text-white" : "text-white/40"}`}>Payment</span>
+                <span className={`text-[10px] sm:text-xs font-semibold uppercase tracking-wider ${activeStep >= 2 ? "text-white" : "text-white/40"}`}>Payment</span>
               </div>
             </div>
 
@@ -307,11 +307,11 @@ export default function CheckoutPage() {
             {activeStep === 1 && (
               <div className="flex flex-col gap-6">
                 <div className="glass-card p-6 flex flex-col gap-5">
-                  <div className="flex items-center justify-between border-b border-white/5 pb-3">
+                  <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-3 border-b border-white/5 pb-3">
                     <h3 className="font-sans font-bold text-sm uppercase tracking-wider">Select Shipping Address</h3>
                     <button
                       onClick={() => setShowNewAddressForm(!showNewAddressForm)}
-                      className="text-xs font-sans font-bold text-primary-300 hover:text-white uppercase tracking-wider flex items-center gap-1"
+                      className="text-xs font-sans font-bold text-primary-300 hover:text-white uppercase tracking-wider flex items-center gap-1 self-start min-[420px]:self-auto"
                     >
                       <FiPlus /> New Address
                     </button>
@@ -359,7 +359,7 @@ export default function CheckoutPage() {
                 {/* NEW ADDRESS DETAILED EXPAND FORM */}
                 {showNewAddressForm && (
                   <form onSubmit={handleAddNewAddress} className="glass-card p-6 flex flex-col gap-4 animate-slide-up">
-                    <div className="flex items-center justify-between border-b border-white/5 pb-3">
+                    <div className="flex items-center justify-between gap-3 border-b border-white/5 pb-3">
                       <h3 className="font-sans font-bold text-xs uppercase tracking-wider">Add New Address</h3>
                       <button type="button" onClick={() => setShowNewAddressForm(false)} className="text-white/60 hover:text-white">
                         <FiX />
@@ -450,7 +450,7 @@ export default function CheckoutPage() {
                       </div>
                     </div>
 
-                    <button type="submit" className="btn-primary w-fit text-xs px-6 py-3 mt-2 self-end">
+                    <button type="submit" className="btn-primary w-full sm:w-fit text-xs px-6 py-3 mt-2 self-end">
                       Save & Apply Address
                     </button>
                   </form>
@@ -480,8 +480,8 @@ export default function CheckoutPage() {
                 </button>
 
                 {/* Selected address review */}
-                <div className="glass-card p-5 flex items-center justify-between border-white/5 bg-white/5">
-                  <div>
+                <div className="glass-card p-5 flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-3 border-white/5 bg-white/5">
+                  <div className="min-w-0">
                     <span className="text-[10px] text-white/50 uppercase font-semibold block mb-1">Shipping To:</span>
                     <p className="font-sans text-xs font-semibold text-white">
                       {savedAddresses[selectedAddressIdx]?.line1}, {savedAddresses[selectedAddressIdx]?.city}
@@ -502,7 +502,7 @@ export default function CheckoutPage() {
                   <div className="flex flex-col gap-3">
                     <label
                       onClick={() => setPaymentMethod("cod")}
-                      className={`flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
+                      className={`flex items-start sm:items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
                         paymentMethod === "cod"
                           ? "border-primary-400 bg-primary-500/10 text-white shadow-glow-violet"
                           : "border-white/5 bg-white/5 hover:border-white/10 text-[#9d8bbb]"
@@ -515,14 +515,14 @@ export default function CheckoutPage() {
                         onChange={() => setPaymentMethod("cod")}
                         className="accent-primary-400 w-4 h-4 cursor-pointer"
                       />
-                      <div className="flex items-center gap-2 font-sans text-xs font-semibold text-white">
+                      <div className="flex items-center gap-2 font-sans text-xs font-semibold text-white leading-snug">
                         <FiTruck className="text-base" /> Cash on Delivery (COD)
                       </div>
                     </label>
 
                     <label
                       onClick={() => setPaymentMethod("online")}
-                      className={`flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
+                      className={`flex items-start sm:items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
                         paymentMethod === "online"
                           ? "border-primary-400 bg-primary-500/10 text-white shadow-glow-violet"
                           : "border-white/5 bg-white/5 hover:border-white/10 text-[#9d8bbb]"
@@ -535,7 +535,7 @@ export default function CheckoutPage() {
                         onChange={() => setPaymentMethod("online")}
                         className="accent-primary-400 w-4 h-4 cursor-pointer"
                       />
-                      <div className="flex items-center gap-2 font-sans text-xs font-semibold text-white">
+                      <div className="flex items-center gap-2 font-sans text-xs font-semibold text-white leading-snug">
                         <FiCreditCard className="text-base" /> Pay Online (UPI, Card, Net Banking)
                       </div>
                     </label>
@@ -569,11 +569,11 @@ export default function CheckoutPage() {
                 const thumbnail = item.product.images?.[0] || "https://placehold.co/80x100/1e1830/f0e8ff?text=Product";
                 return (
                   <div key={item.itemId} className="flex gap-3 items-center justify-between font-sans text-xs">
-                    <div className="flex gap-3 items-center">
+                    <div className="flex gap-3 items-center min-w-0">
                       <div className="w-10 h-12 rounded border border-white/5 overflow-hidden flex-shrink-0 bg-dark-900">
                         <img src={thumbnail} alt="thumb" className="w-full h-full object-cover" />
                       </div>
-                      <div className="flex flex-col gap-0.5">
+                      <div className="flex flex-col gap-0.5 min-w-0">
                         <span className="font-medium text-white/90 line-clamp-1 max-w-[120px]">
                           {item.product.name}
                         </span>

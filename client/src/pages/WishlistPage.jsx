@@ -81,7 +81,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="min-h-[70vh] max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <div className="min-h-[70vh] max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
       <h1 className="font-display font-bold text-3xl md:text-5xl text-white uppercase tracking-wider mb-2 text-center md:text-left">
         My Wishlist
       </h1>
@@ -96,7 +96,7 @@ export default function WishlistPage() {
       )}
 
       {wishlist.length === 0 ? (
-        <div className="glass-card p-16 text-center max-w-xl mx-auto flex flex-col gap-6 items-center">
+        <div className="glass-card p-8 sm:p-16 text-center max-w-xl mx-auto flex flex-col gap-6 items-center">
           <FiHeart className="text-5xl text-white/20" />
           <div>
             <h3 className="font-display font-bold text-xl text-white">Your wishlist is empty</h3>
@@ -107,7 +107,7 @@ export default function WishlistPage() {
           <Link to="/" className="btn-primary">Discover Collections</Link>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
           {wishlist.map((product) => {
             const displayPrice = product.discountPrice ?? product.price;
             const thumbnail = product.images?.[0] || "https://placehold.co/300x400/1e1830/f0e8ff?text=Product";
@@ -129,7 +129,7 @@ export default function WishlistPage() {
                 </Link>
                 
                 {/* Details */}
-                <div className="p-4 flex flex-col flex-grow justify-between gap-4">
+                <div className="p-3 sm:p-4 flex flex-col flex-grow justify-between gap-4">
                   <div>
                     <span className="font-sans text-[10px] text-[#9d8bbb] uppercase tracking-wider block mb-1">
                       {product.brand}
@@ -142,7 +142,7 @@ export default function WishlistPage() {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between gap-3 pt-3 border-t border-white/5 mt-auto">
+                  <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-2 min-[420px]:gap-3 pt-3 border-t border-white/5 mt-auto">
                     <button
                       onClick={() => handleRemove(product._id)}
                       className="text-[10px] font-sans font-bold uppercase tracking-wider text-rose-400 hover:text-rose-300 transition-colors flex items-center gap-1.5"
