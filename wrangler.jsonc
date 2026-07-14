@@ -6,7 +6,7 @@
     "enabled": true
   },
   "build": {
-    "command": "npm --prefix client run build"
+    "command": "npm --prefix client run build:worker"
   },
   "assets": {
     "directory": "client/dist",
