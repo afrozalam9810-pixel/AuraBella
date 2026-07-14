@@ -83,20 +83,20 @@ const userSchema = new mongoose.Schema(
 
     email: {
       type:      String,
-      required:  [true, "Email is required"],
-      unique:    true,          // ← DB index
+      unique:    true,
+      sparse:    true,
       lowercase: true,
       trim:      true,
       validate: {
         validator: (v) =>
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+          !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
         message: "Please provide a valid email address",
       },
     },
 
     password: {
       type:      String,
-      required:  [function () { return !this.googleId; }, "Password is required"],
+      required:  [function () { return !this.googleId && !this.phone; }, "Password is required"],
       minlength: [8, "Password must be at least 8 characters"],
       select:    false,         // never returned in queries by default
     },
@@ -106,6 +106,27 @@ const userSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
       trim: true,
+    },
+
+    phone: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+      validate: {
+        validator: (v) => !v || /^\+\d{8,15}$/.test(v),
+        message: "Please provide a valid phone number with country code",
+      },
+    },
+
+    isPhoneVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    phoneVerifiedAt: {
+      type: Date,
+      default: null,
     },
 
     role: {

@@ -25,6 +25,21 @@ const getCookieOptions = (maxAge) => ({
   ...(maxAge && { maxAge }),
 });
 
+const normalizePhone = (value) => {
+  const digits = String(value || "").replace(/[^\d]/g, "");
+  const internationalDigits = digits.length === 10 ? `91${digits}` : digits;
+  if (!/^\d{8,15}$/.test(internationalDigits)) return null;
+  return { providerValue: internationalDigits, storedValue: `+${internationalDigits}` };
+};
+
+const getMsg91AuthKey = () => {
+  if (!process.env.MSG91_AUTH_KEY) throw new Error("Mobile OTP is not configured.");
+  return process.env.MSG91_AUTH_KEY;
+};
+
+const msg91ErrorMessage = (data) => data?.message || data?.error || "Unable to send or verify the OTP. Please try again.";
+const otpRequestTimes = new Map();
+
 /**
  * Generate a JWT token signed with user's ID.
  */
@@ -109,7 +124,7 @@ const login = async (req, res, next) => {
 
     // 2. Find user & explicitly select password
     const user = await User.findOne({ email }).select("+password");
-    if (!user) {
+    if (!user || !user.password) {
       res.status(401);
       throw new Error("Invalid credentials");
     }
@@ -128,6 +143,100 @@ const login = async (req, res, next) => {
     }
 
     // 5. Send response
+    sendTokenResponse(user, 200, res);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Send a mobile verification code through MSG91.
+ * @route   POST /api/auth/phone/request-otp
+ * @access  Public
+ */
+const requestPhoneOtp = async (req, res, next) => {
+  try {
+    const phone = normalizePhone(req.body.phone);
+    if (!phone) {
+      res.status(400);
+      throw new Error("Enter a valid mobile number with country code.");
+    }
+
+    const rateLimitKey = `${req.ip}:${phone.providerValue}`;
+    const previousRequest = otpRequestTimes.get(rateLimitKey);
+    if (previousRequest && Date.now() - previousRequest < 60 * 1000) {
+      return res.status(429).json({ success: false, message: "Please wait one minute before requesting another OTP." });
+    }
+
+    const url = new URL("https://control.msg91.com/api/v5/otp");
+    url.search = new URLSearchParams({
+      authkey: getMsg91AuthKey(),
+      mobile: phone.providerValue,
+      ...(process.env.MSG91_OTP_TEMPLATE_ID && { template_id: process.env.MSG91_OTP_TEMPLATE_ID }),
+    }).toString();
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.type === "error") {
+      res.status(502);
+      throw new Error(msg91ErrorMessage(data));
+    }
+    otpRequestTimes.set(rateLimitKey, Date.now());
+    res.status(200).json({ success: true, message: "OTP sent to your mobile number." });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Verify a MSG91 OTP, then sign in or create the mobile account.
+ * @route   POST /api/auth/phone/verify-otp
+ * @access  Public
+ */
+const verifyPhoneOtp = async (req, res, next) => {
+  try {
+    const phone = normalizePhone(req.body.phone);
+    const otp = String(req.body.otp || "").trim();
+    if (!phone || !/^\d{4,8}$/.test(otp)) {
+      res.status(400);
+      throw new Error("Enter a valid mobile number and OTP.");
+    }
+
+    const url = new URL("https://control.msg91.com/api/v5/otp/verify");
+    url.search = new URLSearchParams({ otp, mobile: phone.providerValue }).toString();
+    const response = await fetch(url, { headers: { authkey: getMsg91AuthKey() } });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.type === "error") {
+      res.status(401);
+      throw new Error(msg91ErrorMessage(data));
+    }
+
+    let user = await User.findOne({ phone: phone.storedValue });
+    if (!user) {
+      const name = String(req.body.name || "").trim();
+      if (name.length < 2) {
+        return res.status(400).json({ success: false, message: "Enter your full name to create a new account." });
+      }
+      user = await User.create({
+        name,
+        phone: phone.storedValue,
+        isPhoneVerified: true,
+        phoneVerifiedAt: new Date(),
+      });
+    } else {
+      user.isPhoneVerified = true;
+      user.phoneVerifiedAt = new Date();
+      await user.save();
+    }
+
+    if (!user.isActive || user.isBlocked) {
+      res.status(403);
+      throw new Error("Your account has been deactivated or blocked");
+    }
     sendTokenResponse(user, 200, res);
   } catch (error) {
     next(error);
@@ -356,6 +465,8 @@ const deleteAddress = async (req, res, next) => {
 module.exports = {
   register,
   login,
+  requestPhoneOtp,
+  verifyPhoneOtp,
   startGoogleAuth,
   completeGoogleAuth,
   getMe,

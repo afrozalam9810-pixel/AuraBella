@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import PhoneOtpAuth from "../components/PhoneOtpAuth";
 import { setCredentials } from "../store/slices/authSlice";
 import api from "../api/axios";
 
@@ -37,6 +38,11 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = () => {
     window.location.assign(`${api.defaults.baseURL}/auth/google`);
+  };
+
+  const handlePhoneAuthenticated = (data) => {
+    dispatch(setCredentials({ user: data.user, token: data.token }));
+    navigate(redirect);
   };
 
   return (
@@ -124,6 +130,7 @@ export default function LoginPage() {
         >
           <FcGoogle className="text-xl" /> Continue with Google
         </button>
+        <PhoneOtpAuth onAuthenticated={handlePhoneAuthenticated} />
 
         {/* Footer Links */}
         <p className="text-center font-sans text-xs text-[#9d8bbb]">
