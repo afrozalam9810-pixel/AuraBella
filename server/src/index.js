@@ -57,6 +57,17 @@ setInterval(() => {
 }, rateLimitWindowMs);
 
 const customRateLimiter = (req, res, next) => {
+  // Completely bypass rate limiting for safe public read endpoints
+  // to prevent dashboard or product browsing spikes from locking up connections.
+  const path = req.originalUrl || req.url || "";
+  if (
+    path.startsWith("/api/products") ||
+    path.startsWith("/api/categories") ||
+    path.startsWith("/api/health")
+  ) {
+    return next();
+  }
+
   // Take the FIRST IP from x-forwarded-for (the real client),
   // not the last (which is the Render/proxy IP shared by all users).
   const forwarded = req.headers["x-forwarded-for"];
