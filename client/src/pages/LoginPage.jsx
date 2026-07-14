@@ -130,7 +130,6 @@ export default function LoginPage() {
         >
           <FcGoogle className="text-xl" /> Continue with Google
         </button>
-        <PhoneOtpAuth onAuthenticated={handlePhoneAuthenticated} />
 
         {/* Footer Links */}
         <p className="text-center font-sans text-xs text-[#9d8bbb]">

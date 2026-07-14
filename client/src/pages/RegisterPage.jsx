@@ -182,7 +182,6 @@ export default function RegisterPage() {
         >
           <FcGoogle className="text-xl" /> Continue with Google
         </button>
-        <PhoneOtpAuth onAuthenticated={handlePhoneAuthenticated} />
 
         <p className="text-center font-sans text-xs text-[#9d8bbb]">
           Already have an account?{" "}
