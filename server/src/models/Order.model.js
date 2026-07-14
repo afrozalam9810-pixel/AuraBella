@@ -25,6 +25,8 @@ const orderItemSchema = new mongoose.Schema({
     required: [true, "Price at purchase is required"],
     min: [0, "Price at purchase cannot be negative"],
   },
+  hsnCode: { type: String, default: "" },
+  gstRate: { type: Number, default: 0, min: 0, max: 100 },
 });
 
 const shippingAddressSchema = new mongoose.Schema({
@@ -34,7 +36,18 @@ const shippingAddressSchema = new mongoose.Schema({
   state: { type: String, required: true },
   pincode: { type: String, required: true },
   phone: { type: String, required: true },
+  name: { type: String, default: "" },
+  street: { type: String, default: "" },
+  area: { type: String, default: "" },
+  district: { type: String, default: "" },
+  country: { type: String, default: "India" },
 });
+
+const timelineSchema = new mongoose.Schema({
+  status: { type: String, required: true },
+  at: { type: Date, default: Date.now },
+  note: { type: String, default: "" },
+}, { _id: false });
 
 const orderSchema = new mongoose.Schema(
   {
@@ -89,8 +102,8 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "placed",
       enum: {
-        values: ["pending_payment", "placed", "shipped", "delivered", "cancelled"],
-        message: "Order status must be pending_payment, placed, shipped, delivered, or cancelled",
+        values: ["pending_payment", "placed", "packed", "shipped", "out_for_delivery", "delivered", "cancelled", "refunded"],
+        message: "Invalid order status",
       },
     },
     totalAmount: {
@@ -98,6 +111,24 @@ const orderSchema = new mongoose.Schema(
       required: [true, "Total amount is required"],
       min: [0, "Total amount cannot be negative"],
     },
+    invoiceNumber: { type: String, unique: true, sparse: true, trim: true },
+    invoiceDate: { type: Date, default: null },
+    invoiceStatus: { type: String, enum: ["draft", "issued", "cancelled"], default: "draft" },
+    printedInvoice: { type: Boolean, default: false },
+    printedLabel: { type: Boolean, default: false },
+    trackingNumber: { type: String, default: "", trim: true },
+    courierPartner: { type: String, default: "", trim: true },
+    estimatedDeliveryDate: { type: Date, default: null },
+    packageWeight: { type: String, default: "" },
+    packageDimensions: { type: String, default: "" },
+    taxBreakdown: {
+      gstRate: { type: Number, default: 0 },
+      taxAmount: { type: Number, default: 0 },
+      shippingCharges: { type: Number, default: 0 },
+      platformFee: { type: Number, default: 0 },
+      couponDiscount: { type: Number, default: 0 },
+    },
+    statusTimeline: { type: [timelineSchema], default: [] },
   },
   {
     timestamps: true,

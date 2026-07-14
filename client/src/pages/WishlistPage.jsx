@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-redux";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FiTrash2, FiShoppingBag, FiHeart, FiAlertCircle } from "react-icons/fi";
 import { addToCart } from "../store/slices/cartSlice";
@@ -105,7 +104,7 @@ export default function WishlistPage() {
               Tap the heart icon on any product card to save it here.
             </p>
           </div>
-          <RouterLink to="/" className="btn-primary">Discover Collections</RouterLink>
+          <Link to="/" className="btn-primary">Discover Collections</Link>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -116,7 +115,7 @@ export default function WishlistPage() {
               <div key={product._id} className="glass-card overflow-hidden group flex flex-col h-full border border-white/5 bg-white/5 hover:border-primary-400/30 transition-all duration-300">
                 
                 {/* Image */}
-                <RouterLink to={`/product/${product._id}`} className="relative overflow-hidden aspect-[3/4] block">
+                <Link to={`/product/${product._id}`} className="relative overflow-hidden aspect-[3/4] block">
                   <img
                     src={thumbnail}
                     alt={product.name}
@@ -127,7 +126,7 @@ export default function WishlistPage() {
                       Sale
                     </span>
                   )}
-                </RouterLink>
+                </Link>
                 
                 {/* Details */}
                 <div className="p-4 flex flex-col flex-grow justify-between gap-4">
@@ -135,9 +134,9 @@ export default function WishlistPage() {
                     <span className="font-sans text-[10px] text-[#9d8bbb] uppercase tracking-wider block mb-1">
                       {product.brand}
                     </span>
-                    <RouterLink to={`/product/${product._id}`} className="font-sans text-xs md:text-sm text-white/90 font-medium group-hover:text-primary-300 transition-colors line-clamp-1 block">
+                    <Link to={`/product/${product._id}`} className="font-sans text-xs md:text-sm text-white/90 font-medium group-hover:text-primary-300 transition-colors line-clamp-1 block">
                       {product.name}
-                    </RouterLink>
+                    </Link>
                     <span className="font-sans font-bold text-xs md:text-sm text-white block mt-1.5">
                       ₹{displayPrice.toLocaleString("en-IN")}
                     </span>

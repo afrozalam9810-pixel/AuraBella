@@ -37,6 +37,8 @@ import AdminCategories        from "./pages/admin/AdminCategories";
 import AdminOrders            from "./pages/admin/AdminOrders";
 import AdminCoupons           from "./pages/admin/AdminCoupons";
 import AdminUsers             from "./pages/admin/AdminUsers";
+import AdminOrderDetail       from "./pages/admin/AdminOrderDetail";
+import InvoicePage            from "./pages/admin/InvoicePage";
 
 // General components
 import Toast                  from "./components/Toast";
@@ -75,6 +77,8 @@ function App() {
             <Route path="products/:id/edit"       element={<AdminProductForm />} />
             <Route path="categories"              element={<AdminCategories />} />
             <Route path="orders"                  element={<AdminOrders />} />
+            <Route path="orders/:id"              element={<AdminOrderDetail />} />
+            <Route path="orders/:id/invoice"      element={<InvoicePage />} />
             <Route path="coupons"                 element={<AdminCoupons />} />
             <Route path="users"                   element={<AdminUsers />} />
           </Route>

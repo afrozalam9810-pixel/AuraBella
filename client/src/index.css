@@ -239,3 +239,140 @@ html.light .gradient-bg-animated { background: linear-gradient(-45deg, #f8f5fb, 
   scrollbar-width: thin;
   scrollbar-color: rgba(196, 77, 239, 0.4) var(--color-dark-800);
 }
+
+/* ── Invoice & Print Styles ──────────────────────────────────────── */
+
+/* Invoice document table styles */
+.invoice-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 10px;
+}
+
+.invoice-table th {
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #d4af70;
+}
+
+.invoice-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #e8ddf0;
+  vertical-align: top;
+}
+
+.invoice-table tr:last-child td {
+  border-bottom: none;
+}
+
+.invoice-table tbody tr:nth-child(even) {
+  background-color: #faf7fc;
+}
+
+/* Barcode visual placeholder */
+.barcode-visual {
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
+  letter-spacing: -1px;
+  color: #111;
+  line-height: 1;
+  display: inline-block;
+  padding: 6px 4px;
+}
+
+/* Shipping label badge */
+.payment-badge-cod {
+  background: #fff0f0;
+  color: #c0392b;
+  border: 2px solid #c0392b;
+  font-weight: 900;
+  padding: 3px 10px;
+  font-size: 11px;
+  border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+
+.payment-badge-prepaid {
+  background: #f0fff4;
+  color: #1a7a3a;
+  border: 2px solid #1a7a3a;
+  font-weight: 900;
+  padding: 3px 10px;
+  font-size: 11px;
+  border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+
+/* Timeline dot styles */
+.timeline-dot-done {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c44def, #e11d50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(196, 77, 239, 0.5);
+}
+
+.timeline-dot-pending {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+/* ── Print Media Query ───────────────────────────────────────────── */
+@media print {
+  /* Hide everything except the document being printed */
+  body {
+    background: white !important;
+    color: #111 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-hidden,
+  nav,
+  footer,
+  aside,
+  .admin-action-bar {
+    display: none !important;
+  }
+
+  /* Invoice document fills the page cleanly */
+  .invoice-document {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 12mm !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: auto !important;
+    page-break-inside: avoid;
+  }
+
+  /* Shipping label fills the page */
+  .shipping-label {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    page-break-inside: avoid;
+  }
+
+  /* Ensure table rows don't break mid-row */
+  .invoice-table tr {
+    page-break-inside: avoid;
+  }
+
+  /* Page size for invoice */
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+}

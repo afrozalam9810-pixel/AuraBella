@@ -7,6 +7,27 @@ const Order = require("../models/Order.model");
 const Cart = require("../models/Cart.model");
 const Product = require("../models/Product.model");
 const Coupon = require("../models/Coupon.model");
+const InvoiceCounter = require("../models/InvoiceCounter.model");
+
+const orderPopulate = [
+  { path: "user", select: "name email phone" },
+  { path: "items.product", select: "name brand images price discountPrice productId hsnCode gstRate" },
+];
+
+const ensureInvoice = async (order) => {
+  if (order.invoiceNumber) return order;
+  const year = new Date(order.createdAt || Date.now()).getFullYear();
+  const counter = await InvoiceCounter.findOneAndUpdate(
+    { year }, { $inc: { sequence: 1 } }, { new: true, upsert: true, setDefaultsOnInsert: true }
+  );
+  const invoiceNumber = `ABL-${year}-${String(counter.sequence).padStart(6, "0")}`;
+  const claimed = await Order.findOneAndUpdate(
+    { _id: order._id, invoiceNumber: { $in: [null, ""] } },
+    { $set: { invoiceNumber, invoiceDate: new Date(), invoiceStatus: "issued" } },
+    { new: true }
+  );
+  return claimed || Order.findById(order._id);
+};
 
 /**
  * Helper to validate a coupon code and calculate its discount amount.
@@ -307,8 +328,7 @@ const getAllOrders = async (req, res, next) => {
 
     const total = await Order.countDocuments(query);
     const orders = await Order.find(query)
-      .populate("user", "name email")
-      .populate("items.product", "name price brand")
+      .populate(orderPopulate)
       .sort({ createdAt: -1 })
       .skip(skipNum)
       .limit(limitNum);
@@ -322,6 +342,21 @@ const getAllOrders = async (req, res, next) => {
       limit: limitNum,
       data: orders,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAdminOrderById = async (req, res, next) => {
+  try {
+    let order = await Order.findById(req.params.id).populate(orderPopulate);
+    if (!order) {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+    order = await ensureInvoice(order);
+    await order.populate(orderPopulate);
+    res.status(200).json({ success: true, data: order });
   } catch (error) {
     next(error);
   }
@@ -341,7 +376,7 @@ const updateOrderStatus = async (req, res, next) => {
       throw new Error("orderStatus is required");
     }
 
-    const validStatuses = ["placed", "shipped", "delivered", "cancelled"];
+    const validStatuses = ["placed", "packed", "shipped", "out_for_delivery", "delivered", "cancelled", "refunded"];
     if (!validStatuses.includes(orderStatus)) {
       res.status(400);
       throw new Error(
@@ -349,13 +384,14 @@ const updateOrderStatus = async (req, res, next) => {
       );
     }
 
-    const order = await Order.findById(req.params.id);
+    let order = await Order.findById(req.params.id);
     if (!order) {
       res.status(404);
       throw new Error("Order not found");
     }
 
     order.orderStatus = orderStatus;
+    order.statusTimeline.push({ status: orderStatus, at: new Date(), note: req.body.note || "" });
     
     // Automatically update paymentStatus if delivered
     if (orderStatus === "delivered" && order.paymentMethod === "cod") {
@@ -374,11 +410,49 @@ const updateOrderStatus = async (req, res, next) => {
   }
 };
 
+const updateFulfillment = async (req, res, next) => {
+  try {
+    const { orderStatus, courierPartner, trackingNumber, estimatedDeliveryDate, packageWeight, packageDimensions, note } = req.body;
+    const order = await Order.findById(req.params.id);
+    if (!order) { res.status(404); throw new Error("Order not found"); }
+    if (courierPartner !== undefined) order.courierPartner = courierPartner;
+    if (trackingNumber !== undefined) order.trackingNumber = trackingNumber;
+    if (estimatedDeliveryDate !== undefined) order.estimatedDeliveryDate = estimatedDeliveryDate || null;
+    if (packageWeight !== undefined) order.packageWeight = packageWeight;
+    if (packageDimensions !== undefined) order.packageDimensions = packageDimensions;
+    if (orderStatus) {
+      const validStatuses = ["placed", "packed", "shipped", "out_for_delivery", "delivered", "cancelled", "refunded"];
+      if (!validStatuses.includes(orderStatus)) { res.status(400); throw new Error("Invalid order status"); }
+      order.orderStatus = orderStatus;
+      if (orderStatus === "delivered" && order.paymentMethod === "cod") order.paymentStatus = "completed";
+      order.statusTimeline.push({ status: orderStatus, at: new Date(), note: note || "" });
+    }
+    await order.save();
+    const populated = await Order.findById(order._id).populate(orderPopulate);
+    res.status(200).json({ success: true, data: populated });
+  } catch (error) { next(error); }
+};
+
+const recordDocumentEvent = async (req, res, next) => {
+  try {
+    let order = await Order.findById(req.params.id);
+    if (!order) { res.status(404); throw new Error("Order not found"); }
+    if (req.body.document === "invoice") order.printedInvoice = true;
+    if (req.body.document === "label") order.printedLabel = true;
+    order = await ensureInvoice(order);
+    await order.save();
+    res.status(200).json({ success: true, data: order });
+  } catch (error) { next(error); }
+};
+
 module.exports = {
   createOrder,
   getMyOrders,
   getOrderById,
   validateCoupon,
   getAllOrders,
+  getAdminOrderById,
   updateOrderStatus,
+  updateFulfillment,
+  recordDocumentEvent,
 };

@@ -7,7 +7,10 @@
 const express = require("express");
 const {
   getAllOrders,
+  getAdminOrderById,
   updateOrderStatus,
+  updateFulfillment,
+  recordDocumentEvent,
 } = require("../controllers/orderController");
 const { protect } = require("../middleware/auth");
 const { adminOnly } = require("../middleware/adminOnly");
@@ -23,5 +26,11 @@ router.route("/")
 
 router.route("/:id/status")
   .put(updateOrderStatus);
+
+router.route("/:id")
+  .get(getAdminOrderById);
+
+router.put("/:id/fulfillment", updateFulfillment);
+router.post("/:id/document-events", recordDocumentEvent);
 
 module.exports = router;
