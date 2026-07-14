@@ -24,7 +24,7 @@ const getProducts = async (req, res, next) => {
     } = req.query;
 
     // 1. Build Query
-    const query = {};
+    const query = { isDeleted: { $ne: true } };
 
     if (category) {
       query.category = category;
@@ -159,14 +159,31 @@ const searchProducts = async (req, res, next) => {
       throw new Error("Search term is required");
     }
 
-    // Full-text search with sorting by text relevance score
-    const products = await Product.find(
-      { $text: { $search: q } },
+    // 1. Try strict full-text search first
+    let products = await Product.find(
+      { $text: { $search: q }, isDeleted: { $ne: true } },
       { score: { $meta: "textScore" } }
     )
       .sort({ score: { $meta: "textScore" } })
       .populate("category", "name slug")
       .populate("subCategory", "name slug");
+
+    // 2. Fallback: if zero results, use a case-insensitive regex query
+    // for partial and typo-tolerant fuzzy matching on name/brand
+    if (products.length === 0) {
+      const regex = new RegExp(q.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
+      products = await Product.find({
+        isDeleted: { $ne: true },
+        $or: [
+          { name: { $regex: regex } },
+          { brand: { $regex: regex } },
+          { description: { $regex: regex } },
+        ],
+      })
+        .populate("category", "name slug")
+        .populate("subCategory", "name slug")
+        .limit(20);
+    }
 
     res.status(200).json({
       success: true,
@@ -212,12 +229,12 @@ module.exports = {
   },
   deleteProduct: async (req, res, next) => {
     try {
-      const product = await Product.findByIdAndDelete(req.params.id);
+      const product = await Product.findByIdAndUpdate(req.params.id, { isDeleted: true }, { new: true });
       if (!product) {
         res.status(404);
         throw new Error("Product not found");
       }
-      res.status(200).json({ success: true, message: "Product deleted successfully" });
+      res.status(200).json({ success: true, message: "Product deleted successfully (soft delete)" });
     } catch (err) {
       next(err);
     }

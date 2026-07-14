@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FiHeart, FiShoppingBag, FiStar } from "react-icons/fi";
 import { addToCart } from "../store/slices/cartSlice";
+import { getProductUrl } from "../utils/seo";
 
 export default function ProductCard({ product, isWishlisted = false, onWishlistToggle }) {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
 
   return (
     <Link
-      to={`/product/${_id}`}
+      to={getProductUrl(product)}
       className="group block relative bg-dark-800 rounded-2xl overflow-hidden border border-white/5 hover:border-primary-400/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
     >
       {/* Image container */}
@@ -67,6 +68,7 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
         <img
           src={image}
           alt={name}
+          title={name}
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

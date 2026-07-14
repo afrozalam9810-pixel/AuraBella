@@ -5,9 +5,10 @@
   "description": "AuraBella e-commerce storefront — React 18 + Vite 5 + Tailwind CSS 3",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "preview": "next start",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
   "keywords": [
@@ -23,6 +24,7 @@
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "html2pdf.js": "^0.14.0",
+    "next": "^16.2.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",

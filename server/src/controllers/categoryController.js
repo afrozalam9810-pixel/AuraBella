@@ -1,9 +1,17 @@
 /**
  * categoryController.js
  * Controller for product categories.
+ *
+ * Cache strategy:
+ *  - GET /api/categories  → cached for 5 minutes (categories change rarely)
+ *  - Any write mutation   → busts the cache key immediately
  */
 
 const Category = require("../models/Category.model");
+const cache    = require("../config/cache");
+
+const CACHE_KEY = "api:categories";
+const CACHE_TTL = 300; // 5 minutes
 
 /**
  * @desc    Get all categories with nested sub-categories
@@ -12,6 +20,13 @@ const Category = require("../models/Category.model");
  */
 const getCategories = async (req, res, next) => {
   try {
+    // ── Cache read ───────────────────────────────────────────────────────────
+    const cached = cache.get(CACHE_KEY);
+    if (cached) {
+      return res.status(200).json(cached);
+    }
+
+    // ── DB query ─────────────────────────────────────────────────────────────
     const categories = await Category.find({});
 
     // Filter parent categories (parentCategory is null)
@@ -41,11 +56,16 @@ const getCategories = async (req, res, next) => {
       };
     });
 
-    res.status(200).json({
+    const payload = {
       success: true,
       count: nestedCategories.length,
       data: nestedCategories,
-    });
+    };
+
+    // ── Cache write ──────────────────────────────────────────────────────────
+    cache.set(CACHE_KEY, payload, CACHE_TTL);
+
+    res.status(200).json(payload);
   } catch (error) {
     next(error);
   }
@@ -62,6 +82,7 @@ module.exports = {
         slug,
         parentCategory: parentCategory || null,
       });
+      cache.del(CACHE_KEY); // bust cache on write
       res.status(201).json({ success: true, data: category });
     } catch (err) {
       next(err);
@@ -84,6 +105,7 @@ module.exports = {
         res.status(404);
         throw new Error("Category not found");
       }
+      cache.del(CACHE_KEY); // bust cache on write
       res.status(200).json({ success: true, data: category });
     } catch (err) {
       next(err);
@@ -96,6 +118,7 @@ module.exports = {
         res.status(404);
         throw new Error("Category not found");
       }
+      cache.del(CACHE_KEY); // bust cache on write
       res.status(200).json({ success: true, message: "Category deleted successfully" });
     } catch (err) {
       next(err);

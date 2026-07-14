@@ -163,6 +163,8 @@ const userSchema = new mongoose.Schema(
       type:    Boolean,
       default: false,
     },
+    emailVerificationToken:   { type: String, select: false },
+    emailVerificationExpires: { type: Date,   select: false },
 
     // Password reset flow
     passwordResetToken:   { type: String, select: false },
@@ -175,6 +177,10 @@ const userSchema = new mongoose.Schema(
     },
 
     isBlocked: {
+      type:    Boolean,
+      default: false,
+    },
+    isGuest: {
       type:    Boolean,
       default: false,
     },

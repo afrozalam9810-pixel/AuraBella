@@ -1,0 +1,4012 @@
+{
+  "timestamp": "2026-07-14T20:48:58.184Z",
+  "database": "aurabella",
+  "collections": {
+    "users": [
+      {
+        "_id": "6a5671958c99175e05e4b3fd",
+        "name": "AuraBella Admin",
+        "email": "admin@aurabella.com",
+        "isPhoneVerified": false,
+        "phoneVerifiedAt": null,
+        "role": "admin",
+        "addresses": [
+          {
+            "label": "Corporate Office",
+            "line1": "AuraBella Towers, Floor 14",
+            "line2": "Commercial District, MG Road",
+            "city": "Bangalore",
+            "state": "Karnataka",
+            "pincode": "560001",
+            "phone": "9876543210",
+            "isDefault": true,
+            "_id": "6a5671958c99175e05e4b3fe"
+          }
+        ],
+        "wishlist": [],
+        "avatar": "",
+        "isVerified": true,
+        "isActive": true,
+        "isBlocked": false,
+        "createdAt": "2026-07-14T17:27:49.267Z",
+        "updatedAt": "2026-07-14T17:27:49.267Z",
+        "__v": 0
+      }
+    ],
+    "categories": [
+      {
+        "_id": "6a5671958c99175e05e4b40a",
+        "name": "Clothing",
+        "slug": "clothing",
+        "parentCategory": null,
+        "createdAt": "2026-07-14T17:27:49.649Z",
+        "updatedAt": "2026-07-14T17:27:49.649Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b40c",
+        "name": "Tops",
+        "slug": "clothing-tops",
+        "parentCategory": "6a5671958c99175e05e4b40a",
+        "createdAt": "2026-07-14T17:27:49.652Z",
+        "updatedAt": "2026-07-14T17:27:49.652Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b42d",
+        "name": "Dresses",
+        "slug": "clothing-dresses",
+        "parentCategory": "6a5671958c99175e05e4b40a",
+        "createdAt": "2026-07-14T17:27:49.679Z",
+        "updatedAt": "2026-07-14T17:27:49.679Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b44e",
+        "name": "Ethnic Wear",
+        "slug": "clothing-ethnic-wear",
+        "parentCategory": "6a5671958c99175e05e4b40a",
+        "createdAt": "2026-07-14T17:27:49.689Z",
+        "updatedAt": "2026-07-14T17:27:49.689Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b46f",
+        "name": "Bottoms",
+        "slug": "clothing-bottoms",
+        "parentCategory": "6a5671958c99175e05e4b40a",
+        "createdAt": "2026-07-14T17:27:49.698Z",
+        "updatedAt": "2026-07-14T17:27:49.698Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b490",
+        "name": "Footwear",
+        "slug": "footwear",
+        "parentCategory": null,
+        "createdAt": "2026-07-14T17:27:49.706Z",
+        "updatedAt": "2026-07-14T17:27:49.706Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b492",
+        "name": "Heels",
+        "slug": "footwear-heels",
+        "parentCategory": "6a5671958c99175e05e4b490",
+        "createdAt": "2026-07-14T17:27:49.708Z",
+        "updatedAt": "2026-07-14T17:27:49.708Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4b3",
+        "name": "Flats",
+        "slug": "footwear-flats",
+        "parentCategory": "6a5671958c99175e05e4b490",
+        "createdAt": "2026-07-14T17:27:49.717Z",
+        "updatedAt": "2026-07-14T17:27:49.717Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4d4",
+        "name": "Sneakers",
+        "slug": "footwear-sneakers",
+        "parentCategory": "6a5671958c99175e05e4b490",
+        "createdAt": "2026-07-14T17:27:49.726Z",
+        "updatedAt": "2026-07-14T17:27:49.726Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4f5",
+        "name": "Sandals",
+        "slug": "footwear-sandals",
+        "parentCategory": "6a5671958c99175e05e4b490",
+        "createdAt": "2026-07-14T17:27:49.736Z",
+        "updatedAt": "2026-07-14T17:27:49.736Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b516",
+        "name": "Makeup",
+        "slug": "makeup",
+        "parentCategory": null,
+        "createdAt": "2026-07-14T17:27:49.746Z",
+        "updatedAt": "2026-07-14T17:27:49.746Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b518",
+        "name": "Lipstick",
+        "slug": "makeup-lipstick",
+        "parentCategory": "6a5671958c99175e05e4b516",
+        "createdAt": "2026-07-14T17:27:49.747Z",
+        "updatedAt": "2026-07-14T17:27:49.747Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b52f",
+        "name": "Foundation",
+        "slug": "makeup-foundation",
+        "parentCategory": "6a5671958c99175e05e4b516",
+        "createdAt": "2026-07-14T17:27:49.755Z",
+        "updatedAt": "2026-07-14T17:27:49.755Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b546",
+        "name": "Eye Makeup",
+        "slug": "makeup-eye-makeup",
+        "parentCategory": "6a5671958c99175e05e4b516",
+        "createdAt": "2026-07-14T17:27:49.764Z",
+        "updatedAt": "2026-07-14T17:27:49.764Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b55d",
+        "name": "Skincare",
+        "slug": "makeup-skincare",
+        "parentCategory": "6a5671958c99175e05e4b516",
+        "createdAt": "2026-07-14T17:27:49.771Z",
+        "updatedAt": "2026-07-14T17:27:49.771Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b574",
+        "name": "Jewellery",
+        "slug": "jewellery",
+        "parentCategory": null,
+        "createdAt": "2026-07-14T17:27:49.779Z",
+        "updatedAt": "2026-07-14T17:27:49.779Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b576",
+        "name": "Earrings",
+        "slug": "jewellery-earrings",
+        "parentCategory": "6a5671958c99175e05e4b574",
+        "createdAt": "2026-07-14T17:27:49.780Z",
+        "updatedAt": "2026-07-14T17:27:49.780Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b58d",
+        "name": "Necklaces",
+        "slug": "jewellery-necklaces",
+        "parentCategory": "6a5671958c99175e05e4b574",
+        "createdAt": "2026-07-14T17:27:49.788Z",
+        "updatedAt": "2026-07-14T17:27:49.788Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5a4",
+        "name": "Bracelets",
+        "slug": "jewellery-bracelets",
+        "parentCategory": "6a5671958c99175e05e4b574",
+        "createdAt": "2026-07-14T17:27:49.795Z",
+        "updatedAt": "2026-07-14T17:27:49.795Z",
+        "__v": 0
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5bb",
+        "name": "Bags",
+        "slug": "jewellery-bags",
+        "parentCategory": "6a5671958c99175e05e4b574",
+        "createdAt": "2026-07-14T17:27:49.802Z",
+        "updatedAt": "2026-07-14T17:27:49.802Z",
+        "__v": 0
+      }
+    ],
+    "products": [
+      {
+        "_id": "6a5671958c99175e05e4b40e",
+        "name": "Vero Moda Premium Tops Vol 1",
+        "description": "Elevate your standard with the Vero Moda Premium Tops Vol 1. A high-quality, beautifully designed tops from Vero Moda. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b40c",
+        "brand": "Vero Moda",
+        "price": 4044,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Vero%20Moda%20Premium%20Tops%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Vero%20Moda%20Premium%20Tops%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Crimson Red",
+            "stock": 71,
+            "_id": "6a5671958c99175e05e4b40f"
+          },
+          {
+            "size": "S",
+            "color": "Lavender Violet",
+            "stock": 56,
+            "_id": "6a5671958c99175e05e4b410"
+          },
+          {
+            "size": "M",
+            "color": "Crimson Red",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b411"
+          },
+          {
+            "size": "L",
+            "color": "Crimson Red",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b412"
+          },
+          {
+            "size": "XL",
+            "color": "Blush Pink",
+            "stock": 32,
+            "_id": "6a5671958c99175e05e4b413"
+          }
+        ],
+        "avgRating": 4.8,
+        "numReviews": 9,
+        "productId": "AB-8080023B0EC6",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.666Z",
+        "updatedAt": "2026-07-14T17:27:49.666Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b414",
+        "name": "Vero Moda Premium Tops Vol 2",
+        "description": "Elevate your standard with the Vero Moda Premium Tops Vol 2. A high-quality, beautifully designed tops from Vero Moda. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b40c",
+        "brand": "Vero Moda",
+        "price": 3702,
+        "discountPrice": 2961,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Vero%20Moda%20Premium%20Tops%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Vero%20Moda%20Premium%20Tops%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Crimson Red",
+            "stock": 50,
+            "_id": "6a5671958c99175e05e4b415"
+          },
+          {
+            "size": "S",
+            "color": "Lavender Violet",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b416"
+          },
+          {
+            "size": "M",
+            "color": "Crimson Red",
+            "stock": 43,
+            "_id": "6a5671958c99175e05e4b417"
+          },
+          {
+            "size": "L",
+            "color": "Blush Pink",
+            "stock": 87,
+            "_id": "6a5671958c99175e05e4b418"
+          },
+          {
+            "size": "XL",
+            "color": "Midnight Black",
+            "stock": 77,
+            "_id": "6a5671958c99175e05e4b419"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 71,
+        "productId": "AB-7C2D7C1D0D7E",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.666Z",
+        "updatedAt": "2026-07-14T17:27:49.666Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b41a",
+        "name": "AuraBella Style Premium Tops Vol 3",
+        "description": "Elevate your standard with the AuraBella Style Premium Tops Vol 3. A high-quality, beautifully designed tops from AuraBella Style. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b40c",
+        "brand": "AuraBella Style",
+        "price": 3210,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Style%20Premium%20Tops%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Style%20Premium%20Tops%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Champagne Gold",
+            "stock": 59,
+            "_id": "6a5671958c99175e05e4b41b"
+          },
+          {
+            "size": "S",
+            "color": "Midnight Black",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b41c"
+          },
+          {
+            "size": "M",
+            "color": "Champagne Gold",
+            "stock": 60,
+            "_id": "6a5671958c99175e05e4b41d"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 73,
+            "_id": "6a5671958c99175e05e4b41e"
+          },
+          {
+            "size": "XL",
+            "color": "Midnight Black",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b41f"
+          }
+        ],
+        "avgRating": 3.8,
+        "numReviews": 46,
+        "productId": "AB-DFBF2FBCC2F4",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.666Z",
+        "updatedAt": "2026-07-14T17:27:49.666Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b420",
+        "name": "H&M Premium Tops Vol 4",
+        "description": "Elevate your standard with the H&M Premium Tops Vol 4. A high-quality, beautifully designed tops from H&M. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b40c",
+        "brand": "H&M",
+        "price": 1869,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=H%26M%20Premium%20Tops%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=H%26M%20Premium%20Tops%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Midnight Black",
+            "stock": 64,
+            "_id": "6a5671958c99175e05e4b421"
+          },
+          {
+            "size": "S",
+            "color": "Blush Pink",
+            "stock": 40,
+            "_id": "6a5671958c99175e05e4b422"
+          },
+          {
+            "size": "M",
+            "color": "Blush Pink",
+            "stock": 17,
+            "_id": "6a5671958c99175e05e4b423"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 28,
+            "_id": "6a5671958c99175e05e4b424"
+          },
+          {
+            "size": "XL",
+            "color": "Crimson Red",
+            "stock": 82,
+            "_id": "6a5671958c99175e05e4b425"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 63,
+        "productId": "AB-9340425A5C9C",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.666Z",
+        "updatedAt": "2026-07-14T17:27:49.666Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b426",
+        "name": "H&M Premium Tops Vol 5",
+        "description": "Elevate your standard with the H&M Premium Tops Vol 5. A high-quality, beautifully designed tops from H&M. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b40c",
+        "brand": "H&M",
+        "price": 1750,
+        "discountPrice": 1400,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=H%26M%20Premium%20Tops%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=H%26M%20Premium%20Tops%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Midnight Black",
+            "stock": 11,
+            "_id": "6a5671958c99175e05e4b427"
+          },
+          {
+            "size": "S",
+            "color": "Lavender Violet",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b428"
+          },
+          {
+            "size": "M",
+            "color": "Crimson Red",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b429"
+          },
+          {
+            "size": "L",
+            "color": "Blush Pink",
+            "stock": 60,
+            "_id": "6a5671958c99175e05e4b42a"
+          },
+          {
+            "size": "XL",
+            "color": "Lavender Violet",
+            "stock": 17,
+            "_id": "6a5671958c99175e05e4b42b"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 116,
+        "productId": "AB-4DC012441A42",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.666Z",
+        "updatedAt": "2026-07-14T17:27:49.666Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b42f",
+        "name": "Vero Moda Premium Dresses Vol 1",
+        "description": "Elevate your standard with the Vero Moda Premium Dresses Vol 1. A high-quality, beautifully designed dresses from Vero Moda. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b42d",
+        "brand": "Vero Moda",
+        "price": 2450,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Vero%20Moda%20Premium%20Dresses%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Vero%20Moda%20Premium%20Dresses%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Crimson Red",
+            "stock": 91,
+            "_id": "6a5671958c99175e05e4b430"
+          },
+          {
+            "size": "S",
+            "color": "Champagne Gold",
+            "stock": 54,
+            "_id": "6a5671958c99175e05e4b431"
+          },
+          {
+            "size": "M",
+            "color": "Lavender Violet",
+            "stock": 66,
+            "_id": "6a5671958c99175e05e4b432"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 65,
+            "_id": "6a5671958c99175e05e4b433"
+          },
+          {
+            "size": "XL",
+            "color": "Champagne Gold",
+            "stock": 52,
+            "_id": "6a5671958c99175e05e4b434"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 59,
+        "productId": "AB-B3150CD34023",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.685Z",
+        "updatedAt": "2026-07-14T17:27:49.685Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b435",
+        "name": "Zara Premium Dresses Vol 2",
+        "description": "Elevate your standard with the Zara Premium Dresses Vol 2. A high-quality, beautifully designed dresses from Zara. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b42d",
+        "brand": "Zara",
+        "price": 2453,
+        "discountPrice": 1962,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Zara%20Premium%20Dresses%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Zara%20Premium%20Dresses%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Lavender Violet",
+            "stock": 95,
+            "_id": "6a5671958c99175e05e4b436"
+          },
+          {
+            "size": "S",
+            "color": "Lavender Violet",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b437"
+          },
+          {
+            "size": "M",
+            "color": "Champagne Gold",
+            "stock": 62,
+            "_id": "6a5671958c99175e05e4b438"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 99,
+            "_id": "6a5671958c99175e05e4b439"
+          },
+          {
+            "size": "XL",
+            "color": "Champagne Gold",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b43a"
+          }
+        ],
+        "avgRating": 4.3,
+        "numReviews": 43,
+        "productId": "AB-02F5D2C17BE7",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.685Z",
+        "updatedAt": "2026-07-14T17:27:49.685Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b43b",
+        "name": "H&M Premium Dresses Vol 3",
+        "description": "Elevate your standard with the H&M Premium Dresses Vol 3. A high-quality, beautifully designed dresses from H&M. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b42d",
+        "brand": "H&M",
+        "price": 3296,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=H%26M%20Premium%20Dresses%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=H%26M%20Premium%20Dresses%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Lavender Violet",
+            "stock": 22,
+            "_id": "6a5671958c99175e05e4b43c"
+          },
+          {
+            "size": "S",
+            "color": "Midnight Black",
+            "stock": 91,
+            "_id": "6a5671958c99175e05e4b43d"
+          },
+          {
+            "size": "M",
+            "color": "Blush Pink",
+            "stock": 97,
+            "_id": "6a5671958c99175e05e4b43e"
+          },
+          {
+            "size": "L",
+            "color": "Champagne Gold",
+            "stock": 67,
+            "_id": "6a5671958c99175e05e4b43f"
+          },
+          {
+            "size": "XL",
+            "color": "Midnight Black",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b440"
+          }
+        ],
+        "avgRating": 4.1,
+        "numReviews": 82,
+        "productId": "AB-FA977CAAF925",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.685Z",
+        "updatedAt": "2026-07-14T17:27:49.685Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b441",
+        "name": "Zara Premium Dresses Vol 4",
+        "description": "Elevate your standard with the Zara Premium Dresses Vol 4. A high-quality, beautifully designed dresses from Zara. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b42d",
+        "brand": "Zara",
+        "price": 4965,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Zara%20Premium%20Dresses%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Zara%20Premium%20Dresses%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Midnight Black",
+            "stock": 46,
+            "_id": "6a5671958c99175e05e4b442"
+          },
+          {
+            "size": "S",
+            "color": "Crimson Red",
+            "stock": 64,
+            "_id": "6a5671958c99175e05e4b443"
+          },
+          {
+            "size": "M",
+            "color": "Champagne Gold",
+            "stock": 76,
+            "_id": "6a5671958c99175e05e4b444"
+          },
+          {
+            "size": "L",
+            "color": "Crimson Red",
+            "stock": 92,
+            "_id": "6a5671958c99175e05e4b445"
+          },
+          {
+            "size": "XL",
+            "color": "Champagne Gold",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b446"
+          }
+        ],
+        "avgRating": 4.4,
+        "numReviews": 74,
+        "productId": "AB-FFCDF4BD0175",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.686Z",
+        "updatedAt": "2026-07-14T17:27:49.686Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b447",
+        "name": "Vero Moda Premium Dresses Vol 5",
+        "description": "Elevate your standard with the Vero Moda Premium Dresses Vol 5. A high-quality, beautifully designed dresses from Vero Moda. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b42d",
+        "brand": "Vero Moda",
+        "price": 980,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Vero%20Moda%20Premium%20Dresses%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Vero%20Moda%20Premium%20Dresses%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Blush Pink",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b448"
+          },
+          {
+            "size": "S",
+            "color": "Champagne Gold",
+            "stock": 27,
+            "_id": "6a5671958c99175e05e4b449"
+          },
+          {
+            "size": "M",
+            "color": "Champagne Gold",
+            "stock": 83,
+            "_id": "6a5671958c99175e05e4b44a"
+          },
+          {
+            "size": "L",
+            "color": "Crimson Red",
+            "stock": 58,
+            "_id": "6a5671958c99175e05e4b44b"
+          },
+          {
+            "size": "XL",
+            "color": "Blush Pink",
+            "stock": 66,
+            "_id": "6a5671958c99175e05e4b44c"
+          }
+        ],
+        "avgRating": 3.8,
+        "numReviews": 65,
+        "productId": "AB-13743CBBBC67",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.686Z",
+        "updatedAt": "2026-07-14T17:27:49.686Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b450",
+        "name": "H&M Premium Ethnic Wear Vol 1",
+        "description": "Elevate your standard with the H&M Premium Ethnic Wear Vol 1. A high-quality, beautifully designed ethnic wear from H&M. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b44e",
+        "brand": "H&M",
+        "price": 516,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=H%26M%20Premium%20Ethnic%20Wear%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=H%26M%20Premium%20Ethnic%20Wear%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Lavender Violet",
+            "stock": 76,
+            "_id": "6a5671958c99175e05e4b451"
+          },
+          {
+            "size": "S",
+            "color": "Crimson Red",
+            "stock": 75,
+            "_id": "6a5671958c99175e05e4b452"
+          },
+          {
+            "size": "M",
+            "color": "Crimson Red",
+            "stock": 11,
+            "_id": "6a5671958c99175e05e4b453"
+          },
+          {
+            "size": "L",
+            "color": "Blush Pink",
+            "stock": 56,
+            "_id": "6a5671958c99175e05e4b454"
+          },
+          {
+            "size": "XL",
+            "color": "Lavender Violet",
+            "stock": 54,
+            "_id": "6a5671958c99175e05e4b455"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 93,
+        "productId": "AB-3BE6BFD19A10",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.695Z",
+        "updatedAt": "2026-07-14T17:27:49.695Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b456",
+        "name": "AuraBella Style Premium Ethnic Wear Vol 2",
+        "description": "Elevate your standard with the AuraBella Style Premium Ethnic Wear Vol 2. A high-quality, beautifully designed ethnic wear from AuraBella Style. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b44e",
+        "brand": "AuraBella Style",
+        "price": 4838,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Style%20Premium%20Ethnic%20Wear%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Style%20Premium%20Ethnic%20Wear%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Lavender Violet",
+            "stock": 30,
+            "_id": "6a5671958c99175e05e4b457"
+          },
+          {
+            "size": "S",
+            "color": "Crimson Red",
+            "stock": 35,
+            "_id": "6a5671958c99175e05e4b458"
+          },
+          {
+            "size": "M",
+            "color": "Blush Pink",
+            "stock": 43,
+            "_id": "6a5671958c99175e05e4b459"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 85,
+            "_id": "6a5671958c99175e05e4b45a"
+          },
+          {
+            "size": "XL",
+            "color": "Blush Pink",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b45b"
+          }
+        ],
+        "avgRating": 4.3,
+        "numReviews": 50,
+        "productId": "AB-D0D474C7CC37",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.695Z",
+        "updatedAt": "2026-07-14T17:27:49.695Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b45c",
+        "name": "Vero Moda Premium Ethnic Wear Vol 3",
+        "description": "Elevate your standard with the Vero Moda Premium Ethnic Wear Vol 3. A high-quality, beautifully designed ethnic wear from Vero Moda. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b44e",
+        "brand": "Vero Moda",
+        "price": 3548,
+        "discountPrice": 2838,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Vero%20Moda%20Premium%20Ethnic%20Wear%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Vero%20Moda%20Premium%20Ethnic%20Wear%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Champagne Gold",
+            "stock": 75,
+            "_id": "6a5671958c99175e05e4b45d"
+          },
+          {
+            "size": "S",
+            "color": "Crimson Red",
+            "stock": 86,
+            "_id": "6a5671958c99175e05e4b45e"
+          },
+          {
+            "size": "M",
+            "color": "Lavender Violet",
+            "stock": 84,
+            "_id": "6a5671958c99175e05e4b45f"
+          },
+          {
+            "size": "L",
+            "color": "Lavender Violet",
+            "stock": 67,
+            "_id": "6a5671958c99175e05e4b460"
+          },
+          {
+            "size": "XL",
+            "color": "Lavender Violet",
+            "stock": 72,
+            "_id": "6a5671958c99175e05e4b461"
+          }
+        ],
+        "avgRating": 4.4,
+        "numReviews": 118,
+        "productId": "AB-3C1F74B677DD",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.695Z",
+        "updatedAt": "2026-07-14T17:27:49.695Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b462",
+        "name": "Vero Moda Premium Ethnic Wear Vol 4",
+        "description": "Elevate your standard with the Vero Moda Premium Ethnic Wear Vol 4. A high-quality, beautifully designed ethnic wear from Vero Moda. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b44e",
+        "brand": "Vero Moda",
+        "price": 4029,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Vero%20Moda%20Premium%20Ethnic%20Wear%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Vero%20Moda%20Premium%20Ethnic%20Wear%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Crimson Red",
+            "stock": 94,
+            "_id": "6a5671958c99175e05e4b463"
+          },
+          {
+            "size": "S",
+            "color": "Champagne Gold",
+            "stock": 56,
+            "_id": "6a5671958c99175e05e4b464"
+          },
+          {
+            "size": "M",
+            "color": "Lavender Violet",
+            "stock": 63,
+            "_id": "6a5671958c99175e05e4b465"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 86,
+            "_id": "6a5671958c99175e05e4b466"
+          },
+          {
+            "size": "XL",
+            "color": "Champagne Gold",
+            "stock": 90,
+            "_id": "6a5671958c99175e05e4b467"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 115,
+        "productId": "AB-8A7DE8F5B630",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.695Z",
+        "updatedAt": "2026-07-14T17:27:49.695Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b468",
+        "name": "Zara Premium Ethnic Wear Vol 5",
+        "description": "Elevate your standard with the Zara Premium Ethnic Wear Vol 5. A high-quality, beautifully designed ethnic wear from Zara. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b44e",
+        "brand": "Zara",
+        "price": 889,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Zara%20Premium%20Ethnic%20Wear%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Zara%20Premium%20Ethnic%20Wear%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Champagne Gold",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b469"
+          },
+          {
+            "size": "S",
+            "color": "Blush Pink",
+            "stock": 11,
+            "_id": "6a5671958c99175e05e4b46a"
+          },
+          {
+            "size": "M",
+            "color": "Blush Pink",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b46b"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 80,
+            "_id": "6a5671958c99175e05e4b46c"
+          },
+          {
+            "size": "XL",
+            "color": "Crimson Red",
+            "stock": 94,
+            "_id": "6a5671958c99175e05e4b46d"
+          }
+        ],
+        "avgRating": 4.1,
+        "numReviews": 112,
+        "productId": "AB-068948A2760C",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.695Z",
+        "updatedAt": "2026-07-14T17:27:49.695Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b471",
+        "name": "Zara Premium Bottoms Vol 1",
+        "description": "Elevate your standard with the Zara Premium Bottoms Vol 1. A high-quality, beautifully designed bottoms from Zara. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b46f",
+        "brand": "Zara",
+        "price": 2361,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Zara%20Premium%20Bottoms%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Zara%20Premium%20Bottoms%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Lavender Violet",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b472"
+          },
+          {
+            "size": "S",
+            "color": "Crimson Red",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b473"
+          },
+          {
+            "size": "M",
+            "color": "Lavender Violet",
+            "stock": 89,
+            "_id": "6a5671958c99175e05e4b474"
+          },
+          {
+            "size": "L",
+            "color": "Crimson Red",
+            "stock": 89,
+            "_id": "6a5671958c99175e05e4b475"
+          },
+          {
+            "size": "XL",
+            "color": "Crimson Red",
+            "stock": 75,
+            "_id": "6a5671958c99175e05e4b476"
+          }
+        ],
+        "avgRating": 5,
+        "numReviews": 115,
+        "productId": "AB-B20DD44C8CDC",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.703Z",
+        "updatedAt": "2026-07-14T17:31:02.298Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b477",
+        "name": "H&M Premium Bottoms Vol 2",
+        "description": "Elevate your standard with the H&M Premium Bottoms Vol 2. A high-quality, beautifully designed bottoms from H&M. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b46f",
+        "brand": "H&M",
+        "price": 3292,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=H%26M%20Premium%20Bottoms%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=H%26M%20Premium%20Bottoms%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Midnight Black",
+            "stock": 36,
+            "_id": "6a5671958c99175e05e4b478"
+          },
+          {
+            "size": "S",
+            "color": "Blush Pink",
+            "stock": 75,
+            "_id": "6a5671958c99175e05e4b479"
+          },
+          {
+            "size": "M",
+            "color": "Midnight Black",
+            "stock": 82,
+            "_id": "6a5671958c99175e05e4b47a"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 25,
+            "_id": "6a5671958c99175e05e4b47b"
+          },
+          {
+            "size": "XL",
+            "color": "Crimson Red",
+            "stock": 100,
+            "_id": "6a5671958c99175e05e4b47c"
+          }
+        ],
+        "avgRating": 5,
+        "numReviews": 25,
+        "productId": "AB-FD7101E0C446",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.703Z",
+        "updatedAt": "2026-07-14T17:27:49.703Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b47d",
+        "name": "Mango Premium Bottoms Vol 3",
+        "description": "Elevate your standard with the Mango Premium Bottoms Vol 3. A high-quality, beautifully designed bottoms from Mango. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b46f",
+        "brand": "Mango",
+        "price": 1070,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Mango%20Premium%20Bottoms%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Mango%20Premium%20Bottoms%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Crimson Red",
+            "stock": 78,
+            "_id": "6a5671958c99175e05e4b47e"
+          },
+          {
+            "size": "S",
+            "color": "Lavender Violet",
+            "stock": 100,
+            "_id": "6a5671958c99175e05e4b47f"
+          },
+          {
+            "size": "M",
+            "color": "Lavender Violet",
+            "stock": 75,
+            "_id": "6a5671958c99175e05e4b480"
+          },
+          {
+            "size": "L",
+            "color": "Midnight Black",
+            "stock": 38,
+            "_id": "6a5671958c99175e05e4b481"
+          },
+          {
+            "size": "XL",
+            "color": "Crimson Red",
+            "stock": 29,
+            "_id": "6a5671958c99175e05e4b482"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 90,
+        "productId": "AB-931C83C9FFB9",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.703Z",
+        "updatedAt": "2026-07-14T17:27:49.703Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b483",
+        "name": "Zara Premium Bottoms Vol 4",
+        "description": "Elevate your standard with the Zara Premium Bottoms Vol 4. A high-quality, beautifully designed bottoms from Zara. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b46f",
+        "brand": "Zara",
+        "price": 2454,
+        "discountPrice": 1963,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Zara%20Premium%20Bottoms%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Zara%20Premium%20Bottoms%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Lavender Violet",
+            "stock": 57,
+            "_id": "6a5671958c99175e05e4b484"
+          },
+          {
+            "size": "S",
+            "color": "Midnight Black",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b485"
+          },
+          {
+            "size": "M",
+            "color": "Blush Pink",
+            "stock": 23,
+            "_id": "6a5671958c99175e05e4b486"
+          },
+          {
+            "size": "L",
+            "color": "Lavender Violet",
+            "stock": 94,
+            "_id": "6a5671958c99175e05e4b487"
+          },
+          {
+            "size": "XL",
+            "color": "Blush Pink",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b488"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 39,
+        "productId": "AB-CF0E117AC9AA",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.703Z",
+        "updatedAt": "2026-07-14T17:27:49.703Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b489",
+        "name": "H&M Premium Bottoms Vol 5",
+        "description": "Elevate your standard with the H&M Premium Bottoms Vol 5. A high-quality, beautifully designed bottoms from H&M. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b40a",
+        "subCategory": "6a5671958c99175e05e4b46f",
+        "brand": "H&M",
+        "price": 2399,
+        "discountPrice": 1919,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=H%26M%20Premium%20Bottoms%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=H%26M%20Premium%20Bottoms%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "XS",
+            "color": "Midnight Black",
+            "stock": 30,
+            "_id": "6a5671958c99175e05e4b48a"
+          },
+          {
+            "size": "S",
+            "color": "Midnight Black",
+            "stock": 65,
+            "_id": "6a5671958c99175e05e4b48b"
+          },
+          {
+            "size": "M",
+            "color": "Blush Pink",
+            "stock": 88,
+            "_id": "6a5671958c99175e05e4b48c"
+          },
+          {
+            "size": "L",
+            "color": "Blush Pink",
+            "stock": 60,
+            "_id": "6a5671958c99175e05e4b48d"
+          },
+          {
+            "size": "XL",
+            "color": "Blush Pink",
+            "stock": 98,
+            "_id": "6a5671958c99175e05e4b48e"
+          }
+        ],
+        "avgRating": 3.7,
+        "numReviews": 13,
+        "productId": "AB-B2519326F276",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.703Z",
+        "updatedAt": "2026-07-14T17:27:49.703Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b494",
+        "name": "Nike Premium Heels Vol 1",
+        "description": "Elevate your standard with the Nike Premium Heels Vol 1. A high-quality, beautifully designed heels from Nike. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b492",
+        "brand": "Nike",
+        "price": 4776,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Nike%20Premium%20Heels%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Nike%20Premium%20Heels%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Crimson Red",
+            "stock": 55,
+            "_id": "6a5671958c99175e05e4b495"
+          },
+          {
+            "size": "37",
+            "color": "Blush Pink",
+            "stock": 12,
+            "_id": "6a5671958c99175e05e4b496"
+          },
+          {
+            "size": "38",
+            "color": "Crimson Red",
+            "stock": 50,
+            "_id": "6a5671958c99175e05e4b497"
+          },
+          {
+            "size": "39",
+            "color": "Crimson Red",
+            "stock": 24,
+            "_id": "6a5671958c99175e05e4b498"
+          },
+          {
+            "size": "40",
+            "color": "Champagne Gold",
+            "stock": 47,
+            "_id": "6a5671958c99175e05e4b499"
+          }
+        ],
+        "avgRating": 4.8,
+        "numReviews": 50,
+        "productId": "AB-81C9307FEFA9",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.713Z",
+        "updatedAt": "2026-07-14T17:27:49.713Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b49a",
+        "name": "AuraBella Step Premium Heels Vol 2",
+        "description": "Elevate your standard with the AuraBella Step Premium Heels Vol 2. A high-quality, beautifully designed heels from AuraBella Step. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b492",
+        "brand": "AuraBella Step",
+        "price": 4745,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Step%20Premium%20Heels%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Step%20Premium%20Heels%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Lavender Violet",
+            "stock": 17,
+            "_id": "6a5671958c99175e05e4b49b"
+          },
+          {
+            "size": "37",
+            "color": "Midnight Black",
+            "stock": 71,
+            "_id": "6a5671958c99175e05e4b49c"
+          },
+          {
+            "size": "38",
+            "color": "Blush Pink",
+            "stock": 32,
+            "_id": "6a5671958c99175e05e4b49d"
+          },
+          {
+            "size": "39",
+            "color": "Champagne Gold",
+            "stock": 83,
+            "_id": "6a5671958c99175e05e4b49e"
+          },
+          {
+            "size": "40",
+            "color": "Crimson Red",
+            "stock": 82,
+            "_id": "6a5671958c99175e05e4b49f"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 83,
+        "productId": "AB-69E532B30443",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.713Z",
+        "updatedAt": "2026-07-14T17:27:49.713Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4a0",
+        "name": "Steve Madden Premium Heels Vol 3",
+        "description": "Elevate your standard with the Steve Madden Premium Heels Vol 3. A high-quality, beautifully designed heels from Steve Madden. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b492",
+        "brand": "Steve Madden",
+        "price": 4232,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Steve%20Madden%20Premium%20Heels%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Steve%20Madden%20Premium%20Heels%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Lavender Violet",
+            "stock": 71,
+            "_id": "6a5671958c99175e05e4b4a1"
+          },
+          {
+            "size": "37",
+            "color": "Champagne Gold",
+            "stock": 77,
+            "_id": "6a5671958c99175e05e4b4a2"
+          },
+          {
+            "size": "38",
+            "color": "Lavender Violet",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b4a3"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 71,
+            "_id": "6a5671958c99175e05e4b4a4"
+          },
+          {
+            "size": "40",
+            "color": "Lavender Violet",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b4a5"
+          }
+        ],
+        "avgRating": 4.7,
+        "numReviews": 82,
+        "productId": "AB-C465493B803F",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.713Z",
+        "updatedAt": "2026-07-14T17:27:49.713Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4a6",
+        "name": "Adidas Premium Heels Vol 4",
+        "description": "Elevate your standard with the Adidas Premium Heels Vol 4. A high-quality, beautifully designed heels from Adidas. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b492",
+        "brand": "Adidas",
+        "price": 3395,
+        "discountPrice": 2716,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Adidas%20Premium%20Heels%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Adidas%20Premium%20Heels%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 83,
+            "_id": "6a5671958c99175e05e4b4a7"
+          },
+          {
+            "size": "37",
+            "color": "Champagne Gold",
+            "stock": 40,
+            "_id": "6a5671958c99175e05e4b4a8"
+          },
+          {
+            "size": "38",
+            "color": "Crimson Red",
+            "stock": 53,
+            "_id": "6a5671958c99175e05e4b4a9"
+          },
+          {
+            "size": "39",
+            "color": "Champagne Gold",
+            "stock": 67,
+            "_id": "6a5671958c99175e05e4b4aa"
+          },
+          {
+            "size": "40",
+            "color": "Blush Pink",
+            "stock": 64,
+            "_id": "6a5671958c99175e05e4b4ab"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 108,
+        "productId": "AB-CB924242B7A9",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.713Z",
+        "updatedAt": "2026-07-14T17:27:49.713Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4ac",
+        "name": "Aldo Premium Heels Vol 5",
+        "description": "Elevate your standard with the Aldo Premium Heels Vol 5. A high-quality, beautifully designed heels from Aldo. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b492",
+        "brand": "Aldo",
+        "price": 2291,
+        "discountPrice": 1832,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Aldo%20Premium%20Heels%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Aldo%20Premium%20Heels%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 19,
+            "_id": "6a5671958c99175e05e4b4ad"
+          },
+          {
+            "size": "37",
+            "color": "Crimson Red",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b4ae"
+          },
+          {
+            "size": "38",
+            "color": "Champagne Gold",
+            "stock": 79,
+            "_id": "6a5671958c99175e05e4b4af"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b4b0"
+          },
+          {
+            "size": "40",
+            "color": "Champagne Gold",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b4b1"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 47,
+        "productId": "AB-C2C4D7B55FD0",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.713Z",
+        "updatedAt": "2026-07-14T17:27:49.713Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4b5",
+        "name": "Aldo Premium Flats Vol 1",
+        "description": "Elevate your standard with the Aldo Premium Flats Vol 1. A high-quality, beautifully designed flats from Aldo. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4b3",
+        "brand": "Aldo",
+        "price": 648,
+        "discountPrice": 518,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Aldo%20Premium%20Flats%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Aldo%20Premium%20Flats%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Champagne Gold",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b4b6"
+          },
+          {
+            "size": "37",
+            "color": "Lavender Violet",
+            "stock": 22,
+            "_id": "6a5671958c99175e05e4b4b7"
+          },
+          {
+            "size": "38",
+            "color": "Crimson Red",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b4b8"
+          },
+          {
+            "size": "39",
+            "color": "Midnight Black",
+            "stock": 30,
+            "_id": "6a5671958c99175e05e4b4b9"
+          },
+          {
+            "size": "40",
+            "color": "Lavender Violet",
+            "stock": 40,
+            "_id": "6a5671958c99175e05e4b4ba"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 78,
+        "productId": "AB-5F291EDF6979",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.722Z",
+        "updatedAt": "2026-07-14T17:27:49.722Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4bb",
+        "name": "AuraBella Step Premium Flats Vol 2",
+        "description": "Elevate your standard with the AuraBella Step Premium Flats Vol 2. A high-quality, beautifully designed flats from AuraBella Step. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4b3",
+        "brand": "AuraBella Step",
+        "price": 3951,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Step%20Premium%20Flats%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Step%20Premium%20Flats%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 70,
+            "_id": "6a5671958c99175e05e4b4bc"
+          },
+          {
+            "size": "37",
+            "color": "Champagne Gold",
+            "stock": 47,
+            "_id": "6a5671958c99175e05e4b4bd"
+          },
+          {
+            "size": "38",
+            "color": "Midnight Black",
+            "stock": 76,
+            "_id": "6a5671958c99175e05e4b4be"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 37,
+            "_id": "6a5671958c99175e05e4b4bf"
+          },
+          {
+            "size": "40",
+            "color": "Midnight Black",
+            "stock": 19,
+            "_id": "6a5671958c99175e05e4b4c0"
+          }
+        ],
+        "avgRating": 4.3,
+        "numReviews": 53,
+        "productId": "AB-FB9BDE03A9FF",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.722Z",
+        "updatedAt": "2026-07-14T17:27:49.722Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4c1",
+        "name": "Steve Madden Premium Flats Vol 3",
+        "description": "Elevate your standard with the Steve Madden Premium Flats Vol 3. A high-quality, beautifully designed flats from Steve Madden. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4b3",
+        "brand": "Steve Madden",
+        "price": 2253,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Steve%20Madden%20Premium%20Flats%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Steve%20Madden%20Premium%20Flats%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b4c2"
+          },
+          {
+            "size": "37",
+            "color": "Crimson Red",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b4c3"
+          },
+          {
+            "size": "38",
+            "color": "Blush Pink",
+            "stock": 45,
+            "_id": "6a5671958c99175e05e4b4c4"
+          },
+          {
+            "size": "39",
+            "color": "Champagne Gold",
+            "stock": 93,
+            "_id": "6a5671958c99175e05e4b4c5"
+          },
+          {
+            "size": "40",
+            "color": "Crimson Red",
+            "stock": 90,
+            "_id": "6a5671958c99175e05e4b4c6"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 114,
+        "productId": "AB-787525310084",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.722Z",
+        "updatedAt": "2026-07-14T17:27:49.722Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4c7",
+        "name": "Steve Madden Premium Flats Vol 4",
+        "description": "Elevate your standard with the Steve Madden Premium Flats Vol 4. A high-quality, beautifully designed flats from Steve Madden. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4b3",
+        "brand": "Steve Madden",
+        "price": 4200,
+        "discountPrice": 3360,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Steve%20Madden%20Premium%20Flats%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Steve%20Madden%20Premium%20Flats%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Champagne Gold",
+            "stock": 50,
+            "_id": "6a5671958c99175e05e4b4c8"
+          },
+          {
+            "size": "37",
+            "color": "Champagne Gold",
+            "stock": 94,
+            "_id": "6a5671958c99175e05e4b4c9"
+          },
+          {
+            "size": "38",
+            "color": "Crimson Red",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b4ca"
+          },
+          {
+            "size": "39",
+            "color": "Crimson Red",
+            "stock": 92,
+            "_id": "6a5671958c99175e05e4b4cb"
+          },
+          {
+            "size": "40",
+            "color": "Champagne Gold",
+            "stock": 98,
+            "_id": "6a5671958c99175e05e4b4cc"
+          }
+        ],
+        "avgRating": 4.7,
+        "numReviews": 67,
+        "productId": "AB-B0702BD92AF9",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.722Z",
+        "updatedAt": "2026-07-14T17:27:49.722Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4cd",
+        "name": "Adidas Premium Flats Vol 5",
+        "description": "Elevate your standard with the Adidas Premium Flats Vol 5. A high-quality, beautifully designed flats from Adidas. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4b3",
+        "brand": "Adidas",
+        "price": 2197,
+        "discountPrice": 1757,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Adidas%20Premium%20Flats%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Adidas%20Premium%20Flats%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 74,
+            "_id": "6a5671958c99175e05e4b4ce"
+          },
+          {
+            "size": "37",
+            "color": "Crimson Red",
+            "stock": 42,
+            "_id": "6a5671958c99175e05e4b4cf"
+          },
+          {
+            "size": "38",
+            "color": "Champagne Gold",
+            "stock": 27,
+            "_id": "6a5671958c99175e05e4b4d0"
+          },
+          {
+            "size": "39",
+            "color": "Blush Pink",
+            "stock": 69,
+            "_id": "6a5671958c99175e05e4b4d1"
+          },
+          {
+            "size": "40",
+            "color": "Lavender Violet",
+            "stock": 56,
+            "_id": "6a5671958c99175e05e4b4d2"
+          }
+        ],
+        "avgRating": 3.8,
+        "numReviews": 78,
+        "productId": "AB-CC6573160790",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.722Z",
+        "updatedAt": "2026-07-14T17:27:49.722Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4d6",
+        "name": "Adidas Premium Sneakers Vol 1",
+        "description": "Elevate your standard with the Adidas Premium Sneakers Vol 1. A high-quality, beautifully designed sneakers from Adidas. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4d4",
+        "brand": "Adidas",
+        "price": 3039,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Adidas%20Premium%20Sneakers%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Adidas%20Premium%20Sneakers%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Champagne Gold",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b4d7"
+          },
+          {
+            "size": "37",
+            "color": "Champagne Gold",
+            "stock": 38,
+            "_id": "6a5671958c99175e05e4b4d8"
+          },
+          {
+            "size": "38",
+            "color": "Crimson Red",
+            "stock": 29,
+            "_id": "6a5671958c99175e05e4b4d9"
+          },
+          {
+            "size": "39",
+            "color": "Crimson Red",
+            "stock": 93,
+            "_id": "6a5671958c99175e05e4b4da"
+          },
+          {
+            "size": "40",
+            "color": "Midnight Black",
+            "stock": 98,
+            "_id": "6a5671958c99175e05e4b4db"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 28,
+        "productId": "AB-218E1757374A",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.732Z",
+        "updatedAt": "2026-07-14T17:27:49.732Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4dc",
+        "name": "Adidas Premium Sneakers Vol 2",
+        "description": "Elevate your standard with the Adidas Premium Sneakers Vol 2. A high-quality, beautifully designed sneakers from Adidas. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4d4",
+        "brand": "Adidas",
+        "price": 837,
+        "discountPrice": 669,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Adidas%20Premium%20Sneakers%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Adidas%20Premium%20Sneakers%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Champagne Gold",
+            "stock": 69,
+            "_id": "6a5671958c99175e05e4b4dd"
+          },
+          {
+            "size": "37",
+            "color": "Crimson Red",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b4de"
+          },
+          {
+            "size": "38",
+            "color": "Blush Pink",
+            "stock": 71,
+            "_id": "6a5671958c99175e05e4b4df"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 58,
+            "_id": "6a5671958c99175e05e4b4e0"
+          },
+          {
+            "size": "40",
+            "color": "Champagne Gold",
+            "stock": 67,
+            "_id": "6a5671958c99175e05e4b4e1"
+          }
+        ],
+        "avgRating": 5,
+        "numReviews": 114,
+        "productId": "AB-43DC50EE1E80",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.732Z",
+        "updatedAt": "2026-07-14T17:31:02.314Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4e2",
+        "name": "Nike Premium Sneakers Vol 3",
+        "description": "Elevate your standard with the Nike Premium Sneakers Vol 3. A high-quality, beautifully designed sneakers from Nike. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4d4",
+        "brand": "Nike",
+        "price": 1246,
+        "discountPrice": 996,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Nike%20Premium%20Sneakers%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Nike%20Premium%20Sneakers%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Midnight Black",
+            "stock": 98,
+            "_id": "6a5671958c99175e05e4b4e3"
+          },
+          {
+            "size": "37",
+            "color": "Midnight Black",
+            "stock": 88,
+            "_id": "6a5671958c99175e05e4b4e4"
+          },
+          {
+            "size": "38",
+            "color": "Champagne Gold",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b4e5"
+          },
+          {
+            "size": "39",
+            "color": "Midnight Black",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b4e6"
+          },
+          {
+            "size": "40",
+            "color": "Crimson Red",
+            "stock": 78,
+            "_id": "6a5671958c99175e05e4b4e7"
+          }
+        ],
+        "avgRating": 4.7,
+        "numReviews": 94,
+        "productId": "AB-244F9678F254",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.732Z",
+        "updatedAt": "2026-07-14T17:27:49.732Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4e8",
+        "name": "Steve Madden Premium Sneakers Vol 4",
+        "description": "Elevate your standard with the Steve Madden Premium Sneakers Vol 4. A high-quality, beautifully designed sneakers from Steve Madden. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4d4",
+        "brand": "Steve Madden",
+        "price": 2599,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Steve%20Madden%20Premium%20Sneakers%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Steve%20Madden%20Premium%20Sneakers%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Champagne Gold",
+            "stock": 95,
+            "_id": "6a5671958c99175e05e4b4e9"
+          },
+          {
+            "size": "37",
+            "color": "Blush Pink",
+            "stock": 42,
+            "_id": "6a5671958c99175e05e4b4ea"
+          },
+          {
+            "size": "38",
+            "color": "Midnight Black",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b4eb"
+          },
+          {
+            "size": "39",
+            "color": "Crimson Red",
+            "stock": 43,
+            "_id": "6a5671958c99175e05e4b4ec"
+          },
+          {
+            "size": "40",
+            "color": "Crimson Red",
+            "stock": 51,
+            "_id": "6a5671958c99175e05e4b4ed"
+          }
+        ],
+        "avgRating": 4.3,
+        "numReviews": 99,
+        "productId": "AB-BCD7F15DE28E",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.732Z",
+        "updatedAt": "2026-07-14T17:27:49.732Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4ee",
+        "name": "Adidas Premium Sneakers Vol 5",
+        "description": "Elevate your standard with the Adidas Premium Sneakers Vol 5. A high-quality, beautifully designed sneakers from Adidas. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4d4",
+        "brand": "Adidas",
+        "price": 4765,
+        "discountPrice": 3812,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Adidas%20Premium%20Sneakers%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Adidas%20Premium%20Sneakers%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b4ef"
+          },
+          {
+            "size": "37",
+            "color": "Crimson Red",
+            "stock": 55,
+            "_id": "6a5671958c99175e05e4b4f0"
+          },
+          {
+            "size": "38",
+            "color": "Champagne Gold",
+            "stock": 45,
+            "_id": "6a5671958c99175e05e4b4f1"
+          },
+          {
+            "size": "39",
+            "color": "Champagne Gold",
+            "stock": 19,
+            "_id": "6a5671958c99175e05e4b4f2"
+          },
+          {
+            "size": "40",
+            "color": "Champagne Gold",
+            "stock": 97,
+            "_id": "6a5671958c99175e05e4b4f3"
+          }
+        ],
+        "avgRating": 5,
+        "numReviews": 46,
+        "productId": "AB-767AF423D74D",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.733Z",
+        "updatedAt": "2026-07-14T17:27:49.733Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4f7",
+        "name": "Nike Premium Sandals Vol 1",
+        "description": "Elevate your standard with the Nike Premium Sandals Vol 1. A high-quality, beautifully designed sandals from Nike. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4f5",
+        "brand": "Nike",
+        "price": 3759,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Nike%20Premium%20Sandals%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Nike%20Premium%20Sandals%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Champagne Gold",
+            "stock": 91,
+            "_id": "6a5671958c99175e05e4b4f8"
+          },
+          {
+            "size": "37",
+            "color": "Champagne Gold",
+            "stock": 61,
+            "_id": "6a5671958c99175e05e4b4f9"
+          },
+          {
+            "size": "38",
+            "color": "Blush Pink",
+            "stock": 79,
+            "_id": "6a5671958c99175e05e4b4fa"
+          },
+          {
+            "size": "39",
+            "color": "Crimson Red",
+            "stock": 22,
+            "_id": "6a5671958c99175e05e4b4fb"
+          },
+          {
+            "size": "40",
+            "color": "Midnight Black",
+            "stock": 99,
+            "_id": "6a5671958c99175e05e4b4fc"
+          }
+        ],
+        "avgRating": 4.4,
+        "numReviews": 6,
+        "productId": "AB-A9636A02CF91",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.741Z",
+        "updatedAt": "2026-07-14T17:27:49.741Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b4fd",
+        "name": "Aldo Premium Sandals Vol 2",
+        "description": "Elevate your standard with the Aldo Premium Sandals Vol 2. A high-quality, beautifully designed sandals from Aldo. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4f5",
+        "brand": "Aldo",
+        "price": 1381,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Aldo%20Premium%20Sandals%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Aldo%20Premium%20Sandals%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Blush Pink",
+            "stock": 11,
+            "_id": "6a5671958c99175e05e4b4fe"
+          },
+          {
+            "size": "37",
+            "color": "Midnight Black",
+            "stock": 89,
+            "_id": "6a5671958c99175e05e4b4ff"
+          },
+          {
+            "size": "38",
+            "color": "Blush Pink",
+            "stock": 85,
+            "_id": "6a5671958c99175e05e4b500"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 34,
+            "_id": "6a5671958c99175e05e4b501"
+          },
+          {
+            "size": "40",
+            "color": "Lavender Violet",
+            "stock": 46,
+            "_id": "6a5671958c99175e05e4b502"
+          }
+        ],
+        "avgRating": 4.7,
+        "numReviews": 71,
+        "productId": "AB-A42E84879809",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.742Z",
+        "updatedAt": "2026-07-14T17:27:49.742Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b503",
+        "name": "Steve Madden Premium Sandals Vol 3",
+        "description": "Elevate your standard with the Steve Madden Premium Sandals Vol 3. A high-quality, beautifully designed sandals from Steve Madden. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4f5",
+        "brand": "Steve Madden",
+        "price": 2334,
+        "discountPrice": 1867,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Steve%20Madden%20Premium%20Sandals%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Steve%20Madden%20Premium%20Sandals%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Lavender Violet",
+            "stock": 55,
+            "_id": "6a5671958c99175e05e4b504"
+          },
+          {
+            "size": "37",
+            "color": "Lavender Violet",
+            "stock": 72,
+            "_id": "6a5671958c99175e05e4b505"
+          },
+          {
+            "size": "38",
+            "color": "Crimson Red",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b506"
+          },
+          {
+            "size": "39",
+            "color": "Champagne Gold",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b507"
+          },
+          {
+            "size": "40",
+            "color": "Champagne Gold",
+            "stock": 35,
+            "_id": "6a5671958c99175e05e4b508"
+          }
+        ],
+        "avgRating": 4,
+        "numReviews": 29,
+        "productId": "AB-7483671A4A8F",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.742Z",
+        "updatedAt": "2026-07-14T17:27:49.742Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b509",
+        "name": "Nike Premium Sandals Vol 4",
+        "description": "Elevate your standard with the Nike Premium Sandals Vol 4. A high-quality, beautifully designed sandals from Nike. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4f5",
+        "brand": "Nike",
+        "price": 3416,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Nike%20Premium%20Sandals%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Nike%20Premium%20Sandals%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Midnight Black",
+            "stock": 38,
+            "_id": "6a5671958c99175e05e4b50a"
+          },
+          {
+            "size": "37",
+            "color": "Blush Pink",
+            "stock": 92,
+            "_id": "6a5671958c99175e05e4b50b"
+          },
+          {
+            "size": "38",
+            "color": "Blush Pink",
+            "stock": 18,
+            "_id": "6a5671958c99175e05e4b50c"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 33,
+            "_id": "6a5671958c99175e05e4b50d"
+          },
+          {
+            "size": "40",
+            "color": "Midnight Black",
+            "stock": 56,
+            "_id": "6a5671958c99175e05e4b50e"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 72,
+        "productId": "AB-12D303192584",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.742Z",
+        "updatedAt": "2026-07-14T17:27:49.742Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b50f",
+        "name": "AuraBella Step Premium Sandals Vol 5",
+        "description": "Elevate your standard with the AuraBella Step Premium Sandals Vol 5. A high-quality, beautifully designed sandals from AuraBella Step. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b490",
+        "subCategory": "6a5671958c99175e05e4b4f5",
+        "brand": "AuraBella Step",
+        "price": 2899,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Step%20Premium%20Sandals%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Step%20Premium%20Sandals%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "36",
+            "color": "Lavender Violet",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b510"
+          },
+          {
+            "size": "37",
+            "color": "Blush Pink",
+            "stock": 69,
+            "_id": "6a5671958c99175e05e4b511"
+          },
+          {
+            "size": "38",
+            "color": "Midnight Black",
+            "stock": 98,
+            "_id": "6a5671958c99175e05e4b512"
+          },
+          {
+            "size": "39",
+            "color": "Lavender Violet",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b513"
+          },
+          {
+            "size": "40",
+            "color": "Lavender Violet",
+            "stock": 77,
+            "_id": "6a5671958c99175e05e4b514"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 83,
+        "productId": "AB-ACE73526ECD1",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.742Z",
+        "updatedAt": "2026-07-14T17:27:49.742Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b51a",
+        "name": "Maybelline Premium Lipstick Vol 1",
+        "description": "Elevate your standard with the Maybelline Premium Lipstick Vol 1. A high-quality, beautifully designed lipstick from Maybelline. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b518",
+        "brand": "Maybelline",
+        "price": 4497,
+        "discountPrice": 3597,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Maybelline%20Premium%20Lipstick%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Maybelline%20Premium%20Lipstick%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 43,
+            "_id": "6a5671958c99175e05e4b51b"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 12,
+            "_id": "6a5671958c99175e05e4b51c"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 27,
+            "_id": "6a5671958c99175e05e4b51d"
+          }
+        ],
+        "avgRating": 3.5,
+        "numReviews": 81,
+        "productId": "AB-57631560B9AC",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.751Z",
+        "updatedAt": "2026-07-14T17:27:49.751Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b51e",
+        "name": "Maybelline Premium Lipstick Vol 2",
+        "description": "Elevate your standard with the Maybelline Premium Lipstick Vol 2. A high-quality, beautifully designed lipstick from Maybelline. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b518",
+        "brand": "Maybelline",
+        "price": 4435,
+        "discountPrice": 3548,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Maybelline%20Premium%20Lipstick%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Maybelline%20Premium%20Lipstick%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 23,
+            "_id": "6a5671958c99175e05e4b51f"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 29,
+            "_id": "6a5671958c99175e05e4b520"
+          },
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 31,
+            "_id": "6a5671958c99175e05e4b521"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 78,
+        "productId": "AB-A72EC522EBA2",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.752Z",
+        "updatedAt": "2026-07-14T17:27:49.752Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b522",
+        "name": "AuraBella Glow Premium Lipstick Vol 3",
+        "description": "Elevate your standard with the AuraBella Glow Premium Lipstick Vol 3. A high-quality, beautifully designed lipstick from AuraBella Glow. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b518",
+        "brand": "AuraBella Glow",
+        "price": 4794,
+        "discountPrice": 3835,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Glow%20Premium%20Lipstick%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Glow%20Premium%20Lipstick%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 8,
+            "_id": "6a5671958c99175e05e4b523"
+          },
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 35,
+            "_id": "6a5671958c99175e05e4b524"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 47,
+            "_id": "6a5671958c99175e05e4b525"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 61,
+        "productId": "AB-0AB41A90A962",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.752Z",
+        "updatedAt": "2026-07-14T17:27:49.752Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b526",
+        "name": "Estee Lauder Premium Lipstick Vol 4",
+        "description": "Elevate your standard with the Estee Lauder Premium Lipstick Vol 4. A high-quality, beautifully designed lipstick from Estee Lauder. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b518",
+        "brand": "Estee Lauder",
+        "price": 2993,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Estee%20Lauder%20Premium%20Lipstick%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Estee%20Lauder%20Premium%20Lipstick%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b527"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 25,
+            "_id": "6a5671958c99175e05e4b528"
+          },
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b529"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 112,
+        "productId": "AB-6BE601F8071E",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.752Z",
+        "updatedAt": "2026-07-14T17:27:49.752Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b52a",
+        "name": "Maybelline Premium Lipstick Vol 5",
+        "description": "Elevate your standard with the Maybelline Premium Lipstick Vol 5. A high-quality, beautifully designed lipstick from Maybelline. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b518",
+        "brand": "Maybelline",
+        "price": 1325,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Maybelline%20Premium%20Lipstick%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Maybelline%20Premium%20Lipstick%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 19,
+            "_id": "6a5671958c99175e05e4b52b"
+          },
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 10,
+            "_id": "6a5671958c99175e05e4b52c"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 50,
+            "_id": "6a5671958c99175e05e4b52d"
+          }
+        ],
+        "avgRating": 3.7,
+        "numReviews": 7,
+        "productId": "AB-E6BDE4D0187E",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.752Z",
+        "updatedAt": "2026-07-14T17:27:49.752Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b531",
+        "name": "MAC Premium Foundation Vol 1",
+        "description": "Elevate your standard with the MAC Premium Foundation Vol 1. A high-quality, beautifully designed foundation from MAC. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b52f",
+        "brand": "MAC",
+        "price": 4386,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=MAC%20Premium%20Foundation%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=MAC%20Premium%20Foundation%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 28,
+            "_id": "6a5671958c99175e05e4b532"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 39,
+            "_id": "6a5671958c99175e05e4b533"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 40,
+            "_id": "6a5671958c99175e05e4b534"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 23,
+        "productId": "AB-E0EE69A2692F",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.761Z",
+        "updatedAt": "2026-07-14T17:27:49.761Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b535",
+        "name": "Maybelline Premium Foundation Vol 2",
+        "description": "Elevate your standard with the Maybelline Premium Foundation Vol 2. A high-quality, beautifully designed foundation from Maybelline. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b52f",
+        "brand": "Maybelline",
+        "price": 3912,
+        "discountPrice": 3129,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Maybelline%20Premium%20Foundation%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Maybelline%20Premium%20Foundation%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 18,
+            "_id": "6a5671958c99175e05e4b536"
+          },
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 50,
+            "_id": "6a5671958c99175e05e4b537"
+          },
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 25,
+            "_id": "6a5671958c99175e05e4b538"
+          }
+        ],
+        "avgRating": 3.6,
+        "numReviews": 100,
+        "productId": "AB-FAFB917781B3",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.761Z",
+        "updatedAt": "2026-07-14T17:27:49.761Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b539",
+        "name": "L'Oreal Premium Foundation Vol 3",
+        "description": "Elevate your standard with the L'Oreal Premium Foundation Vol 3. A high-quality, beautifully designed foundation from L'Oreal. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b52f",
+        "brand": "L'Oreal",
+        "price": 2994,
+        "discountPrice": 2395,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=L'Oreal%20Premium%20Foundation%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=L'Oreal%20Premium%20Foundation%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b53a"
+          },
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 46,
+            "_id": "6a5671958c99175e05e4b53b"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 24,
+            "_id": "6a5671958c99175e05e4b53c"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 6,
+        "productId": "AB-6F3F268E1AF2",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.761Z",
+        "updatedAt": "2026-07-14T17:27:49.761Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b53d",
+        "name": "L'Oreal Premium Foundation Vol 4",
+        "description": "Elevate your standard with the L'Oreal Premium Foundation Vol 4. A high-quality, beautifully designed foundation from L'Oreal. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b52f",
+        "brand": "L'Oreal",
+        "price": 2392,
+        "discountPrice": 1913,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=L'Oreal%20Premium%20Foundation%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=L'Oreal%20Premium%20Foundation%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 45,
+            "_id": "6a5671958c99175e05e4b53e"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 18,
+            "_id": "6a5671958c99175e05e4b53f"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 14,
+            "_id": "6a5671958c99175e05e4b540"
+          }
+        ],
+        "avgRating": 4.8,
+        "numReviews": 14,
+        "productId": "AB-3E524537FF75",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.761Z",
+        "updatedAt": "2026-07-14T17:27:49.761Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b541",
+        "name": "MAC Premium Foundation Vol 5",
+        "description": "Elevate your standard with the MAC Premium Foundation Vol 5. A high-quality, beautifully designed foundation from MAC. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b52f",
+        "brand": "MAC",
+        "price": 564,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=MAC%20Premium%20Foundation%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=MAC%20Premium%20Foundation%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 10,
+            "_id": "6a5671958c99175e05e4b542"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 42,
+            "_id": "6a5671958c99175e05e4b543"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 5,
+            "_id": "6a5671958c99175e05e4b544"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 39,
+        "productId": "AB-03CC5192CAC1",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.761Z",
+        "updatedAt": "2026-07-14T17:27:49.761Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b548",
+        "name": "MAC Premium Eye Makeup Vol 1",
+        "description": "Elevate your standard with the MAC Premium Eye Makeup Vol 1. A high-quality, beautifully designed eye makeup from MAC. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b546",
+        "brand": "MAC",
+        "price": 543,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=MAC%20Premium%20Eye%20Makeup%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=MAC%20Premium%20Eye%20Makeup%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 49,
+            "_id": "6a5671958c99175e05e4b549"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 16,
+            "_id": "6a5671958c99175e05e4b54a"
+          },
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 15,
+            "_id": "6a5671958c99175e05e4b54b"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 56,
+        "productId": "AB-18CE586F39DA",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.768Z",
+        "updatedAt": "2026-07-14T17:27:49.768Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b54c",
+        "name": "AuraBella Glow Premium Eye Makeup Vol 2",
+        "description": "Elevate your standard with the AuraBella Glow Premium Eye Makeup Vol 2. A high-quality, beautifully designed eye makeup from AuraBella Glow. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b546",
+        "brand": "AuraBella Glow",
+        "price": 3579,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Glow%20Premium%20Eye%20Makeup%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Glow%20Premium%20Eye%20Makeup%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 13,
+            "_id": "6a5671958c99175e05e4b54d"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b54e"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 7,
+            "_id": "6a5671958c99175e05e4b54f"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 99,
+        "productId": "AB-34D963DA2D58",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.768Z",
+        "updatedAt": "2026-07-14T17:27:49.768Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b550",
+        "name": "AuraBella Glow Premium Eye Makeup Vol 3",
+        "description": "Elevate your standard with the AuraBella Glow Premium Eye Makeup Vol 3. A high-quality, beautifully designed eye makeup from AuraBella Glow. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b546",
+        "brand": "AuraBella Glow",
+        "price": 2800,
+        "discountPrice": 2240,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Glow%20Premium%20Eye%20Makeup%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Glow%20Premium%20Eye%20Makeup%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 24,
+            "_id": "6a5671958c99175e05e4b551"
+          },
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b552"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 47,
+            "_id": "6a5671958c99175e05e4b553"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 10,
+        "productId": "AB-23119F33E0D5",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.768Z",
+        "updatedAt": "2026-07-14T17:27:49.768Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b554",
+        "name": "L'Oreal Premium Eye Makeup Vol 4",
+        "description": "Elevate your standard with the L'Oreal Premium Eye Makeup Vol 4. A high-quality, beautifully designed eye makeup from L'Oreal. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b546",
+        "brand": "L'Oreal",
+        "price": 1843,
+        "discountPrice": 1474,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=L'Oreal%20Premium%20Eye%20Makeup%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=L'Oreal%20Premium%20Eye%20Makeup%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 34,
+            "_id": "6a5671958c99175e05e4b555"
+          },
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 8,
+            "_id": "6a5671958c99175e05e4b556"
+          },
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 14,
+            "_id": "6a5671958c99175e05e4b557"
+          }
+        ],
+        "avgRating": 3.7,
+        "numReviews": 37,
+        "productId": "AB-4801A96B53BE",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.768Z",
+        "updatedAt": "2026-07-14T17:27:49.768Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b558",
+        "name": "AuraBella Glow Premium Eye Makeup Vol 5",
+        "description": "Elevate your standard with the AuraBella Glow Premium Eye Makeup Vol 5. A high-quality, beautifully designed eye makeup from AuraBella Glow. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b546",
+        "brand": "AuraBella Glow",
+        "price": 2128,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Glow%20Premium%20Eye%20Makeup%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Glow%20Premium%20Eye%20Makeup%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 29,
+            "_id": "6a5671958c99175e05e4b559"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 36,
+            "_id": "6a5671958c99175e05e4b55a"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b55b"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 32,
+        "productId": "AB-27F500E0A63E",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.768Z",
+        "updatedAt": "2026-07-14T17:27:49.768Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b55f",
+        "name": "Estee Lauder Premium Skincare Vol 1",
+        "description": "Elevate your standard with the Estee Lauder Premium Skincare Vol 1. A high-quality, beautifully designed skincare from Estee Lauder. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b55d",
+        "brand": "Estee Lauder",
+        "price": 3661,
+        "discountPrice": 2928,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Estee%20Lauder%20Premium%20Skincare%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Estee%20Lauder%20Premium%20Skincare%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 16,
+            "_id": "6a5671958c99175e05e4b560"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b561"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 50,
+            "_id": "6a5671958c99175e05e4b562"
+          }
+        ],
+        "avgRating": 3.6,
+        "numReviews": 106,
+        "productId": "AB-8CB41E56DEC1",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.775Z",
+        "updatedAt": "2026-07-14T17:27:49.775Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b563",
+        "name": "MAC Premium Skincare Vol 2",
+        "description": "Elevate your standard with the MAC Premium Skincare Vol 2. A high-quality, beautifully designed skincare from MAC. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b55d",
+        "brand": "MAC",
+        "price": 2698,
+        "discountPrice": 2158,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=MAC%20Premium%20Skincare%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=MAC%20Premium%20Skincare%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 26,
+            "_id": "6a5671958c99175e05e4b564"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 9,
+            "_id": "6a5671958c99175e05e4b565"
+          },
+          {
+            "size": "Standard",
+            "color": "Blush Pink",
+            "stock": 6,
+            "_id": "6a5671958c99175e05e4b566"
+          }
+        ],
+        "avgRating": 3.6,
+        "numReviews": 116,
+        "productId": "AB-5CC5EBE7CA92",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.775Z",
+        "updatedAt": "2026-07-14T17:27:49.775Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b567",
+        "name": "Estee Lauder Premium Skincare Vol 3",
+        "description": "Elevate your standard with the Estee Lauder Premium Skincare Vol 3. A high-quality, beautifully designed skincare from Estee Lauder. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b55d",
+        "brand": "Estee Lauder",
+        "price": 4455,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Estee%20Lauder%20Premium%20Skincare%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Estee%20Lauder%20Premium%20Skincare%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b568"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 30,
+            "_id": "6a5671958c99175e05e4b569"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 36,
+            "_id": "6a5671958c99175e05e4b56a"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 111,
+        "productId": "AB-473CCC0D223D",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.775Z",
+        "updatedAt": "2026-07-14T17:27:49.775Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b56b",
+        "name": "Estee Lauder Premium Skincare Vol 4",
+        "description": "Elevate your standard with the Estee Lauder Premium Skincare Vol 4. A high-quality, beautifully designed skincare from Estee Lauder. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b55d",
+        "brand": "Estee Lauder",
+        "price": 1965,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Estee%20Lauder%20Premium%20Skincare%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Estee%20Lauder%20Premium%20Skincare%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 36,
+            "_id": "6a5671958c99175e05e4b56c"
+          },
+          {
+            "size": "Standard",
+            "color": "Midnight Black",
+            "stock": 5,
+            "_id": "6a5671958c99175e05e4b56d"
+          },
+          {
+            "size": "Standard",
+            "color": "Champagne Gold",
+            "stock": 8,
+            "_id": "6a5671958c99175e05e4b56e"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 92,
+        "productId": "AB-C60DC973EACC",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.775Z",
+        "updatedAt": "2026-07-14T17:27:49.775Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b56f",
+        "name": "AuraBella Glow Premium Skincare Vol 5",
+        "description": "Elevate your standard with the AuraBella Glow Premium Skincare Vol 5. A high-quality, beautifully designed skincare from AuraBella Glow. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b516",
+        "subCategory": "6a5671958c99175e05e4b55d",
+        "brand": "AuraBella Glow",
+        "price": 1660,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Glow%20Premium%20Skincare%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Glow%20Premium%20Skincare%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "Standard",
+            "color": "Crimson Red",
+            "stock": 47,
+            "_id": "6a5671958c99175e05e4b570"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 37,
+            "_id": "6a5671958c99175e05e4b571"
+          },
+          {
+            "size": "Standard",
+            "color": "Lavender Violet",
+            "stock": 33,
+            "_id": "6a5671958c99175e05e4b572"
+          }
+        ],
+        "avgRating": 3.6,
+        "numReviews": 85,
+        "productId": "AB-A91FDFEC5E7C",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.775Z",
+        "updatedAt": "2026-07-14T17:27:49.775Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b578",
+        "name": "Tiffany & Co. Premium Earrings Vol 1",
+        "description": "Elevate your standard with the Tiffany & Co. Premium Earrings Vol 1. A high-quality, beautifully designed earrings from Tiffany & Co.. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b576",
+        "brand": "Tiffany & Co.",
+        "price": 654,
+        "discountPrice": 523,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Tiffany%20%26%20Co.%20Premium%20Earrings%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Tiffany%20%26%20Co.%20Premium%20Earrings%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 19,
+            "_id": "6a5671958c99175e05e4b579"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 49,
+            "_id": "6a5671958c99175e05e4b57a"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 35,
+            "_id": "6a5671958c99175e05e4b57b"
+          }
+        ],
+        "avgRating": 4.7,
+        "numReviews": 32,
+        "productId": "AB-07E30E9CD340",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.784Z",
+        "updatedAt": "2026-07-14T17:27:49.784Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b57c",
+        "name": "Pandora Premium Earrings Vol 2",
+        "description": "Elevate your standard with the Pandora Premium Earrings Vol 2. A high-quality, beautifully designed earrings from Pandora. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b576",
+        "brand": "Pandora",
+        "price": 4357,
+        "discountPrice": 3485,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Pandora%20Premium%20Earrings%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Pandora%20Premium%20Earrings%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 23,
+            "_id": "6a5671958c99175e05e4b57d"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 20,
+            "_id": "6a5671958c99175e05e4b57e"
+          },
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 49,
+            "_id": "6a5671958c99175e05e4b57f"
+          }
+        ],
+        "avgRating": 3.6,
+        "numReviews": 104,
+        "productId": "AB-E1352AD40EA6",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.784Z",
+        "updatedAt": "2026-07-14T17:27:49.784Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b580",
+        "name": "Cartier Premium Earrings Vol 3",
+        "description": "Elevate your standard with the Cartier Premium Earrings Vol 3. A high-quality, beautifully designed earrings from Cartier. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b576",
+        "brand": "Cartier",
+        "price": 3925,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Cartier%20Premium%20Earrings%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Cartier%20Premium%20Earrings%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 43,
+            "_id": "6a5671958c99175e05e4b581"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 30,
+            "_id": "6a5671958c99175e05e4b582"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 30,
+            "_id": "6a5671958c99175e05e4b583"
+          }
+        ],
+        "avgRating": 3.7,
+        "numReviews": 33,
+        "productId": "AB-D9D8822E9442",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.784Z",
+        "updatedAt": "2026-07-14T17:27:49.784Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b584",
+        "name": "AuraBella Luxe Premium Earrings Vol 4",
+        "description": "Elevate your standard with the AuraBella Luxe Premium Earrings Vol 4. A high-quality, beautifully designed earrings from AuraBella Luxe. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b576",
+        "brand": "AuraBella Luxe",
+        "price": 793,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Luxe%20Premium%20Earrings%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Luxe%20Premium%20Earrings%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 33,
+            "_id": "6a5671958c99175e05e4b585"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 39,
+            "_id": "6a5671958c99175e05e4b586"
+          },
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 13,
+            "_id": "6a5671958c99175e05e4b587"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 110,
+        "productId": "AB-DAB025EB2D5B",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.784Z",
+        "updatedAt": "2026-07-14T17:27:49.784Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b588",
+        "name": "Swarovski Premium Earrings Vol 5",
+        "description": "Elevate your standard with the Swarovski Premium Earrings Vol 5. A high-quality, beautifully designed earrings from Swarovski. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b576",
+        "brand": "Swarovski",
+        "price": 3555,
+        "discountPrice": 2844,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Swarovski%20Premium%20Earrings%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Swarovski%20Premium%20Earrings%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b589"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b58a"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 7,
+            "_id": "6a5671958c99175e05e4b58b"
+          }
+        ],
+        "avgRating": 4.7,
+        "numReviews": 59,
+        "productId": "AB-6CF4F79E391F",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.784Z",
+        "updatedAt": "2026-07-14T17:27:49.784Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b58f",
+        "name": "Pandora Premium Necklaces Vol 1",
+        "description": "Elevate your standard with the Pandora Premium Necklaces Vol 1. A high-quality, beautifully designed necklaces from Pandora. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b58d",
+        "brand": "Pandora",
+        "price": 3077,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Pandora%20Premium%20Necklaces%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Pandora%20Premium%20Necklaces%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 34,
+            "_id": "6a5671958c99175e05e4b590"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 24,
+            "_id": "6a5671958c99175e05e4b591"
+          },
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 27,
+            "_id": "6a5671958c99175e05e4b592"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 90,
+        "productId": "AB-0EFBA962BEB2",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.791Z",
+        "updatedAt": "2026-07-14T17:27:49.791Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b593",
+        "name": "Pandora Premium Necklaces Vol 2",
+        "description": "Elevate your standard with the Pandora Premium Necklaces Vol 2. A high-quality, beautifully designed necklaces from Pandora. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b58d",
+        "brand": "Pandora",
+        "price": 1829,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Pandora%20Premium%20Necklaces%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Pandora%20Premium%20Necklaces%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 47,
+            "_id": "6a5671958c99175e05e4b594"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 16,
+            "_id": "6a5671958c99175e05e4b595"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b596"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 91,
+        "productId": "AB-A9077C6839E3",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.792Z",
+        "updatedAt": "2026-07-14T17:27:49.792Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b597",
+        "name": "Cartier Premium Necklaces Vol 3",
+        "description": "Elevate your standard with the Cartier Premium Necklaces Vol 3. A high-quality, beautifully designed necklaces from Cartier. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b58d",
+        "brand": "Cartier",
+        "price": 4994,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Cartier%20Premium%20Necklaces%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Cartier%20Premium%20Necklaces%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 17,
+            "_id": "6a5671958c99175e05e4b598"
+          },
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 48,
+            "_id": "6a5671958c99175e05e4b599"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b59a"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 84,
+        "productId": "AB-BF5E18A3249C",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.792Z",
+        "updatedAt": "2026-07-14T17:27:49.792Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b59b",
+        "name": "Swarovski Premium Necklaces Vol 4",
+        "description": "Elevate your standard with the Swarovski Premium Necklaces Vol 4. A high-quality, beautifully designed necklaces from Swarovski. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b58d",
+        "brand": "Swarovski",
+        "price": 4607,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Swarovski%20Premium%20Necklaces%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Swarovski%20Premium%20Necklaces%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 39,
+            "_id": "6a5671958c99175e05e4b59c"
+          },
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 23,
+            "_id": "6a5671958c99175e05e4b59d"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 27,
+            "_id": "6a5671958c99175e05e4b59e"
+          }
+        ],
+        "avgRating": 5,
+        "numReviews": 82,
+        "productId": "AB-06565167CA1B",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.792Z",
+        "updatedAt": "2026-07-14T17:27:49.792Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b59f",
+        "name": "Cartier Premium Necklaces Vol 5",
+        "description": "Elevate your standard with the Cartier Premium Necklaces Vol 5. A high-quality, beautifully designed necklaces from Cartier. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b58d",
+        "brand": "Cartier",
+        "price": 1152,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Cartier%20Premium%20Necklaces%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Cartier%20Premium%20Necklaces%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 13,
+            "_id": "6a5671958c99175e05e4b5a0"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b5a1"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 27,
+            "_id": "6a5671958c99175e05e4b5a2"
+          }
+        ],
+        "avgRating": 4.1,
+        "numReviews": 75,
+        "productId": "AB-CDC53F52CFC8",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.792Z",
+        "updatedAt": "2026-07-14T17:27:49.792Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5a6",
+        "name": "Cartier Premium Bracelets Vol 1",
+        "description": "Elevate your standard with the Cartier Premium Bracelets Vol 1. A high-quality, beautifully designed bracelets from Cartier. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5a4",
+        "brand": "Cartier",
+        "price": 3429,
+        "discountPrice": 2743,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Cartier%20Premium%20Bracelets%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Cartier%20Premium%20Bracelets%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b5a7"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 9,
+            "_id": "6a5671958c99175e05e4b5a8"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 46,
+            "_id": "6a5671958c99175e05e4b5a9"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 34,
+        "productId": "AB-10CBC55568BE",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.799Z",
+        "updatedAt": "2026-07-14T17:27:49.799Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5aa",
+        "name": "AuraBella Luxe Premium Bracelets Vol 2",
+        "description": "Elevate your standard with the AuraBella Luxe Premium Bracelets Vol 2. A high-quality, beautifully designed bracelets from AuraBella Luxe. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5a4",
+        "brand": "AuraBella Luxe",
+        "price": 863,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bracelets%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bracelets%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 6,
+            "_id": "6a5671958c99175e05e4b5ab"
+          },
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 7,
+            "_id": "6a5671958c99175e05e4b5ac"
+          },
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 10,
+            "_id": "6a5671958c99175e05e4b5ad"
+          }
+        ],
+        "avgRating": 4.3,
+        "numReviews": 18,
+        "productId": "AB-703F5564DEF3",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.799Z",
+        "updatedAt": "2026-07-14T17:27:49.799Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5ae",
+        "name": "AuraBella Luxe Premium Bracelets Vol 3",
+        "description": "Elevate your standard with the AuraBella Luxe Premium Bracelets Vol 3. A high-quality, beautifully designed bracelets from AuraBella Luxe. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5a4",
+        "brand": "AuraBella Luxe",
+        "price": 4012,
+        "discountPrice": 3209,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bracelets%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bracelets%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 13,
+            "_id": "6a5671958c99175e05e4b5af"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 34,
+            "_id": "6a5671958c99175e05e4b5b0"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b5b1"
+          }
+        ],
+        "avgRating": 4.5,
+        "numReviews": 14,
+        "productId": "AB-0DAB22E6083B",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.799Z",
+        "updatedAt": "2026-07-14T17:27:49.799Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5b2",
+        "name": "Swarovski Premium Bracelets Vol 4",
+        "description": "Elevate your standard with the Swarovski Premium Bracelets Vol 4. A high-quality, beautifully designed bracelets from Swarovski. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5a4",
+        "brand": "Swarovski",
+        "price": 3654,
+        "discountPrice": 2923,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Swarovski%20Premium%20Bracelets%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Swarovski%20Premium%20Bracelets%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 44,
+            "_id": "6a5671958c99175e05e4b5b3"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 29,
+            "_id": "6a5671958c99175e05e4b5b4"
+          },
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 17,
+            "_id": "6a5671958c99175e05e4b5b5"
+          }
+        ],
+        "avgRating": 3.5,
+        "numReviews": 55,
+        "productId": "AB-5F2AA3DA961A",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.799Z",
+        "updatedAt": "2026-07-14T17:27:49.799Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5b6",
+        "name": "AuraBella Luxe Premium Bracelets Vol 5",
+        "description": "Elevate your standard with the AuraBella Luxe Premium Bracelets Vol 5. A high-quality, beautifully designed bracelets from AuraBella Luxe. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5a4",
+        "brand": "AuraBella Luxe",
+        "price": 4689,
+        "discountPrice": 3751,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bracelets%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bracelets%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 28,
+            "_id": "6a5671958c99175e05e4b5b7"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 5,
+            "_id": "6a5671958c99175e05e4b5b8"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 8,
+            "_id": "6a5671958c99175e05e4b5b9"
+          }
+        ],
+        "avgRating": 3.7,
+        "numReviews": 11,
+        "productId": "AB-8FB936A2AB83",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.799Z",
+        "updatedAt": "2026-07-14T17:27:49.799Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5bd",
+        "name": "Cartier Premium Bags Vol 1",
+        "description": "Elevate your standard with the Cartier Premium Bags Vol 1. A high-quality, beautifully designed bags from Cartier. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5bb",
+        "brand": "Cartier",
+        "price": 3019,
+        "discountPrice": 2415,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Cartier%20Premium%20Bags%20Vol%201",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Cartier%20Premium%20Bags%20Vol%201+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 46,
+            "_id": "6a5671958c99175e05e4b5be"
+          },
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 13,
+            "_id": "6a5671958c99175e05e4b5bf"
+          },
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 38,
+            "_id": "6a5671958c99175e05e4b5c0"
+          }
+        ],
+        "avgRating": 4.8,
+        "numReviews": 21,
+        "productId": "AB-A32CC9FDC114",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.805Z",
+        "updatedAt": "2026-07-14T17:27:49.805Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5c1",
+        "name": "Tiffany & Co. Premium Bags Vol 2",
+        "description": "Elevate your standard with the Tiffany & Co. Premium Bags Vol 2. A high-quality, beautifully designed bags from Tiffany & Co.. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5bb",
+        "brand": "Tiffany & Co.",
+        "price": 4543,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Tiffany%20%26%20Co.%20Premium%20Bags%20Vol%202",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Tiffany%20%26%20Co.%20Premium%20Bags%20Vol%202+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Blush Pink",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b5c2"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 38,
+            "_id": "6a5671958c99175e05e4b5c3"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 21,
+            "_id": "6a5671958c99175e05e4b5c4"
+          }
+        ],
+        "avgRating": 4.6,
+        "numReviews": 24,
+        "productId": "AB-B6FF3D1C4F11",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.805Z",
+        "updatedAt": "2026-07-14T17:27:49.805Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5c5",
+        "name": "AuraBella Luxe Premium Bags Vol 3",
+        "description": "Elevate your standard with the AuraBella Luxe Premium Bags Vol 3. A high-quality, beautifully designed bags from AuraBella Luxe. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5bb",
+        "brand": "AuraBella Luxe",
+        "price": 4266,
+        "discountPrice": 3412,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bags%20Vol%203",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bags%20Vol%203+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 12,
+            "_id": "6a5671958c99175e05e4b5c6"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b5c7"
+          },
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 25,
+            "_id": "6a5671958c99175e05e4b5c8"
+          }
+        ],
+        "avgRating": 3.9,
+        "numReviews": 47,
+        "productId": "AB-1EB72B567377",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.805Z",
+        "updatedAt": "2026-07-14T17:27:49.805Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5c9",
+        "name": "AuraBella Luxe Premium Bags Vol 4",
+        "description": "Elevate your standard with the AuraBella Luxe Premium Bags Vol 4. A high-quality, beautifully designed bags from AuraBella Luxe. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5bb",
+        "brand": "AuraBella Luxe",
+        "price": 4332,
+        "discountPrice": null,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bags%20Vol%204",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=AuraBella%20Luxe%20Premium%20Bags%20Vol%204+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Midnight Black",
+            "stock": 17,
+            "_id": "6a5671958c99175e05e4b5ca"
+          },
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 37,
+            "_id": "6a5671958c99175e05e4b5cb"
+          },
+          {
+            "size": "One Size",
+            "color": "Champagne Gold",
+            "stock": 13,
+            "_id": "6a5671958c99175e05e4b5cc"
+          }
+        ],
+        "avgRating": 4.2,
+        "numReviews": 78,
+        "productId": "AB-2FFACC066459",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.805Z",
+        "updatedAt": "2026-07-14T17:27:49.805Z"
+      },
+      {
+        "_id": "6a5671958c99175e05e4b5cd",
+        "name": "Pandora Premium Bags Vol 5",
+        "description": "Elevate your standard with the Pandora Premium Bags Vol 5. A high-quality, beautifully designed bags from Pandora. Perfect for daily luxury, parties, and corporate wear. Made with premium, durable materials.",
+        "category": "6a5671958c99175e05e4b574",
+        "subCategory": "6a5671958c99175e05e4b5bb",
+        "brand": "Pandora",
+        "price": 2851,
+        "discountPrice": 2280,
+        "images": [
+          "https://placehold.co/600x400/2a1040/f0e8ff?text=Pandora%20Premium%20Bags%20Vol%205",
+          "https://placehold.co/600x400/1e1830/f0e8ff?text=Pandora%20Premium%20Bags%20Vol%205+Detail"
+        ],
+        "variants": [
+          {
+            "size": "One Size",
+            "color": "Crimson Red",
+            "stock": 41,
+            "_id": "6a5671958c99175e05e4b5ce"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 38,
+            "_id": "6a5671958c99175e05e4b5cf"
+          },
+          {
+            "size": "One Size",
+            "color": "Lavender Violet",
+            "stock": 37,
+            "_id": "6a5671958c99175e05e4b5d0"
+          }
+        ],
+        "avgRating": 4.9,
+        "numReviews": 80,
+        "productId": "AB-6AD055ECDEE1",
+        "__v": 0,
+        "createdAt": "2026-07-14T17:27:49.805Z",
+        "updatedAt": "2026-07-14T17:27:49.805Z"
+      }
+    ],
+    "reviews": [],
+    "productqas": [],
+    "carts": [
+      {
+        "_id": "6a567256a141be12ba37f08c",
+        "user": "6a5671958c99175e05e4b3fd",
+        "__v": 1,
+        "createdAt": "2026-07-14T17:31:02.149Z",
+        "items": [],
+        "updatedAt": "2026-07-14T17:31:02.321Z"
+      }
+    ],
+    "orders": [
+      {
+        "_id": "6a56725620679a1607d0875d",
+        "user": "6a5671958c99175e05e4b3fd",
+        "items": [
+          {
+            "product": "6a5671958c99175e05e4b471",
+            "variant": {
+              "size": "XS",
+              "color": "Lavender Violet"
+            },
+            "qty": 1,
+            "priceAtPurchase": 2361,
+            "hsnCode": "",
+            "gstRate": 0,
+            "_id": "6a56725620679a1607d0875e"
+          },
+          {
+            "product": "6a5671958c99175e05e4b4dc",
+            "variant": {
+              "size": "36",
+              "color": "Champagne Gold"
+            },
+            "qty": 1,
+            "priceAtPurchase": 669,
+            "hsnCode": "",
+            "gstRate": 0,
+            "_id": "6a56725620679a1607d0875f"
+          }
+        ],
+        "shippingAddress": {
+          "line1": "AuraBella Towers, Floor 14",
+          "line2": "Commercial District, MG Road",
+          "city": "Bangalore",
+          "state": "Karnataka",
+          "pincode": "560001",
+          "phone": "9876543210",
+          "name": "",
+          "street": "",
+          "area": "",
+          "district": "",
+          "country": "India",
+          "_id": "6a56725620679a1607d08760"
+        },
+        "paymentMethod": "cod",
+        "paymentStatus": "pending",
+        "orderStatus": "packed",
+        "totalAmount": 3030,
+        "invoiceDate": "2026-07-14T17:34:58.784Z",
+        "invoiceStatus": "issued",
+        "printedInvoice": true,
+        "printedLabel": true,
+        "trackingNumber": "",
+        "courierPartner": "",
+        "estimatedDeliveryDate": null,
+        "packageWeight": "",
+        "packageDimensions": "",
+        "taxBreakdown": {
+          "gstRate": 0,
+          "taxAmount": 0,
+          "shippingCharges": 0,
+          "platformFee": 0,
+          "couponDiscount": 0
+        },
+        "statusTimeline": [
+          {
+            "status": "placed",
+            "at": "2026-07-14T17:37:09.314Z",
+            "note": ""
+          },
+          {
+            "status": "shipped",
+            "at": "2026-07-14T17:37:21.349Z",
+            "note": ""
+          },
+          {
+            "status": "packed",
+            "at": "2026-07-14T17:37:32.110Z",
+            "note": ""
+          }
+        ],
+        "createdAt": "2026-07-14T17:31:02.283Z",
+        "updatedAt": "2026-07-14T18:01:50.309Z",
+        "__v": 3,
+        "invoiceNumber": "ABL-2026-000001"
+      }
+    ],
+    "coupons": [],
+    "invoicecounters": [
+      {
+        "_id": "6a567342a141be12ba37f08d",
+        "year": 2026,
+        "__v": 0,
+        "sequence": 1
+      }
+    ],
+    "emaillogs": [],
+    "banners": [],
+    "pushsubscriptions": []
+  }
+}

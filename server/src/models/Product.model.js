@@ -115,6 +115,26 @@ const productSchema = new mongoose.Schema(
       default: 0,
       min: [0, "Number of reviews cannot be negative"],
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+    supplierEmail: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    supplierPhone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    reorderThreshold: {
+      type: Number,
+      default: 5,
+      min: 0,
+    },
   },
   {
     timestamps: true,
@@ -126,6 +146,7 @@ productSchema.index({ category: 1 });
 productSchema.index({ subCategory: 1 });
 productSchema.index({ price: 1 });
 productSchema.index({ brand: 1 });
+productSchema.index({ isDeleted: 1 });
 productSchema.index({ createdAt: -1 }); // Index default sort field to prevent in-memory sort timeouts
 productSchema.index({ name: "text", description: "text", brand: "text" }); // Text index for search functionality
 

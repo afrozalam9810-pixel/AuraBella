@@ -15,8 +15,9 @@ const {
 const { protect } = require("../middleware/auth");
 const { adminOnly } = require("../middleware/adminOnly");
 
-// Import nested review router
+// Import nested review and Q&A routers
 const reviewRouter = require("./reviews.route");
+const { productRouter: qaRouter } = require("./productQA.route");
 
 const router = express.Router();
 
@@ -30,7 +31,8 @@ router.post("/", protect, adminOnly, createProduct);
 router.put("/:id", protect, adminOnly, updateProduct);
 router.delete("/:id", protect, adminOnly, deleteProduct);
 
-// Re-route into review router
+// Re-route into review and QA routers
 router.use("/:id/reviews", reviewRouter);
+router.use("/:id/qa", qaRouter);
 
 module.exports = router;

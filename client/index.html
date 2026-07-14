@@ -10,6 +10,26 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      Anti-FOUC (Flash of Unstyled Content) theme script.
+      This MUST run synchronously before React renders to prevent
+      a visible layout shift when the user's saved theme differs from the default.
+      It reads localStorage and applies the correct class to <html> immediately.
+    -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("aurabella-theme");
+          if (t === "light") {
+            document.documentElement.classList.add("light");
+            document.documentElement.style.colorScheme = "light";
+          } else {
+            document.documentElement.style.colorScheme = "dark";
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- SEO -->
     <title>AuraBella — Luxury Beauty & Skincare</title>
     <meta name="description" content="AuraBella is your destination for premium beauty, skincare, and wellness products. Discover curated collections that celebrate your natural aura." />
@@ -22,13 +42,28 @@
     <meta property="og:description" content="Discover curated beauty collections that celebrate your natural aura." />
     <meta property="og:url" content="https://aurabella.com" />
 
-    <!-- Google Fonts: Cormorant Garamond (display serif) + Poppins (body sans) -->
+    <!-- Google Fonts: non-blocking preload pattern (eliminates render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preload the font CSS so the browser fetches it in parallel, not blocking -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
     />
+    <!-- Apply the stylesheet after load without blocking rendering -->
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

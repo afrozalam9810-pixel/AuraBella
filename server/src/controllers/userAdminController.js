@@ -4,7 +4,8 @@ module.exports = {
   getAllUsers: async (req, res, next) => {
     try {
       const users = await User.find({}).sort({ createdAt: -1 });
-      res.status(200).json({ success: true, count: users.length, data: users });
+      const safeUsers = users.map(user => user.toSafeObject());
+      res.status(200).json({ success: true, count: safeUsers.length, data: safeUsers });
     } catch (err) {
       next(err);
     }

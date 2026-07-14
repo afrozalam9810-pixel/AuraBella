@@ -60,6 +60,21 @@ export default function Footer() {
           </h4>
           <ul className="flex flex-col gap-2.5 font-sans text-xs text-[#9d8bbb]">
             <li>
+              <Link to="/faq" className="hover:text-white transition-colors">
+                Help &amp; FAQs
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-white transition-colors">
+                About AuraBella
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-white transition-colors">
+                Contact Support
+              </Link>
+            </li>
+            <li>
               <Link to="/account" className="hover:text-white transition-colors">
                 My Profile Account
               </Link>
@@ -75,8 +90,13 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/" className="hover:text-white transition-colors">
-                Shipping & Returns Policy
+              <Link to="/shipping-policy" className="hover:text-white transition-colors">
+                Shipping Policy
+              </Link>
+            </li>
+            <li>
+              <Link to="/return-policy" className="hover:text-white transition-colors">
+                Return &amp; Refund Policy
               </Link>
             </li>
           </ul>
@@ -110,9 +130,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 border-t border-white/5 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-[10px] md:text-xs text-white/30">
         <p>&copy; {new Date().getFullYear()} AuraBella Inc. All rights reserved.</p>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-          <a href="#" className="hover:text-white/60 transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-white/60 transition-colors">Terms of Service</a>
-          <a href="#" className="hover:text-white/60 transition-colors">Cookie Settings</a>
+          <Link to="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-white/60 transition-colors">Terms &amp; Conditions</Link>
+          <a href="#" className="hover:text-white/60 transition-colors font-sans">Cookie Settings</a>
         </div>
       </div>
     </footer>

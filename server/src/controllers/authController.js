@@ -100,6 +100,15 @@ const register = async (req, res, next) => {
       password,
     });
 
+    // Send Welcome Email and Notify Admin
+    try {
+      const { sendWelcomeEmail, notifyAdminNewUser } = require("../services/email/emailService");
+      sendWelcomeEmail(user.email, user.name);
+      notifyAdminNewUser({ name: user.name, email: user.email, source: "Email Registration" });
+    } catch (err) {
+      console.error("Welcome email trigger failed:", err.message);
+    }
+
     // 4. Send token in cookie and response
     sendTokenResponse(user, 201, res);
   } catch (error) {
@@ -142,7 +151,35 @@ const login = async (req, res, next) => {
       throw new Error("Your account has been deactivated or blocked");
     }
 
-    // 5. Send response
+    // 5. Send login alert email
+    try {
+      const { sendLoginAlert } = require("../services/email/emailService");
+      const userAgent = req.headers["user-agent"] || "";
+      let browser = "Unknown Browser";
+      if (userAgent.includes("Chrome")) browser = "Google Chrome";
+      else if (userAgent.includes("Safari")) browser = "Apple Safari";
+      else if (userAgent.includes("Firefox")) browser = "Mozilla Firefox";
+      else if (userAgent.includes("Edge")) browser = "Microsoft Edge";
+
+      let device = "Desktop PC";
+      if (userAgent.includes("Mobile") || userAgent.includes("Android") || userAgent.includes("iPhone")) {
+        device = "Mobile Smart Device";
+      }
+
+      const ip = req.ip || req.connection.remoteAddress || "Unknown IP";
+      sendLoginAlert(user.email, user.name, {
+        date: new Date().toLocaleDateString("en-IN"),
+        time: new Date().toLocaleTimeString("en-IN"),
+        browser,
+        device,
+        ip,
+        location: "India (Approximate)"
+      });
+    } catch (err) {
+      console.error("Login alert trigger failed:", err.message);
+    }
+
+    // 6. Send response
     sendTokenResponse(user, 200, res);
   } catch (error) {
     next(error);
@@ -304,6 +341,15 @@ const completeGoogleAuth = async (req, res, next) => {
           avatar: profile.picture || "",
           isVerified: true,
         });
+
+        // Welcome and admin alerts
+        try {
+          const { sendWelcomeEmail, notifyAdminNewUser } = require("../services/email/emailService");
+          sendWelcomeEmail(user.email, user.name);
+          notifyAdminNewUser({ name: user.name, email: user.email, source: "Google OAuth" });
+        } catch (err) {
+          console.error("Google welcome email failed:", err.message);
+        }
       }
     }
 
@@ -375,10 +421,27 @@ const updateProfile = async (req, res, next) => {
     const { name, email } = req.body;
     const user = await User.findById(req.user._id);
 
-    if (name) user.name = name;
-    if (email) user.email = email;
+    const changes = [];
+    if (name && user.name !== name) {
+      user.name = name;
+      changes.push("Profile Name");
+    }
+    if (email && user.email !== email.toLowerCase()) {
+      user.email = email.toLowerCase();
+      changes.push("Profile Email");
+    }
 
     await user.save();
+
+    if (changes.length > 0) {
+      try {
+        const { sendProfileUpdated } = require("../services/email/emailService");
+        sendProfileUpdated(user.email, user.name, changes);
+      } catch (err) {
+        console.error("Profile update email failed:", err.message);
+      }
+    }
+
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
@@ -401,6 +464,13 @@ const addAddress = async (req, res, next) => {
     // Create new address
     user.addresses.push(req.body);
     await user.save();
+
+    try {
+      const { sendProfileUpdated } = require("../services/email/emailService");
+      sendProfileUpdated(user.email, user.name, ["Added a new address"]);
+    } catch (err) {
+      console.error("Address add email failed:", err.message);
+    }
 
     res.status(201).json({
       success: true,
@@ -431,6 +501,13 @@ const updateAddress = async (req, res, next) => {
     Object.assign(address, req.body);
     await user.save();
 
+    try {
+      const { sendProfileUpdated } = require("../services/email/emailService");
+      sendProfileUpdated(user.email, user.name, ["Updated an address"]);
+    } catch (err) {
+      console.error("Address update email failed:", err.message);
+    }
+
     res.status(200).json({
       success: true,
       message: "Address updated successfully",
@@ -452,10 +529,217 @@ const deleteAddress = async (req, res, next) => {
     user.addresses = user.addresses.filter(addr => addr._id.toString() !== req.params.id);
     await user.save();
 
+    try {
+      const { sendProfileUpdated } = require("../services/email/emailService");
+      sendProfileUpdated(user.email, user.name, ["Deleted an address"]);
+    } catch (err) {
+      console.error("Address delete email failed:", err.message);
+    }
+
     res.status(200).json({
       success: true,
       message: "Address deleted successfully",
       user: user.toSafeObject(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Forgot Password Request
+ * @route   POST /api/auth/forgot-password
+ * @access  Public
+ */
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(400);
+      throw new Error("Please provide your email address");
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message: "If an account exists with this email, a reset link has been sent.",
+      });
+    }
+
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    user.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    user.passwordResetExpires = Date.now() + 3600000; // 1 hour
+
+    await user.save();
+
+    const clientUrl = (process.env.CLIENT_URL || "http://localhost:3000").replace(/\/$/, "");
+    const resetLink = `${clientUrl}/reset-password?token=${resetToken}`;
+    
+    const { sendPasswordReset } = require("../services/email/emailService");
+    await sendPasswordReset(user.email, user.name, resetLink);
+
+    res.status(200).json({
+      success: true,
+      message: "If an account exists with this email, a reset link has been sent.",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Reset Password using token
+ * @route   POST /api/auth/reset-password
+ * @access  Public
+ */
+const resetPassword = async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+    if (!token || !password) {
+      res.status(400);
+      throw new Error("Token and new password are required");
+    }
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    }).select("+password");
+
+    if (!user) {
+      res.status(400);
+      throw new Error("Invalid or expired reset token");
+    }
+
+    user.password = password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    try {
+      const { sendPasswordChanged } = require("../services/email/emailService");
+      sendPasswordChanged(user.email, user.name, {
+        date: new Date().toLocaleDateString("en-IN"),
+        time: new Date().toLocaleTimeString("en-IN"),
+      });
+    } catch (err) {
+      console.error("Password changed confirmation email failed:", err.message);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successful. You can now log in.",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Send Email Verification OTP
+ * @route   POST /api/auth/request-email-verification
+ * @access  Private
+ */
+const requestEmailVerification = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user.isVerified) {
+      return res.status(400).json({
+        success: false,
+        message: "Email address is already verified.",
+      });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const hashedOtp = crypto.createHash("sha256").update(otp).digest("hex");
+    user.emailVerificationToken = hashedOtp;
+    user.emailVerificationExpires = Date.now() + 600000; // 10 minutes
+
+    await user.save();
+
+    const { sendVerificationEmail } = require("../services/email/emailService");
+    await sendVerificationEmail(user.email, user.name, otp);
+
+    res.status(200).json({
+      success: true,
+      message: "Verification OTP code sent to your email address.",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Verify Email OTP
+ * @route   POST /api/auth/verify-email
+ * @access  Private
+ */
+const verifyEmail = async (req, res, next) => {
+  try {
+    const { otp } = req.body;
+    if (!otp) {
+      res.status(400);
+      throw new Error("OTP code is required");
+    }
+
+    const hashedOtp = crypto.createHash("sha256").update(otp).digest("hex");
+
+    const user = await User.findOne({
+      _id: req.user._id,
+      emailVerificationToken: hashedOtp,
+      emailVerificationExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      res.status(400);
+      throw new Error("Invalid or expired OTP verification code");
+    }
+
+    user.isVerified = true;
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Email address verified successfully.",
+      user: user.toSafeObject(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Delete Account
+ * @route   DELETE /api/auth/delete-account
+ * @access  Private
+ */
+const deleteAccount = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    
+    try {
+      const { sendAccountDeleted } = require("../services/email/emailService");
+      await sendAccountDeleted(user.email, user.name);
+    } catch (err) {
+      console.error("Account deleted email failed:", err.message);
+    }
+
+    await User.findByIdAndDelete(req.user._id);
+
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Your account has been deleted successfully.",
     });
   } catch (error) {
     next(error);
@@ -475,4 +759,9 @@ module.exports = {
   addAddress,
   updateAddress,
   deleteAddress,
+  forgotPassword,
+  resetPassword,
+  requestEmailVerification,
+  verifyEmail,
+  deleteAccount,
 };

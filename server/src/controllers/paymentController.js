@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const mongoose = require("mongoose");
 const Cart = require("../models/Cart.model");
 const Coupon = require("../models/Coupon.model");
 const Order = require("../models/Order.model");
@@ -163,25 +164,69 @@ const verifyPaymentSignature = async (req, res, next) => {
       throw new Error("Invalid Razorpay payment signature.");
     }
 
-    for (const item of order.items) {
-      const update = await Product.updateOne(
-        {
-          _id: item.product,
-          variants: { $elemMatch: { size: item.variant.size, color: item.variant.color, stock: { $gte: item.qty } } },
-        },
-        { $inc: { "variants.$.stock": -item.qty } }
-      );
-      if (update.modifiedCount !== 1) {
-        res.status(409);
-        throw new Error("Stock changed while your payment was processing. Contact support for assistance.");
-      }
+    // --- ACID Transaction: deduct stock + mark order paid atomically ---
+    let session = null;
+    try {
+      session = await mongoose.startSession();
+      session.startTransaction();
+    } catch (_) {
+      session = null; // standalone MongoDB — skip session
     }
 
-    order.razorpayPaymentId = razorpay_payment_id;
-    order.paymentStatus = "completed";
-    order.orderStatus = "placed";
-    await order.save();
-    await Cart.updateOne({ user: req.user._id }, { $set: { items: [] } });
+    try {
+      const dbOpts = session ? { session } : {};
+
+      for (const item of order.items) {
+        const update = await Product.updateOne(
+          {
+            _id: item.product,
+            variants: { $elemMatch: { size: item.variant.size, color: item.variant.color, stock: { $gte: item.qty } } },
+          },
+          { $inc: { "variants.$.stock": -item.qty } },
+          dbOpts
+        );
+        if (update.modifiedCount !== 1) {
+          res.status(409);
+          throw new Error("Stock changed while your payment was processing. Contact support for assistance.");
+        }
+      }
+
+      order.razorpayPaymentId = razorpay_payment_id;
+      order.paymentStatus = "completed";
+      order.orderStatus = "placed";
+      await order.save(dbOpts);
+      await Cart.updateOne({ user: req.user._id }, { $set: { items: [] } }, dbOpts);
+
+      if (session) {
+        await session.commitTransaction();
+        session.endSession();
+      }
+    } catch (txErr) {
+      if (session) {
+        await session.abortTransaction();
+        session.endSession();
+      }
+      throw txErr;
+    }
+
+    // Send emails outside transaction thread
+    try {
+      const populated = await Order.findById(order._id)
+        .populate("user", "name email phone")
+        .populate("items.product", "name brand images price discountPrice productId");
+
+      const { sendPaymentSuccess, sendOrderPlaced, notifyAdminNewOrder } = require("../services/email/emailService");
+      await sendPaymentSuccess(populated, razorpay_payment_id, populated.totalAmount);
+      await sendOrderPlaced(populated);
+      await notifyAdminNewOrder({
+        orderId: populated.orderId,
+        customerName: req.user.name,
+        amount: populated.totalAmount,
+        paymentMethod: populated.paymentMethod,
+      });
+    } catch (err) {
+      console.error("Payment success email alerts failed:", err.message);
+    }
 
     res.status(200).json({ success: true, message: "Payment verified successfully.", data: order });
   } catch (err) {
@@ -189,4 +234,66 @@ const verifyPaymentSignature = async (req, res, next) => {
   }
 };
 
-module.exports = { createPaymentOrder, verifyPaymentSignature };
+/**
+ * @desc    Notify payment failure
+ * @route   POST /api/payments/fail
+ * @access  Private
+ */
+const notifyPaymentFailure = async (req, res, next) => {
+  try {
+    const { orderId, error } = req.body;
+    if (!orderId) {
+      res.status(400);
+      throw new Error("orderId is required");
+    }
+
+    const order = await Order.findById(orderId)
+      .populate("user", "name email phone")
+      .populate("items.product", "name brand images price discountPrice productId");
+
+    if (!order) {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+
+    const { sendPaymentFailed } = require("../services/email/emailService");
+    await sendPaymentFailed(order, order.totalAmount, error || "Transaction was cancelled or declined.");
+
+    res.status(200).json({ success: true, message: "Payment failure email enqueued." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const refundRazorpayPayment = async (paymentId, amountInRupees) => {
+  try {
+    const { keyId, keySecret } = getRazorpayConfig();
+    const authorization = Buffer.from(`${keyId}:${keySecret}`).toString("base64");
+    const amount = Math.round(amountInRupees * 100);
+
+    const response = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}/refund`, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${authorization}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount }),
+    });
+
+    const body = await response.json();
+    if (!response.ok) {
+      throw new Error(body.error?.description || "Razorpay gateway refund request failed");
+    }
+    return body;
+  } catch (err) {
+    console.error("[RazorpayRefund] Failed to trigger automatic refund:", err.message);
+    throw err;
+  }
+};
+
+module.exports = { 
+  createPaymentOrder, 
+  verifyPaymentSignature, 
+  notifyPaymentFailure,
+  refundRazorpayPayment
+};

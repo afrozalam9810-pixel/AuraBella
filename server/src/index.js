@@ -19,6 +19,11 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const { rateLimit } = require("express-rate-limit");
+const { doubleCsrf } = require("csrf-csrf");
+
 const connectDB = require("./config/db");
 const healthRouter = require("./routes/health.route");
 const authRouter = require("./routes/auth.route");
@@ -32,120 +37,150 @@ const adminCouponRouter = require("./routes/coupons.route");
 const adminUserRouter = require("./routes/users.route");
 const adminStatsRouter = require("./routes/adminStats.route");
 const paymentRouter = require("./routes/payments.route");
+const adminEmailRouter = require("./routes/email.route");
+const bannersRouter = require("./routes/banners.route");
+const { adminRouter: adminQARouter } = require("./routes/productQA.route");
+const pushRouter = require("./routes/push.route");
 const errorHandler = require("./middleware/errorHandler");
 
 // ─── App Setup ────────────────────────────────────────────────────────────────
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ─── Global Middleware ────────────────────────────────────────────────────────
+// ─── 1. Helmet — secure HTTP headers ──────────────────────────────────────────
+// Disables the default CSP (our API is not a browser entrypoint);
+// the SPA sets its own CSP via Vercel headers.
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // handled by frontend CDN
+    crossOriginEmbedderPolicy: false, // prevents CORS issues on API calls
+  })
+);
 
-// Custom Rate Limiter
-// Uses the real client IP (first entry in x-forwarded-for, not the proxy IP)
-// to avoid false positives on Render where all traffic shares the same proxy.
-const rateLimitWindowMs = 15 * 60 * 1000; // 15 minutes
-const rateLimitMaxRequests = 500;          // raised — admin dashboard makes many calls
-const ipRequestCache = new Map();
-
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, data] of ipRequestCache.entries()) {
-    if (now > data.resetTime) {
-      ipRequestCache.delete(ip);
-    }
-  }
-}, rateLimitWindowMs);
-
-const customRateLimiter = (req, res, next) => {
-  // Completely bypass rate limiting for safe public read endpoints
-  // to prevent dashboard or product browsing spikes from locking up connections.
-  const path = req.originalUrl || req.url || "";
-  if (
-    path.startsWith("/api/products") ||
-    path.startsWith("/api/categories") ||
-    path.startsWith("/api/health")
-  ) {
-    return next();
-  }
-
-  // Take the FIRST IP from x-forwarded-for (the real client),
-  // not the last (which is the Render/proxy IP shared by all users).
-  const forwarded = req.headers["x-forwarded-for"];
-  const ip = (forwarded ? forwarded.split(",")[0] : null) ||
-             req.socket.remoteAddress ||
-             "unknown";
-  const now = Date.now();
-
-  if (!ipRequestCache.has(ip)) {
-    ipRequestCache.set(ip, { count: 1, resetTime: now + rateLimitWindowMs });
-  } else {
-    const data = ipRequestCache.get(ip);
-    if (now > data.resetTime) {
-      data.count = 1;
-      data.resetTime = now + rateLimitWindowMs;
-    } else {
-      data.count++;
-    }
-    if (data.count > rateLimitMaxRequests) {
-      return res.status(429).json({
-        success: false,
-        message: "Too many requests. Please try again in 15 minutes.",
-      });
-    }
-  }
-  next();
-};
-
-// Security Headers
-// NOTE: CSP is intentionally omitted here — the frontend is a separate
-// domain (Vercel) and the backend is an API server. Applying a CSP on the
-// API responses does not protect the SPA and was previously blocking CORS
-// preflight requests. The SPA should set its own CSP via Vercel headers config.
-const customSecurityHeaders = (req, res, next) => {
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("X-XSS-Protection", "1; mode=block");
-  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-  if (req.secure) {
-    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-  }
-  next();
-};
-
-app.use(customRateLimiter);
-app.use(customSecurityHeaders);
-
-// CORS — accept both production domains and local dev
-// Supports: CLIENT_URL env var (set on Render), plus www variant and localhost.
+// ─── 2. CORS ──────────────────────────────────────────────────────────────────
 const allowedOrigins = [
   process.env.CLIENT_URL,
   process.env.CLIENT_URL ? process.env.CLIENT_URL.replace("://", "://www.") : null,
   "http://localhost:5173",
   "http://localhost:3000",
+  "http://localhost:3001",
 ].filter(Boolean);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, Postman, server-to-server)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
       callback(new Error(`CORS: origin '${origin}' not allowed`));
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-CSRF-Token"],
   })
 );
 
-// Parse incoming JSON bodies (max 10 MB — large enough for base64 image previews)
+// ─── 3. Body parsers & cookie parser ──────────────────────────────────────────
 app.use(express.json({ limit: "10mb" }));
-
-// Parse URL-encoded bodies (form submissions)
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-// Parse cookies (used by JWT refresh-token cookie strategy later)
 app.use(cookieParser());
+
+// ─── 4. NoSQL Injection Prevention ────────────────────────────────────────────
+// Strips keys beginning with `$` or containing `.` from req.body, req.params,
+// and req.query so that MongoDB operators cannot be injected via API payloads.
+app.use(
+  mongoSanitize({
+    allowDots: false,
+    onSanitize: ({ req, key }) => {
+      console.warn(`[Security] Sanitized suspicious key "${key}" on ${req.method} ${req.originalUrl}`);
+    },
+  })
+);
+
+// ─── 5. Rate Limiting ─────────────────────────────────────────────────────────
+// General API limiter — generous enough for the admin dashboard
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => {
+    // Use the real client IP from the x-forwarded-for header (set by Render/Railway proxies)
+    const forwarded = req.headers["x-forwarded-for"];
+    return (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket.remoteAddress || "unknown";
+  },
+  skip: (req) => {
+    // Skip rate limiting for public read-only endpoints to prevent false positives
+    const path = req.originalUrl || "";
+    return path.startsWith("/api/products") || path.startsWith("/api/categories") || path.startsWith("/api/health");
+  },
+  message: { success: false, message: "Too many requests. Please try again in 15 minutes." },
+});
+
+// Strict auth limiter — prevents brute-force login & OTP abuse
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => {
+    const forwarded = req.headers["x-forwarded-for"];
+    return (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket.remoteAddress || "unknown";
+  },
+  message: { success: false, message: "Too many login attempts. Please try again later." },
+});
+
+app.use(generalLimiter);
+
+// Apply strict auth limiter to authentication endpoints
+app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/register", authLimiter);
+app.use("/api/auth/forgot-password", authLimiter);
+app.use("/api/auth/reset-password", authLimiter);
+
+// ─── 6. CSRF Protection (Double-Submit Cookie Pattern) ────────────────────────
+// This protects state-mutating endpoints against cross-site request forgery.
+// The SPA must:
+//   (a) Call GET /api/csrf-token to receive a token in the response body,
+//   (b) Include that token as the X-CSRF-Token header on every mutating request.
+//
+// Public GET endpoints and Razorpay webhooks are exempt (safe methods + no cookies).
+const {
+  invalidCsrfTokenError,
+  generateToken,
+  doubleCsrfProtection,
+} = doubleCsrf({
+  getSecret: () => process.env.CSRF_SECRET || "aurabella-csrf-secret-change-in-production",
+  cookieName: "__Host-psifi.x-csrf-token",
+  cookieOptions: {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  },
+  size: 64,
+  ignoredMethods: ["GET", "HEAD", "OPTIONS"],
+  getTokenFromRequest: (req) => req.headers["x-csrf-token"],
+});
+
+// Endpoint for the SPA to fetch a fresh CSRF token
+app.get("/api/csrf-token", (req, res) => {
+  res.json({ csrfToken: generateToken(req, res) });
+});
+
+// Apply CSRF protection globally to all mutating routes
+app.use((req, res, next) => {
+  // Skip CSRF for Razorpay webhook callbacks (server-to-server, no cookie)
+  if (req.originalUrl.startsWith("/api/payments/webhook")) return next();
+  doubleCsrfProtection(req, res, next);
+});
+
+// Return a structured 403 when CSRF validation fails
+app.use((err, req, res, next) => {
+  if (err === invalidCsrfTokenError) {
+    return res.status(403).json({ success: false, message: "Invalid or missing CSRF token." });
+  }
+  next(err);
+});
 
 // ─── Request Logger (dev only) ────────────────────────────────────────────────
 if (process.env.NODE_ENV === "development") {
@@ -168,6 +203,10 @@ app.use("/api/admin/coupons", adminCouponRouter);
 app.use("/api/admin/users", adminUserRouter);
 app.use("/api/admin/stats", adminStatsRouter);
 app.use("/api/payments", paymentRouter);
+app.use("/api/admin/emails", adminEmailRouter);
+app.use("/api/banners", bannersRouter);
+app.use("/api/admin/qa", adminQARouter);
+app.use("/api/push", pushRouter);
 
 // ── 404 handler — catches any route not matched above ─────────────────────────
 app.use((_req, res) => {
@@ -194,6 +233,14 @@ const startServer = async () => {
       "\x1b[33m[Server]\x1b[0m  Starting without database — " +
       "routes that require DB access will return errors."
     );
+  } else {
+    // Start automated daily database backup job
+    try {
+      const { scheduleBackups } = require("./services/backupService");
+      scheduleBackups();
+    } catch (err) {
+      console.error("[Backup] Failed to schedule backups:", err.message);
+    }
   }
 
   // 2. Start HTTP listener. Railway routes traffic to the injected PORT over
