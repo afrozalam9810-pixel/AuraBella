@@ -126,6 +126,7 @@ productSchema.index({ category: 1 });
 productSchema.index({ subCategory: 1 });
 productSchema.index({ price: 1 });
 productSchema.index({ brand: 1 });
+productSchema.index({ createdAt: -1 }); // Index default sort field to prevent in-memory sort timeouts
 productSchema.index({ name: "text", description: "text", brand: "text" }); // Text index for search functionality
 
 const Product = mongoose.model("Product", productSchema);
