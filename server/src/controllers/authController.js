@@ -157,8 +157,10 @@ const completeGoogleAuth = async (req, res, next) => {
 
   try {
     const { code, state, error } = req.query;
-    if (error || !code || !state || !req.cookies?.google_oauth_state) {
-      return fail(error || "Google sign-in was cancelled.");
+    if (error) return fail(error === "access_denied" ? "Google sign-in was cancelled." : "Google sign-in failed.");
+    if (!code || !state) return fail("Invalid Google sign-in response. Please try again.");
+    if (!req.cookies?.google_oauth_state) {
+      return fail("Google sign-in session expired. Enable cookies, then try again.");
     }
 
     const expectedState = Buffer.from(req.cookies.google_oauth_state, "utf8");
