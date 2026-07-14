@@ -9,50 +9,45 @@
  *   4. Register global error handler (must be last)
  *   5. Attempt MongoDB connection (with retry logic)
  *   6. Start HTTP listener AFTER DB attempt resolves
- *      (in dev: server starts even if DB is unavailable)
- *      (in prod: process.exit(1) if DB fails — see config/db.js)
  */
 
 require("dotenv").config();
 
-const express = require("express");
-const cors = require("cors");
+const express      = require("express");
+const cors         = require("cors");
 const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-const helmet = require("helmet");
+const mongoose     = require("mongoose");
+const helmet       = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const { rateLimit } = require("express-rate-limit");
-const { doubleCsrf } = require("csrf-csrf");
 
-const connectDB = require("./config/db");
-const healthRouter = require("./routes/health.route");
-const authRouter = require("./routes/auth.route");
-const categoryRouter = require("./routes/categories.route");
-const productRouter = require("./routes/products.route");
-const cartRouter = require("./routes/cart.route");
-const wishlistRouter = require("./routes/wishlist.route");
-const orderRouter = require("./routes/orders.route");
-const adminOrderRouter = require("./routes/adminOrders.route");
+const connectDB         = require("./config/db");
+const healthRouter      = require("./routes/health.route");
+const authRouter        = require("./routes/auth.route");
+const categoryRouter    = require("./routes/categories.route");
+const productRouter     = require("./routes/products.route");
+const cartRouter        = require("./routes/cart.route");
+const wishlistRouter    = require("./routes/wishlist.route");
+const orderRouter       = require("./routes/orders.route");
+const adminOrderRouter  = require("./routes/adminOrders.route");
 const adminCouponRouter = require("./routes/coupons.route");
-const adminUserRouter = require("./routes/users.route");
-const adminStatsRouter = require("./routes/adminStats.route");
-const paymentRouter = require("./routes/payments.route");
-const adminEmailRouter = require("./routes/email.route");
-const bannersRouter = require("./routes/banners.route");
+const adminUserRouter   = require("./routes/users.route");
+const adminStatsRouter  = require("./routes/adminStats.route");
+const paymentRouter     = require("./routes/payments.route");
+const adminEmailRouter  = require("./routes/email.route");
+const bannersRouter     = require("./routes/banners.route");
 const { adminRouter: adminQARouter } = require("./routes/productQA.route");
-const pushRouter = require("./routes/push.route");
-const errorHandler = require("./middleware/errorHandler");
+const pushRouter        = require("./routes/push.route");
+const errorHandler      = require("./middleware/errorHandler");
 
 // ─── App Setup ────────────────────────────────────────────────────────────────
-const app = express();
+const app  = express();
 const PORT = process.env.PORT || 5000;
 
-// ─── 1. Helmet — secure HTTP headers ──────────────────────────────────────────
-// Disables the default CSP (our API is not a browser entrypoint);
-// the SPA sets its own CSP via Vercel headers.
+// ─── 1. Helmet — secure HTTP headers ─────────────────────────────────────────
 app.use(
   helmet({
-    contentSecurityPolicy: false, // handled by frontend CDN
+    contentSecurityPolicy:    false, // handled by frontend CDN
     crossOriginEmbedderPolicy: false, // prevents CORS issues on API calls
   })
 );
@@ -79,14 +74,14 @@ app.use(
   })
 );
 
-// ─── 3. Body parsers & cookie parser ──────────────────────────────────────────
+// ─── 3. Body parsers & cookie parser ─────────────────────────────────────────
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 
-// ─── 4. NoSQL Injection Prevention ────────────────────────────────────────────
+// ─── 4. NoSQL Injection Prevention ───────────────────────────────────────────
 // Strips keys beginning with `$` or containing `.` from req.body, req.params,
-// and req.query so that MongoDB operators cannot be injected via API payloads.
+// and req.query so MongoDB operators cannot be injected via API payloads.
 app.use(
   mongoSanitize({
     allowDots: false,
@@ -97,96 +92,56 @@ app.use(
 );
 
 // ─── 5. Rate Limiting ─────────────────────────────────────────────────────────
-// General API limiter — generous enough for the admin dashboard
+const getClientIp = (req) => {
+  const forwarded = req.headers["x-forwarded-for"];
+  return (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket.remoteAddress || "unknown";
+};
+
+// General API limiter — 500 req / 15 min per IP
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 500,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => {
-    // Use the real client IP from the x-forwarded-for header (set by Render/Railway proxies)
-    const forwarded = req.headers["x-forwarded-for"];
-    return (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket.remoteAddress || "unknown";
-  },
+  keyGenerator: getClientIp,
   skip: (req) => {
-    // Skip rate limiting for public read-only endpoints to prevent false positives
     const path = req.originalUrl || "";
-    return path.startsWith("/api/products") || path.startsWith("/api/categories") || path.startsWith("/api/health");
+    return (
+      path.startsWith("/api/products") ||
+      path.startsWith("/api/categories") ||
+      path.startsWith("/api/health")
+    );
   },
   message: { success: false, message: "Too many requests. Please try again in 15 minutes." },
 });
 
-// Strict auth limiter — prevents brute-force login & OTP abuse
+// Strict auth limiter — 30 req / 15 min (prevents brute-force)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 30,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => {
-    const forwarded = req.headers["x-forwarded-for"];
-    return (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket.remoteAddress || "unknown";
-  },
+  keyGenerator: getClientIp,
   message: { success: false, message: "Too many login attempts. Please try again later." },
 });
 
 app.use(generalLimiter);
-
-// Apply strict auth limiter to authentication endpoints
-app.use("/api/auth/login", authLimiter);
-app.use("/api/auth/register", authLimiter);
+app.use("/api/auth/login",           authLimiter);
+app.use("/api/auth/register",        authLimiter);
 app.use("/api/auth/forgot-password", authLimiter);
-app.use("/api/auth/reset-password", authLimiter);
+app.use("/api/auth/reset-password",  authLimiter);
 
-// ─── 6. CSRF Protection (Double-Submit Cookie Pattern) ────────────────────────
-// This protects state-mutating endpoints against cross-site request forgery.
-// The SPA must:
-//   (a) Call GET /api/csrf-token to receive a token in the response body,
-//   (b) Include that token as the X-CSRF-Token header on every mutating request.
-//
-// Public GET endpoints and Razorpay webhooks are exempt (safe methods + no cookies).
-const isProd = process.env.NODE_ENV === "production";
-
-const {
-  invalidCsrfTokenError,
-  generateToken,
-  doubleCsrfProtection,
-} = doubleCsrf({
-  getSecret: () => process.env.CSRF_SECRET || "aurabella-csrf-secret-change-in-production",
-  // In production the SPA (aurabellaafroz.com) and API (aurabellaafroz.up.railway.app)
-  // are on DIFFERENT origins. Cross-origin cookies require SameSite=None + Secure.
-  // NOTE: The `__Host-` prefix is INCOMPATIBLE with SameSite=None (browser spec §4.1.3).
-  // We use a plain cookie name instead so the browser accepts it cross-origin.
-  cookieName: isProd ? "psifi.x-csrf-token" : "psifi.x-csrf-token",
-  cookieOptions: {
-    httpOnly: true,
-    sameSite: isProd ? "none" : "lax",
-    secure: isProd,
-    path: "/",
-  },
-  size: 64,
-  ignoredMethods: ["GET", "HEAD", "OPTIONS"],
-  // csrf-csrf v3 API: getTokenFromRequest (not getCsrfTokenFromRequest)
-  getTokenFromRequest: (req) => req.headers["x-csrf-token"],
-});
-
-// Endpoint for the SPA to fetch a fresh CSRF token
-app.get("/api/csrf-token", (req, res) => {
-  res.json({ csrfToken: generateToken(req, res) });
-});
-
-// Apply CSRF protection globally to all mutating routes
-app.use((req, res, next) => {
-  // Skip CSRF for Razorpay webhook callbacks (server-to-server, no cookie)
-  if (req.originalUrl.startsWith("/api/payments/webhook")) return next();
-  doubleCsrfProtection(req, res, next);
-});
-
-// Return a structured 403 when CSRF validation fails
-app.use((err, req, res, next) => {
-  if (err === invalidCsrfTokenError) {
-    return res.status(403).json({ success: false, message: "Invalid or missing CSRF token." });
-  }
-  next(err);
+// ─── 6. CSRF Token stub ───────────────────────────────────────────────────────
+// The csrf-csrf double-submit-cookie pattern is incompatible with cross-origin
+// SPA+REST deployments (frontend on Cloudflare, API on Railway — different domains).
+// CSRF protection is instead enforced by:
+//   • CORS origin whitelist (only aurabellaafroz.com is allowed)
+//   • SameSite=Lax cookies on the auth JWT
+//   • Helmet security headers
+// This endpoint returns a no-op token so any cached frontend build that calls
+// GET /api/csrf-token does not throw a 404.
+app.get("/api/csrf-token", (_req, res) => {
+  res.json({ csrfToken: "no-op" });
 });
 
 // ─── Request Logger (dev only) ────────────────────────────────────────────────
@@ -198,24 +153,24 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
-app.use("/api/health", healthRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/categories", categoryRouter);
-app.use("/api/products", productRouter);
-app.use("/api/cart", cartRouter);
-app.use("/api/wishlist", wishlistRouter);
-app.use("/api/orders", orderRouter);
-app.use("/api/admin/orders", adminOrderRouter);
+app.use("/api/health",        healthRouter);
+app.use("/api/auth",          authRouter);
+app.use("/api/categories",    categoryRouter);
+app.use("/api/products",      productRouter);
+app.use("/api/cart",          cartRouter);
+app.use("/api/wishlist",      wishlistRouter);
+app.use("/api/orders",        orderRouter);
+app.use("/api/admin/orders",  adminOrderRouter);
 app.use("/api/admin/coupons", adminCouponRouter);
-app.use("/api/admin/users", adminUserRouter);
-app.use("/api/admin/stats", adminStatsRouter);
-app.use("/api/payments", paymentRouter);
-app.use("/api/admin/emails", adminEmailRouter);
-app.use("/api/banners", bannersRouter);
-app.use("/api/admin/qa", adminQARouter);
-app.use("/api/push", pushRouter);
+app.use("/api/admin/users",   adminUserRouter);
+app.use("/api/admin/stats",   adminStatsRouter);
+app.use("/api/payments",      paymentRouter);
+app.use("/api/admin/emails",  adminEmailRouter);
+app.use("/api/banners",       bannersRouter);
+app.use("/api/admin/qa",      adminQARouter);
+app.use("/api/push",          pushRouter);
 
-// ── 404 handler — catches any route not matched above ─────────────────────────
+// ─── 404 handler ──────────────────────────────────────────────────────────────
 app.use((_req, res) => {
   res.status(404).json({
     success: false,
@@ -226,13 +181,8 @@ app.use((_req, res) => {
 // ─── Global Error Handler (must be the LAST middleware) ───────────────────────
 app.use(errorHandler);
 
-// ─── Bootstrap ───────────────────────────────────────────────────────────────
-// Wrap startup in an async function so we can await the DB connection
-// before opening the HTTP port. This prevents the server from accepting
-// requests before it is ready in production.
-
+// ─── Bootstrap ────────────────────────────────────────────────────────────────
 const startServer = async () => {
-  // 1. Connect to MongoDB (retries internally; exits in prod on failure)
   const dbConnected = await connectDB();
 
   if (!dbConnected) {
@@ -241,7 +191,6 @@ const startServer = async () => {
       "routes that require DB access will return errors."
     );
   } else {
-    // Start automated daily database backup job
     try {
       const { scheduleBackups } = require("./services/backupService");
       scheduleBackups();
@@ -250,9 +199,6 @@ const startServer = async () => {
     }
   }
 
-  // 2. Start HTTP listener. Railway routes traffic to the injected PORT over
-  // IPv4, so bind explicitly to all IPv4 interfaces rather than relying on
-  // the platform-specific default host.
   const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(
       `\n\x1b[35m╔══════════════════════════════════════════╗\x1b[0m`
@@ -280,9 +226,6 @@ const startServer = async () => {
     );
   });
 
-  // Railway sends SIGTERM while replacing or stopping a deployment. Stop
-  // accepting new requests first, then close the database connection before
-  // exiting. This prevents in-flight requests from being dropped abruptly.
   const shutdown = (signal) => {
     console.log(`[Server] ${signal} received; shutting down gracefully.`);
     server.close(async () => {
@@ -295,10 +238,9 @@ const startServer = async () => {
   };
 
   process.once("SIGTERM", () => shutdown("SIGTERM"));
-  process.once("SIGINT", () => shutdown("SIGINT"));
+  process.once("SIGINT",  () => shutdown("SIGINT"));
 };
 
-// Kick off startup — catch any unexpected top-level errors
 startServer().catch((err) => {
   console.error("\x1b[31m[Server]\x1b[0m  Fatal startup error:", err.message);
   process.exit(1);

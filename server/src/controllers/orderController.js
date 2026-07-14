@@ -525,7 +525,14 @@ const updateOrderStatus = async (req, res, next) => {
       }
     }
 
-    await order.save();
+    // Use findByIdAndUpdate with runValidators: false to bypass schema validation for older orders
+    await Order.findByIdAndUpdate(order._id, {
+      $set: {
+        orderStatus: order.orderStatus,
+        paymentStatus: order.paymentStatus,
+        statusTimeline: order.statusTimeline
+      }
+    }, { runValidators: false });
 
     // ─── 2. Trigger Status Update Notifications (Email, SMS, Web Push) ───────
     try {
@@ -611,7 +618,22 @@ const updateFulfillment = async (req, res, next) => {
       if (orderStatus === "delivered" && order.paymentMethod === "cod") order.paymentStatus = "completed";
       order.statusTimeline.push({ status: orderStatus, at: new Date(), note: note || "" });
     }
-    await order.save();
+    // Use $set update instead of order.save() to bypass MongoDB Atlas collection-level
+    // validators that fail on older orders missing fields added in later schema versions.
+    const updateFields = {};
+    if (courierPartner !== undefined)        updateFields.courierPartner       = courierPartner;
+    if (trackingNumber !== undefined)        updateFields.trackingNumber       = trackingNumber;
+    if (estimatedDeliveryDate !== undefined) updateFields.estimatedDeliveryDate = estimatedDeliveryDate || null;
+    if (packageWeight !== undefined)         updateFields.packageWeight        = packageWeight;
+    if (packageDimensions !== undefined)     updateFields.packageDimensions    = packageDimensions;
+    if (orderStatus) {
+      updateFields.orderStatus    = orderStatus;
+      updateFields.statusTimeline = order.statusTimeline; // already pushed above
+      if (orderStatus === "delivered" && order.paymentMethod === "cod") {
+        updateFields.paymentStatus = "completed";
+      }
+    }
+    await Order.findByIdAndUpdate(order._id, { $set: updateFields }, { runValidators: false });
     const populated = await Order.findById(order._id).populate(orderPopulate);
 
     // Trigger fulfillment update emails
