@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 
 const WishlistPage = dynamic(() => import("../../views/WishlistPage"), { ssr: false });
