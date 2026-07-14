@@ -33,6 +33,38 @@
   --shadow-card-hover:0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
+html.light {
+  --color-dark-900: #f8f5fb;
+  --color-dark-800: #ffffff;
+  --color-dark-700: #f1eaf5;
+  --color-text: #24162e;
+  --color-text-muted: #685574;
+  --border-color: rgba(113, 48, 136, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(58, 27, 76, 0.12);
+  --shadow-card: 0 4px 24px rgba(49, 22, 62, 0.1);
+  --shadow-card-hover: 0 12px 40px rgba(49, 22, 62, 0.16);
+}
+
+/* The storefront predates theme tokens and contains explicit dark utilities.
+   These scoped overrides keep its surfaces, text, and controls readable in light mode. */
+html.light .bg-dark-900 { background-color: #f8f5fb !important; }
+html.light .bg-dark-800 { background-color: #ffffff !important; }
+html.light .bg-dark-700 { background-color: #f1eaf5 !important; }
+html.light [class*="text-white"],
+html.light [class*="text-[#f0e8ff]"] { color: #24162e !important; }
+html.light [class*="text-white/"] { color: #685574 !important; }
+html.light [class*="border-white"] { border-color: rgba(58, 27, 76, 0.14) !important; }
+html.light [class*="bg-white/"] { background-color: rgba(255, 255, 255, 0.92) !important; }
+html.light input,
+html.light textarea,
+html.light select { color: #24162e !important; }
+html.light .bg-brand-gradient,
+html.light .btn-primary { color: #ffffff !important; }
+html.light .bg-brand-gradient *,
+html.light .btn-primary * { color: #ffffff !important; }
+html.light .gradient-bg-animated { background: linear-gradient(-45deg, #f8f5fb, #f3e7f8, #fff4f7, #f8f0e5); }
+
 /* ── Base Reset & Defaults ──────────────────────────────────────── */
 @layer base {
   *, *::before, *::after {

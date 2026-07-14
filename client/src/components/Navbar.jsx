@@ -11,9 +11,12 @@ import {
   FiLogOut,
   FiChevronDown,
   FiSliders,
+  FiMoon,
+  FiSun,
 } from "react-icons/fi";
 import { toggleMobileMenu, closeAll } from "../store/slices/uiSlice";
 import { logout } from "../store/slices/authSlice";
+import { useTheme } from "../context/ThemeContext";
 
 const NAVIGATION_LINKS = [
   { name: "Clothing", slug: "clothing" },
@@ -27,6 +30,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { totalQty } = useSelector((state) => state.cart);
@@ -119,6 +123,16 @@ export default function Navbar() {
               </span>
             )}
           </Link>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="hover:text-primary-400 transition-colors p-1"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? <FiSun /> : <FiMoon />}
+          </button>
 
           {/* Account Dropdown */}
           <div className="relative">
