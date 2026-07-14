@@ -8,6 +8,7 @@ dist/
 build/
 .vite/
 out/
+client/.next/
 
 # ─── Environment variables ───────────────────────────────────────
 .env
