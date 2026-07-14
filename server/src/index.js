@@ -144,29 +144,29 @@ app.use("/api/auth/reset-password", authLimiter);
 //   (b) Include that token as the X-CSRF-Token header on every mutating request.
 //
 // Public GET endpoints and Razorpay webhooks are exempt (safe methods + no cookies).
+const isProd = process.env.NODE_ENV === "production";
+
 const {
   invalidCsrfTokenError,
   generateToken,
   doubleCsrfProtection,
 } = doubleCsrf({
   getSecret: () => process.env.CSRF_SECRET || "aurabella-csrf-secret-change-in-production",
-  // Credential requests from the deployed UI reach the API cross-origin.
-  // A strict cookie is not sent with those requests, so the token header
-  // cannot be validated. `SameSite=None` + `Secure` keeps the double-submit
-  // protection intact while allowing the browser to send the CSRF cookie.
-  cookieName:
-    process.env.NODE_ENV === "production"
-      ? "__Host-psifi.x-csrf-token"
-      : "psifi.x-csrf-token",
+  // In production the SPA (aurabellaafroz.com) and API (aurabellaafroz.up.railway.app)
+  // are on DIFFERENT origins. Cross-origin cookies require SameSite=None + Secure.
+  // NOTE: The `__Host-` prefix is INCOMPATIBLE with SameSite=None (browser spec §4.1.3).
+  // We use a plain cookie name instead so the browser accepts it cross-origin.
+  cookieName: isProd ? "psifi.x-csrf-token" : "psifi.x-csrf-token",
   cookieOptions: {
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
     path: "/",
   },
   size: 64,
   ignoredMethods: ["GET", "HEAD", "OPTIONS"],
-  getCsrfTokenFromRequest: (req) => req.headers["x-csrf-token"],
+  // csrf-csrf v3 API: getTokenFromRequest (not getCsrfTokenFromRequest)
+  getTokenFromRequest: (req) => req.headers["x-csrf-token"],
 });
 
 // Endpoint for the SPA to fetch a fresh CSRF token
