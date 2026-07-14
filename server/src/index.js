@@ -40,29 +40,33 @@ const PORT = process.env.PORT || 5000;
 
 // ─── Global Middleware ────────────────────────────────────────────────────────
 
-// Custom Rate Limiter (Memory Store)
-const rateLimitWindowMs = 15 * 60 * 1000;
-const rateLimitMaxRequests = 200;
+// Custom Rate Limiter
+// Uses the real client IP (first entry in x-forwarded-for, not the proxy IP)
+// to avoid false positives on Render where all traffic shares the same proxy.
+const rateLimitWindowMs = 15 * 60 * 1000; // 15 minutes
+const rateLimitMaxRequests = 500;          // raised — admin dashboard makes many calls
 const ipRequestCache = new Map();
 
 setInterval(() => {
   const now = Date.now();
   for (const [ip, data] of ipRequestCache.entries()) {
-    if (now - data.resetTime > rateLimitWindowMs) {
+    if (now > data.resetTime) {
       ipRequestCache.delete(ip);
     }
   }
 }, rateLimitWindowMs);
 
 const customRateLimiter = (req, res, next) => {
-  const ip = req.ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  // Take the FIRST IP from x-forwarded-for (the real client),
+  // not the last (which is the Render/proxy IP shared by all users).
+  const forwarded = req.headers["x-forwarded-for"];
+  const ip = (forwarded ? forwarded.split(",")[0] : null) ||
+             req.socket.remoteAddress ||
+             "unknown";
   const now = Date.now();
 
   if (!ipRequestCache.has(ip)) {
-    ipRequestCache.set(ip, {
-      count: 1,
-      resetTime: now + rateLimitWindowMs,
-    });
+    ipRequestCache.set(ip, { count: 1, resetTime: now + rateLimitWindowMs });
   } else {
     const data = ipRequestCache.get(ip);
     if (now > data.resetTime) {
@@ -71,24 +75,26 @@ const customRateLimiter = (req, res, next) => {
     } else {
       data.count++;
     }
-
     if (data.count > rateLimitMaxRequests) {
       return res.status(429).json({
         success: false,
-        message: "Too many requests from this IP. Please try again after 15 minutes.",
+        message: "Too many requests. Please try again in 15 minutes.",
       });
     }
   }
   next();
 };
 
-// Custom Helmet Headers
+// Security Headers
+// NOTE: CSP is intentionally omitted here — the frontend is a separate
+// domain (Vercel) and the backend is an API server. Applying a CSP on the
+// API responses does not protect the SPA and was previously blocking CORS
+// preflight requests. The SPA should set its own CSP via Vercel headers config.
 const customSecurityHeaders = (req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("X-XSS-Protection", "1; mode=block");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-  res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' http://localhost:5000 http://localhost:5173 https://api.razorpay.com;");
   if (req.secure) {
     res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   }
@@ -98,11 +104,24 @@ const customSecurityHeaders = (req, res, next) => {
 app.use(customRateLimiter);
 app.use(customSecurityHeaders);
 
-// CORS — allow requests from the React dev server (and production domain)
+// CORS — accept both production domains and local dev
+// Supports: CLIENT_URL env var (set on Render), plus www variant and localhost.
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  process.env.CLIENT_URL ? process.env.CLIENT_URL.replace("://", "://www.") : null,
+  "http://localhost:5173",
+  "http://localhost:3000",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true, // needed when the client sends cookies / auth headers
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, Postman, server-to-server)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
+    },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
