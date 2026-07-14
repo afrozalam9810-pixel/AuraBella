@@ -2,6 +2,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 import { setCredentials } from "../store/slices/authSlice";
 import api from "../api/axios";
 
@@ -32,6 +33,10 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    window.location.assign(`${api.defaults.baseURL}/auth/google`);
   };
 
   return (
@@ -108,6 +113,17 @@ export default function LoginPage() {
             {loading ? "Signing in…" : "Sign In"}
           </button>
         </form>
+
+        <div className="flex items-center gap-3 text-white/30 text-[10px] uppercase tracking-wider">
+          <span className="h-px flex-1 bg-white/10" /> Or continue with <span className="h-px flex-1 bg-white/10" />
+        </div>
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="w-full py-3 border border-white/15 rounded-xl text-sm font-semibold text-white hover:bg-white/5 transition-colors flex items-center justify-center gap-3"
+        >
+          <FcGoogle className="text-xl" /> Continue with Google
+        </button>
 
         {/* Footer Links */}
         <p className="text-center font-sans text-xs text-[#9d8bbb]">

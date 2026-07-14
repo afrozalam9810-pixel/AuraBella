@@ -4,7 +4,7 @@
  */
 
 const express = require("express");
-const { register, login, getMe, logout, updateProfile, addAddress, updateAddress, deleteAddress } = require("../controllers/authController");
+const { register, login, startGoogleAuth, completeGoogleAuth, getMe, logout, updateProfile, addAddress, updateAddress, deleteAddress } = require("../controllers/authController");
 const { protect } = require("../middleware/auth");
 
 const router = express.Router();
@@ -12,6 +12,8 @@ const router = express.Router();
 // Public routes
 router.post("/register", register);
 router.post("/login", login);
+router.get("/google", startGoogleAuth);
+router.get("/google/callback", completeGoogleAuth);
 
 // Protected routes (requires valid token)
 router.post("/logout", protect, logout);

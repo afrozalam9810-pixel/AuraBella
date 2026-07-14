@@ -4,7 +4,26 @@
  */
 
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const { OAuth2Client } = require("google-auth-library");
 const User = require("../models/User.model");
+
+const getGoogleConfig = () => {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const callbackUrl = process.env.GOOGLE_CALLBACK_URL;
+  if (!clientId || !clientSecret || !callbackUrl) {
+    throw new Error("Google sign-in is not configured.");
+  }
+  return { clientId, callbackUrl, client: new OAuth2Client(clientId, clientSecret, callbackUrl) };
+};
+
+const getCookieOptions = (maxAge) => ({
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  ...(maxAge && { maxAge }),
+});
 
 /**
  * Generate a JWT token signed with user's ID.
@@ -23,9 +42,8 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   const cookieExpiryDays = parseInt(process.env.JWT_COOKIE_EXPIRES_IN, 10) || 7;
   const cookieOptions = {
+    ...getCookieOptions(),
     expires: new Date(Date.now() + cookieExpiryDays * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   };
 
@@ -113,6 +131,85 @@ const login = async (req, res, next) => {
     sendTokenResponse(user, 200, res);
   } catch (error) {
     next(error);
+  }
+};
+
+const startGoogleAuth = (req, res, next) => {
+  try {
+    const { client } = getGoogleConfig();
+    const state = crypto.randomBytes(32).toString("hex");
+    res.cookie("google_oauth_state", state, getCookieOptions(10 * 60 * 1000));
+
+    res.redirect(client.generateAuthUrl({
+      access_type: "online",
+      prompt: "select_account",
+      scope: ["openid", "email", "profile"],
+      state,
+    }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+const completeGoogleAuth = async (req, res, next) => {
+  const clientUrl = (process.env.CLIENT_URL || "http://localhost:5173").replace(/\/$/, "");
+  const fail = (reason) => res.redirect(`${clientUrl}/auth/google/callback?error=${encodeURIComponent(reason)}`);
+
+  try {
+    const { code, state, error } = req.query;
+    if (error || !code || !state || !req.cookies?.google_oauth_state) {
+      return fail(error || "Google sign-in was cancelled.");
+    }
+
+    const expectedState = Buffer.from(req.cookies.google_oauth_state, "utf8");
+    const receivedState = Buffer.from(state, "utf8");
+    res.clearCookie("google_oauth_state", getCookieOptions());
+    if (expectedState.length !== receivedState.length || !crypto.timingSafeEqual(expectedState, receivedState)) {
+      return fail("Invalid Google sign-in state. Please try again.");
+    }
+
+    const { client, clientId } = getGoogleConfig();
+    const { tokens } = await client.getToken(code);
+    if (!tokens.id_token) throw new Error("Google did not return an identity token.");
+    const ticket = await client.verifyIdToken({ idToken: tokens.id_token, audience: clientId });
+    const profile = ticket.getPayload();
+    if (!profile?.sub || !profile.email || !profile.email_verified) {
+      throw new Error("Your Google account does not have a verified email address.");
+    }
+
+    let user = await User.findOne({ googleId: profile.sub });
+    if (!user) {
+      user = await User.findOne({ email: profile.email.toLowerCase() });
+      if (user) {
+        user.googleId = profile.sub;
+        if (!user.avatar && profile.picture) user.avatar = profile.picture;
+        user.isVerified = true;
+        await user.save();
+      } else {
+        user = await User.create({
+          name: profile.name || profile.email.split("@")[0],
+          email: profile.email.toLowerCase(),
+          googleId: profile.sub,
+          avatar: profile.picture || "",
+          isVerified: true,
+        });
+      }
+    }
+
+    if (!user.isActive || user.isBlocked) return fail("This account has been deactivated or blocked.");
+    const token = generateToken(user._id);
+    const cookieExpiryDays = parseInt(process.env.JWT_COOKIE_EXPIRES_IN, 10) || 7;
+    res.cookie("token", token, {
+      ...getCookieOptions(),
+      expires: new Date(Date.now() + cookieExpiryDays * 24 * 60 * 60 * 1000),
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
+
+    // A URL fragment is never sent to the server or included in referrer headers.
+    res.redirect(`${clientUrl}/auth/google/callback#token=${encodeURIComponent(token)}`);
+  } catch (error) {
+    console.error("Google authentication failed:", error.message);
+    return fail("Google sign-in failed. Please try again.");
   }
 };
 
@@ -257,6 +354,8 @@ const deleteAddress = async (req, res, next) => {
 module.exports = {
   register,
   login,
+  startGoogleAuth,
+  completeGoogleAuth,
   getMe,
   logout,
   updateProfile,

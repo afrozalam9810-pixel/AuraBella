@@ -20,6 +20,7 @@ import CheckoutPage           from "./pages/CheckoutPage";
 import WishlistPage           from "./pages/WishlistPage";
 import LoginPage              from "./pages/LoginPage";
 import RegisterPage           from "./pages/RegisterPage";
+import GoogleAuthCallback     from "./pages/GoogleAuthCallback";
 import AccountPage            from "./pages/AccountPage";
 import AccountOrdersPage      from "./pages/AccountOrdersPage";
 import AccountOrderDetailPage from "./pages/AccountOrderDetailPage";
@@ -56,6 +57,7 @@ function App() {
           <Route path="/cart"                     element={<CartPage />} />
           <Route path="/login"                    element={<LoginPage />} />
           <Route path="/register"                 element={<RegisterPage />} />
+          <Route path="/auth/google/callback"     element={<GoogleAuthCallback />} />
 
           {/* Protected Routes */}
           <Route path="/checkout"                 element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
