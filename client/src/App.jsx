@@ -4,6 +4,7 @@
  * Defines the full route tree with Navbar + Footer shared layout.
  */
 
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Layout
@@ -36,18 +37,19 @@ import ReturnsPage            from "./views/ReturnsPage";
 import ShippingPage           from "./views/ShippingPage";
 import FaqPage                from "./views/FaqPage";
 
-// Admin imports
 import AdminRoute             from "./components/AdminRoute";
-import AdminLayout            from "./views/admin/AdminLayout";
-import AdminDashboard         from "./views/admin/AdminDashboard";
-import AdminProducts          from "./views/admin/AdminProducts";
-import AdminProductForm       from "./views/admin/AdminProductForm";
-import AdminCategories        from "./views/admin/AdminCategories";
-import AdminOrders            from "./views/admin/AdminOrders";
-import AdminCoupons           from "./views/admin/AdminCoupons";
-import AdminUsers             from "./views/admin/AdminUsers";
-import AdminOrderDetail       from "./views/admin/AdminOrderDetail";
-import InvoicePage            from "./views/admin/InvoicePage";
+// Admin pages are loaded only for an admin route. This keeps the storefront
+// bundle from downloading dashboard and invoice code before it is needed.
+const AdminLayout = lazy(() => import("./views/admin/AdminLayout"));
+const AdminDashboard = lazy(() => import("./views/admin/AdminDashboard"));
+const AdminProducts = lazy(() => import("./views/admin/AdminProducts"));
+const AdminProductForm = lazy(() => import("./views/admin/AdminProductForm"));
+const AdminCategories = lazy(() => import("./views/admin/AdminCategories"));
+const AdminOrders = lazy(() => import("./views/admin/AdminOrders"));
+const AdminCoupons = lazy(() => import("./views/admin/AdminCoupons"));
+const AdminUsers = lazy(() => import("./views/admin/AdminUsers"));
+const AdminOrderDetail = lazy(() => import("./views/admin/AdminOrderDetail"));
+const InvoicePage = lazy(() => import("./views/admin/InvoicePage"));
 
 // General components
 import Toast                  from "./components/Toast";
@@ -60,7 +62,14 @@ function App() {
 
       {/* Main content grows to fill remaining viewport height */}
       <main className="flex-grow">
-        <Routes>
+        <Suspense
+          fallback={
+            <div className="min-h-[60vh] flex items-center justify-center">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500" />
+            </div>
+          }
+        >
+          <Routes>
           {/* Public */}
           <Route path="/"                         element={<HomePage />} />
           <Route path="/category/:slug"           element={<ProductListingPage />} />
@@ -101,7 +110,8 @@ function App() {
 
           {/* 404 */}
           <Route path="*"                         element={<NotFoundPage />} />
-        </Routes>
+          </Routes>
+        </Suspense>
       </main>
 
       <Footer />

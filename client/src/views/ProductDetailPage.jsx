@@ -56,7 +56,35 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
   // Track product view for recently viewed carousel
   useTrackRecentlyViewed(product);
 
-  // Fetch product data, reviews, related products, and wishlist status on id change
+  const fetchRelatedProducts = async (prod) => {
+    if (!prod.category) return;
+
+    try {
+      const categoryId = prod.category._id || prod.category;
+      const { data } = await api.get(`/products?category=${categoryId}&limit=5`);
+      if (data?.success) {
+        setRelatedProducts(data.data.filter((item) => item._id !== prod._id));
+      }
+    } catch (_) {
+      // Related products are optional and must not delay the main page.
+    }
+  };
+
+  const fetchWishlistStatus = async (productId) => {
+    if (!isAuthenticated) return;
+
+    try {
+      const { data } = await api.get("/wishlist");
+      if (data?.success) {
+        setIsWishlisted(data.data.some((item) => item._id === productId));
+      }
+    } catch (_) {
+      // Wishlist status is optional for the initial product render.
+    }
+  };
+
+  // Fetch the product first. Related products and wishlist state load after
+  // the main product is visible instead of holding the page loader open.
   const fetchProductData = async () => {
     try {
       setLoading(true);
@@ -73,29 +101,9 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
           setSelectedColor(firstInStock.color || "");
         }
 
-        // Fetch related products from same category
-        if (prod.category) {
-          const catId = prod.category._id || prod.category;
-          const relatedRes = await api.get(`/products?category=${catId}&limit=5`);
-          if (relatedRes.data && relatedRes.data.success) {
-            // Filter out current product
-            const filtered = relatedRes.data.data.filter((p) => p._id !== prod._id);
-            setRelatedProducts(filtered);
-          }
-        }
-
-        // Check if item is in wishlist (if logged in)
-        if (isAuthenticated) {
-          try {
-            const wishlistRes = await api.get("/wishlist");
-            if (wishlistRes.data && wishlistRes.data.success) {
-              const inWishlist = wishlistRes.data.data.some((p) => p._id === prod._id);
-              setIsWishlisted(inWishlist);
-            }
-          } catch (_) {
-            // Wishlist fetch failed silently
-          }
-        }
+        setLoading(false);
+        void fetchRelatedProducts(prod);
+        void fetchWishlistStatus(prod._id);
       }
     } catch (err) {
       console.error(err);
@@ -111,31 +119,11 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
       setRelatedProducts(initialRelatedProducts || []);
       setLoading(false);
 
-      if (isAuthenticated) {
-        api.get("/wishlist")
-          .then((res) => {
-            if (res.data && res.data.success) {
-              const inWishlist = res.data.data.some((p) => p._id === id);
-              setIsWishlisted(inWishlist);
-            }
-          })
-          .catch(() => {});
-      }
+      void fetchWishlistStatus(id);
       return;
     }
 
     fetchProductData();
-    if (isAuthenticated) {
-      api.get("/wishlist")
-        .then((res) => {
-          if (res.data && res.data.success) {
-            const inWishlist = res.data.data.some((p) => p._id === id);
-            setIsWishlisted(inWishlist);
-          }
-        })
-        .catch(() => {});
-    }
-
     // Reset view specific states
     setQty(1);
     setActiveImageIdx(0);

@@ -121,7 +121,8 @@ const getProductById = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate("category", "name slug")
-      .populate("subCategory", "name slug");
+      .populate("subCategory", "name slug")
+      .lean();
 
     if (!product) {
       res.status(404);
@@ -131,12 +132,13 @@ const getProductById = async (req, res, next) => {
     // Fetch related reviews and populate the user details
     const reviews = await Review.find({ product: product._id })
       .populate("user", "name email avatar")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
 
     res.status(200).json({
       success: true,
       data: {
-        ...product.toObject(),
+        ...product,
         reviews,
       },
     });
