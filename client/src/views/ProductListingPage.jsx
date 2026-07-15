@@ -37,6 +37,34 @@ export default function ProductListingPage({
     return val ? val.split(",") : [];
   }, [searchParams]);
 
+  // Determine the active category before any effect reads it. Referencing a
+  // later `const` from an effect dependency array throws at render time and
+  // leaves the category route as a blank page.
+  const currentCategoryContext = useMemo(() => {
+    if (!categories.length) return null;
+
+    const parent = categories.find((category) => category.slug === slug);
+    if (parent) {
+      return { type: "parent", category: parent, id: parent._id };
+    }
+
+    for (const parentCategory of categories) {
+      const subCategory = (parentCategory.subCategories || []).find(
+        (category) => category.slug === slug
+      );
+      if (subCategory) {
+        return {
+          type: "sub",
+          category: subCategory,
+          parent: parentCategory,
+          id: subCategory._id,
+        };
+      }
+    }
+
+    return null;
+  }, [categories, slug]);
+
   // Fetch all nested categories on mount
   useEffect(() => {
     if (initialCategories) return;
@@ -101,27 +129,6 @@ export default function ProductListingPage({
       if (s) s.remove();
     };
   }, [products, currentCategoryContext, searchParams, slug]);
-
-  // Determine current active category or subcategory from slug
-  const currentCategoryContext = useMemo(() => {
-    if (!categories.length) return null;
-    
-    // Check if slug matches a parent category
-    const parent = categories.find((cat) => cat.slug === slug);
-    if (parent) {
-      return { type: "parent", category: parent, id: parent._id };
-    }
-
-    // Check if slug matches a subcategory
-    for (const p of categories) {
-      const sub = p.subCategories.find((s) => s.slug === slug);
-      if (sub) {
-        return { type: "sub", category: sub, parent: p, id: sub._id };
-      }
-    }
-
-    return null;
-  }, [categories, slug]);
 
   // Fetch products whenever filters or category changes
   useEffect(() => {
