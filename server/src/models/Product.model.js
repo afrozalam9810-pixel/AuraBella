@@ -149,6 +149,17 @@ productSchema.index({ brand: 1 });
 productSchema.index({ isDeleted: 1 });
 productSchema.index({ createdAt: -1 }); // Index default sort field to prevent in-memory sort timeouts
 productSchema.index({ name: "text", description: "text", brand: "text" }); // Text index for search functionality
+// A product is identified by its name and description.  The collation makes
+// the constraint case-insensitive, so "Silk Dress" and "silk dress" cannot
+// be entered as separate products with the same description.
+productSchema.index(
+  { name: 1, description: 1 },
+  {
+    unique: true,
+    name: "unique_product_name_description",
+    collation: { locale: "en", strength: 2 },
+  }
+);
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;

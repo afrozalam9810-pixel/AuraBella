@@ -50,12 +50,20 @@ const errorHandler = (err, req, res, next) => {
   // 4. Duplicate Key Error (MongoDB code 11000)
   else if (err.code === 11000) {
     statusCode = 409;
+    if (err.keyPattern?.name && err.keyPattern?.description) {
+      message = "A product with the same name and description already exists.";
+      errors = [{
+        field: "name",
+        message: "Choose a different name or description for this product.",
+      }];
+    } else {
     const field = Object.keys(err.keyValue || {})[0] || "field";
     message    = `Duplicate entry: That ${field} is already in use.`;
     errors     = [{
       field,
       message: `This ${field} is already registered.`,
     }];
+    }
   }
   // 5. JWT or Session Expired Errors
   else if (err.name === "JsonWebTokenError") {
