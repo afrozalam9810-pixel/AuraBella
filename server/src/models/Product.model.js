@@ -141,12 +141,17 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+productSchema.index({
+    avgRating: -1,
+    numReviews: -1
+});
+
+
 // Indexes for common queries
 productSchema.index({ category: 1 });
 productSchema.index({ subCategory: 1 });
 productSchema.index({ price: 1 });
 productSchema.index({ brand: 1 });
-productSchema.index({ isDeleted: 1 });
 productSchema.index({ createdAt: -1 }); // Index default sort field to prevent in-memory sort timeouts
 productSchema.index({ name: "text", description: "text", brand: "text" }); // Text index for search functionality
 // A product is identified by its name and description.  The collation makes

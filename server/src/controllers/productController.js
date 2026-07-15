@@ -36,7 +36,7 @@ const getProducts = async (req, res, next) => {
     } = req.query;
 
     // 1. Build Query
-    const query = { isDeleted: { $ne: true } };
+    const query = { isDeleted: false};
 
     if (category) {
       query.category = category;
@@ -105,8 +105,6 @@ const getProducts = async (req, res, next) => {
     const [total, products] = await Promise.all([
       Product.countDocuments(query),
       Product.find(query)
-      .populate("category", "name slug")
-      .populate("subCategory", "name slug")
       .select("name productId brand price discountPrice images avgRating numReviews variants category subCategory createdAt")
       .sort(sortBy)
       .skip(skipNum)
