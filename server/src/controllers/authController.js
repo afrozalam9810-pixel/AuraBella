@@ -460,9 +460,16 @@ const updateProfile = async (req, res, next) => {
 const addAddress = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
-    
-    // Create new address
-    user.addresses.push(req.body);
+
+    // The first address is always the default. If an address is explicitly
+    // selected as default, clear that flag from every other saved address.
+    const isDefault = req.body.isDefault || user.addresses.length === 0;
+    if (isDefault) {
+      user.addresses.forEach((address) => {
+        address.isDefault = false;
+      });
+    }
+    user.addresses.push({ ...req.body, isDefault });
     await user.save();
 
     try {
@@ -495,6 +502,12 @@ const updateAddress = async (req, res, next) => {
     if (!address) {
       res.status(404);
       throw new Error("Address not found");
+    }
+
+    if (req.body.isDefault) {
+      user.addresses.forEach((savedAddress) => {
+        savedAddress.isDefault = savedAddress._id.equals(address._id);
+      });
     }
 
     // Update fields

@@ -55,6 +55,11 @@ const fetchCsrfToken = async () => {
 
 // ── Request interceptor — inject CSRF token on mutating calls ─────────────────
 api.interceptors.request.use(async (config) => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   const method = config.method?.toLowerCase();
   if (MUTATING_METHODS.has(method)) {
     if (!csrfToken) {
