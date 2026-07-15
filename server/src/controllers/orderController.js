@@ -456,8 +456,21 @@ const getAdminOrderById = async (req, res, next) => {
       res.status(404);
       throw new Error("Order not found");
     }
-    order = await ensureInvoice(order);
-    await order.populate(orderPopulate);
+
+    // Invoice assignment writes to the order document. Some legacy orders can
+    // fail an Atlas collection validator when that write occurs, even though
+    // they are still valid enough to view and print. Never let invoice-number
+    // generation make the order-detail page unavailable.
+    try {
+      order = await ensureInvoice(order);
+      await order.populate(orderPopulate);
+    } catch (invoiceError) {
+      if (invoiceError?.code !== 121) throw invoiceError;
+      console.warn(
+        `[Orders] Could not assign an invoice number to legacy order ${order._id}: ${invoiceError.message}`
+      );
+    }
+
     res.status(200).json({ success: true, data: order });
   } catch (error) {
     next(error);
