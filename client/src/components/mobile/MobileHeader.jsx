@@ -56,15 +56,6 @@ export default function MobileHeader() {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-3.5 text-white text-xl">
-            {/* Search Icon button */}
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Toggle search bar"
-              className="hover:text-primary-400 transition-colors p-1"
-            >
-              {searchOpen ? <FiX /> : <FiSearch />}
-            </button>
-
             {/* Wishlist Link */}
             <Link
               to="/wishlist"
@@ -92,26 +83,22 @@ export default function MobileHeader() {
           </div>
         </div>
 
-        {/* Dynamic Search Bar Drawer */}
-        <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            searchOpen ? "max-h-[60px] opacity-100 border-t border-white/5 bg-dark-950" : "max-h-0 opacity-0 pointer-events-none"
-          }`}
-        >
-          <form onSubmit={handleSearchSubmit} className="flex items-center relative p-3">
+        {/* Permanent Search Bar */}
+        <div className="border-t border-white/5 bg-dark-950/40 p-3">
+          <form onSubmit={handleSearchSubmit} className="flex items-center relative">
             <input
               type="text"
               placeholder="Search for Dresses, Sarees, Jewellery..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-xs bg-white/5 border border-white/10 focus:border-primary-400 focus:outline-none rounded-full py-2.5 pl-4 pr-10 text-white font-sans transition-all duration-300"
+              className="w-full text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-full py-2.5 pl-4 pr-10 text-white font-sans transition-all duration-300"
             />
             <button
               type="submit"
               aria-label="Submit search query"
-              className="absolute right-6 text-white/50 hover:text-primary-400 transition-colors"
+              className="absolute right-4 text-white/50 hover:text-primary-400 transition-colors flex items-center"
             >
-              <FiSearch />
+              <FiSearch className="text-base" />
             </button>
           </form>
         </div>
