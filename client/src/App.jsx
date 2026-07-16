@@ -11,6 +11,10 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useIsMobile } from "./hooks/useIsMobile";
+
+const MobileHeader = lazy(() => import("./components/mobile/MobileHeader"));
+const MobileBottomNavigation = lazy(() => import("./components/mobile/MobileBottomNavigation"));
 
 // Pages
 import HomePage               from "./views/HomePage";
@@ -55,9 +59,17 @@ const InvoicePage = lazy(() => import("./views/admin/InvoicePage"));
 import Toast                  from "./components/Toast";
 
 function App() {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="flex flex-col min-h-screen bg-dark-900">
-      <Navbar />
+    <div className={`flex flex-col min-h-screen bg-dark-900 ${isMobile ? "pb-16" : ""}`}>
+      {isMobile ? (
+        <Suspense fallback={null}>
+          <MobileHeader />
+        </Suspense>
+      ) : (
+        <Navbar />
+      )}
       <Toast />
 
       {/* Main content grows to fill remaining viewport height */}
@@ -114,7 +126,13 @@ function App() {
         </Suspense>
       </main>
 
-      <Footer />
+      {isMobile ? (
+        <Suspense fallback={null}>
+          <MobileBottomNavigation />
+        </Suspense>
+      ) : (
+        <Footer />
+      )}
     </div>
   );
 }
