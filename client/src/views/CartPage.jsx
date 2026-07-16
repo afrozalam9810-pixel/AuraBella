@@ -1,11 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FiTrash2, FiMinus, FiPlus, FiArrowRight, FiTag, FiX, FiCheck } from "react-icons/fi";
 import { updateQty, removeFromCart, clearCart } from "../store/slices/cartSlice";
 import api from "../api/axios";
 import { getProductUrl } from "../utils/seo";
+import { useIsMobile } from "../hooks/useIsMobile";
+import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
+
+const MobileCartPage = lazy(() => import("../components/mobile/MobileCartPage"));
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -128,6 +132,33 @@ export default function CartPage() {
   // Calculations
   const discount = activeCoupon ? activeCoupon.discountAmount : 0;
   const finalTotal = Math.max(0, totalAmount - discount);
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Suspense fallback={<MobileSkeletonLoader type="home" />}>
+        <MobileCartPage
+          items={items}
+          totalAmount={totalAmount}
+          totalQty={totalQty}
+          couponCode={couponCode}
+          setCouponCode={setCouponCode}
+          activeCoupon={activeCoupon}
+          couponError={couponError}
+          couponSuccess={couponSuccess}
+          validatingCoupon={validatingCoupon}
+          handleUpdateQty={handleUpdateQty}
+          handleRemove={handleRemove}
+          handleApplyCoupon={handleApplyCoupon}
+          handleRemoveCoupon={handleRemoveCoupon}
+          handleCheckoutRedirect={handleCheckoutRedirect}
+          discount={discount}
+          finalTotal={finalTotal}
+        />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-[75vh] max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">

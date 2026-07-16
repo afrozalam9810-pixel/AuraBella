@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiShoppingBag, FiHeart, FiLogOut, FiMapPin, FiEdit, FiTrash2, FiPlus, FiX, FiCheck } from "react-icons/fi";
 import { logout, setCredentials } from "../store/slices/authSlice";
 import api from "../api/axios";
+import { useIsMobile } from "../hooks/useIsMobile";
+import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
+
+const MobileAccountPage = lazy(() => import("../components/mobile/MobileAccountPage"));
 
 export default function AccountPage() {
   const dispatch = useDispatch();
@@ -140,6 +144,37 @@ export default function AccountPage() {
       setAddressError("Failed to delete address.");
     }
   };
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Suspense fallback={<MobileSkeletonLoader type="home" />}>
+        <MobileAccountPage
+          user={user}
+          profileForm={profileForm}
+          setProfileForm={setProfileForm}
+          isEditingProfile={isEditingProfile}
+          setIsEditingProfile={setIsEditingProfile}
+          profileError={profileError}
+          profileSuccess={profileSuccess}
+          handleProfileSubmit={handleProfileSubmit}
+          addresses={addresses}
+          showAddressForm={showAddressForm}
+          setShowAddressForm={setShowAddressForm}
+          editingAddressId={editingAddressId}
+          addressForm={addressForm}
+          setAddressForm={setAddressForm}
+          addressError={addressError}
+          addressSuccess={addressSuccess}
+          handleAddressSubmit={handleAddressSubmit}
+          handleEditAddressClick={handleEditAddressClick}
+          handleDeleteAddress={handleDeleteAddress}
+          handleLogout={handleLogout}
+        />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-[80vh] max-w-7xl mx-auto px-4 md:px-8 py-12">

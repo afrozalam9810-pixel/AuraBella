@@ -1,10 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { FiCheckCircle, FiTruck, FiCreditCard, FiPlus, FiMapPin, FiArrowLeft, FiX, FiAlertCircle, FiScissors } from "react-icons/fi";
 import { clearCart } from "../store/slices/cartSlice";
 import api from "../api/axios";
+import { useIsMobile } from "../hooks/useIsMobile";
+import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
+
+const MobileCheckoutPage = lazy(() => import("../components/mobile/MobileCheckoutPage"));
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -265,6 +269,37 @@ export default function CheckoutPage() {
         </div>
         <Link to="/" className="btn-primary">Shop Now</Link>
       </div>
+    );
+  }
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Suspense fallback={<MobileSkeletonLoader type="detail" />}>
+        <MobileCheckoutPage
+          items={items}
+          totalAmount={totalAmount}
+          totalQty={totalQty}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          savedAddresses={savedAddresses}
+          selectedAddressIdx={selectedAddressIdx}
+          setSelectedAddressIdx={setSelectedAddressIdx}
+          showNewAddressForm={showNewAddressForm}
+          setShowNewAddressForm={setShowNewAddressForm}
+          newAddress={newAddress}
+          setNewAddress={setNewAddress}
+          appliedCoupon={appliedCoupon}
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+          loading={loading}
+          submittingOrder={submittingOrder}
+          errorMsg={errorMsg}
+          handleAddNewAddress={handleAddNewAddress}
+          handlePlaceOrder={handlePlaceOrder}
+        />
+      </Suspense>
     );
   }
 
