@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiHeart, FiShoppingBag, FiStar, FiChevronLeft, FiChevronRight, FiMinus, FiPlus, FiAlertCircle, FiCheck } from "react-icons/fi";
@@ -9,6 +9,10 @@ import { showToast } from "../store/slices/uiSlice";
 import api from "../api/axios";
 import ProductCard from "../components/ProductCard";
 import RecentlyViewed, { useTrackRecentlyViewed } from "../components/RecentlyViewed";
+import { useIsMobile } from "../hooks/useIsMobile";
+import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
+
+const MobileProductDetailPage = lazy(() => import("../components/mobile/MobileProductDetailPage"));
 
 export default function ProductDetailPage({ initialProduct, initialRelatedProducts, id: propId }) {
   const { id: routeId } = useParams();
@@ -295,6 +299,41 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
   const discountPct = product.discountPrice
     ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
     : null;
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Suspense fallback={<MobileSkeletonLoader type="detail" />}>
+        <MobileProductDetailPage
+          product={product}
+          relatedProducts={relatedProducts}
+          isWishlisted={isWishlisted}
+          selectedSize={selectedSize}
+          selectedColor={selectedColor}
+          setSelectedSize={setSelectedSize}
+          setSelectedColor={setSelectedColor}
+          qty={qty}
+          setQty={setQty}
+          activeImageIdx={activeImageIdx}
+          setActiveImageIdx={setActiveImageIdx}
+          reviewForm={reviewForm}
+          setReviewForm={setReviewForm}
+          submittingReview={submittingReview}
+          reviewError={reviewError}
+          reviewSuccess={reviewSuccess}
+          handleAddToCart={handleAddToCart}
+          handleWishlistToggle={handleWishlistToggle}
+          handleReviewSubmit={handleReviewSubmit}
+          ratingBreakdown={ratingBreakdown}
+          uniqueSizes={uniqueSizes}
+          uniqueColors={uniqueColors}
+          getCombinationStock={getCombinationStock}
+          currentCombinationStock={currentCombinationStock}
+        />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-dark-900 text-white py-8 md:py-12 px-4 md:px-8">
