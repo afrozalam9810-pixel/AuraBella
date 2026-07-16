@@ -13,7 +13,7 @@
  *  6. Newsletter CTA banner
  */
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import {
   FiChevronLeft, FiChevronRight, FiShield,
@@ -21,6 +21,10 @@ import {
 } from "react-icons/fi";
 import api from "../api/axios";
 import ProductCard from "../components/ProductCard";
+import { useIsMobile } from "../hooks/useIsMobile";
+import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
+
+const MobileHomePage = lazy(() => import("../components/mobile/MobileHomePage"));
 
 // ─── Hero Slides data ────────────────────────────────────────────────────────
 const HERO_SLIDES = [
@@ -330,6 +334,21 @@ export default function HomePage({ initialTrending, initialNewArrivals }) {
       .catch(() => setNewArrivals([...MOCK_PRODUCTS].reverse()))
       .finally(() => setLoadingNew(false));
   }, [initialNewArrivals]);
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Suspense fallback={<MobileSkeletonLoader type="home" />}>
+        <MobileHomePage
+          trending={trending}
+          newArrivals={newArrivals}
+          loadingTrending={loadingTrending}
+          loadingNew={loadingNew}
+        />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-dark-900">
