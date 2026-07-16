@@ -21,6 +21,10 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Mobile detection — must be called unconditionally BEFORE any early returns
+  // to satisfy React's Rules of Hooks (hook call order must be identical every render).
+  const isMobile = useIsMobile();
+
   // Authentication State
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -299,8 +303,6 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
   const discountPct = product.discountPrice
     ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
     : null;
-
-  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (

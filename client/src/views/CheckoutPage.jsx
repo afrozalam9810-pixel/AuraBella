@@ -19,6 +19,9 @@ export default function CheckoutPage() {
   const { items, totalAmount, totalQty } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
+  // Mobile detection — must be unconditional, before any early returns (Rules of Hooks)
+  const isMobile = useIsMobile();
+
   // Checkout Progress State
   const [activeStep, setActiveStep] = useState(1); // 1: Shipping Address, 2: Payment & Place Order
 
@@ -271,8 +274,6 @@ export default function CheckoutPage() {
       </div>
     );
   }
-
-  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
