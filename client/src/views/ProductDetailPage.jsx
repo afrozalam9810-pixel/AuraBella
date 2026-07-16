@@ -5,6 +5,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FiHeart, FiShoppingBag, FiStar, FiChevronLeft, FiChevronRight, FiMinus, FiPlus, FiAlertCircle, FiCheck } from "react-icons/fi";
 import { addToCart } from "../store/slices/cartSlice";
+import { addToWishlist, removeFromWishlist } from "../store/slices/wishlistSlice";
 import { showToast } from "../store/slices/uiSlice";
 import api from "../api/axios";
 import ProductCard from "../components/ProductCard";
@@ -27,12 +28,15 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
 
   // Authentication State
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  // Wishlist IDs from Redux store — hydrated on app boot, no extra fetch needed.
+  const wishlistItems = useSelector((state) => state.wishlist.items);
 
   // API Data States
   const [product, setProduct] = useState(initialProduct || null);
   const [loading, setLoading] = useState(!initialProduct);
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState(initialRelatedProducts || []);
+  // isWishlisted derived from Redux store — always in sync with WishlistPage.
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   // Interactive Form / Selection States
@@ -78,17 +82,11 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
     }
   };
 
-  const fetchWishlistStatus = async (productId) => {
-    if (!isAuthenticated) return;
-
-    try {
-      const { data } = await api.get("/wishlist");
-      if (data?.success) {
-        setIsWishlisted(data.data.some((item) => item._id === productId));
-      }
-    } catch (_) {
-      // Wishlist status is optional for the initial product render.
-    }
+  const fetchWishlistStatus = (productId) => {
+    // Derived from the already-hydrated Redux wishlist store.
+    // No extra API call needed — useAppHydration fetches once on app boot.
+    const wishlisted = wishlistItems.some((item) => item._id === productId);
+    setIsWishlisted(wishlisted);
   };
 
   // Fetch the product first. Related products and wishlist state load after
@@ -149,6 +147,13 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
       }
     }
   }, [product]);
+
+  // Re-derive wishlist status whenever Redux store changes (e.g. after hydration)
+  useEffect(() => {
+    if (id) {
+      setIsWishlisted(wishlistItems.some((item) => item._id === id));
+    }
+  }, [wishlistItems, id]);
 
   // Derived variants details
   const uniqueSizes = useMemo(() => {
@@ -215,26 +220,31 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
     }
   };
 
-  // Wishlist toggle operation
+  // Wishlist toggle operation — dispatches to Redux thunks to keep store in sync.
   const handleWishlistToggle = async () => {
     if (!isAuthenticated) {
       navigate("/login");
       return;
     }
 
-    try {
-      if (isWishlisted) {
-        await api.delete(`/wishlist/${id}`);
-        setIsWishlisted(false);
-        dispatch(showToast({ message: "Item removed from wishlist.", type: "success" }));
-      } else {
-        await api.post(`/wishlist/${id}`);
-        setIsWishlisted(true);
-        dispatch(showToast({ message: "Item added to wishlist!", type: "success" }));
-      }
-    } catch (err) {
-      console.error("Wishlist operation failed", err);
-      dispatch(showToast({ message: "Failed to update wishlist state.", type: "error" }));
+    if (isWishlisted) {
+      setIsWishlisted(false);
+      dispatch(removeFromWishlist(id));
+      dispatch(showToast({ message: "Item removed from wishlist.", type: "success" }));
+    } else {
+      setIsWishlisted(true);
+      dispatch(
+        addToWishlist({
+          _id: id,
+          name: product?.name,
+          price: product?.price,
+          discountPrice: product?.discountPrice,
+          images: product?.images,
+          brand: product?.brand,
+          variants: product?.variants,
+        })
+      );
+      dispatch(showToast({ message: "Item added to wishlist!", type: "success" }));
     }
   };
 

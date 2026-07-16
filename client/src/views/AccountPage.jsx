@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiShoppingBag, FiHeart, FiLogOut, FiMapPin, FiEdit, FiTrash2, FiPlus, FiX, FiCheck } from "react-icons/fi";
 import { logout, setCredentials } from "../store/slices/authSlice";
+import { clearCartLocal } from "../store/slices/cartSlice";
+import { clearWishlist } from "../store/slices/wishlistSlice";
 import api from "../api/axios";
 import { useIsMobile } from "../hooks/useIsMobile";
 import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
@@ -62,7 +64,9 @@ export default function AccountPage() {
     } catch (_) {
       // Ignore
     } finally {
-      dispatch(logout());
+      dispatch(clearCartLocal());    // clear cart from Redux immediately
+      dispatch(clearWishlist());     // clear wishlist from Redux immediately
+      dispatch(logout());            // clear auth state + resetHydration
       navigate("/login");
     }
   };

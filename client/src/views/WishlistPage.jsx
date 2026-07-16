@@ -1,50 +1,23 @@
-"use client";
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiTrash2, FiShoppingBag, FiHeart, FiAlertCircle } from "react-icons/fi";
 import { addToCart } from "../store/slices/cartSlice";
-import api from "../api/axios";
+import { removeFromWishlist, fetchWishlist } from "../store/slices/wishlistSlice";
 import { getProductUrl } from "../utils/seo";
 
 export default function WishlistPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [wishlist, setWishlist] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const wishlist = useSelector((state) => state.wishlist.items) || [];
+  const loading = useSelector((state) => state.wishlist.loading);
+  const error = useSelector((state) => state.wishlist.error);
 
-  const fetchWishlist = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const { data } = await api.get("/wishlist");
-      if (data && data.success) {
-        setWishlist(data.data || []);
-      }
-    } catch (err) {
-      console.error("Error fetching wishlist", err);
-      setError("Could not load your wishlist. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+  const handleRemove = (productId) => {
+    dispatch(removeFromWishlist(productId));
   };
 
-  useEffect(() => {
-    fetchWishlist();
-  }, []);
-
-  const handleRemove = async (productId) => {
-    try {
-      await api.delete(`/wishlist/${productId}`);
-      setWishlist((prev) => prev.filter((p) => p._id !== productId));
-    } catch (err) {
-      console.error("Error removing item from wishlist", err);
-    }
-  };
-
-  const handleMoveToCart = async (product) => {
+  const handleMoveToCart = (product) => {
     const firstVariant = product.variants?.[0] || {};
     
     // 1. Dispatch to Redux Cart
@@ -65,16 +38,11 @@ export default function WishlistPage() {
       })
     );
 
-    // 2. Remove from Wishlist on server
-    try {
-      await api.delete(`/wishlist/${product._id}`);
-      setWishlist((prev) => prev.filter((p) => p._id !== product._id));
-    } catch (err) {
-      console.error("Error updating wishlist status", err);
-    }
+    // 2. Remove from Wishlist
+    dispatch(removeFromWishlist(product._id));
   };
 
-  if (loading) {
+  if (loading && wishlist.length === 0) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500" />

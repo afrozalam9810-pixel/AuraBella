@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useIsMobile } from "./hooks/useIsMobile";
+import { useAppHydration } from "./hooks/useAppHydration";
 
 const MobileHeader = lazy(() => import("./components/mobile/MobileHeader"));
 const MobileBottomNavigation = lazy(() => import("./components/mobile/MobileBottomNavigation"));
@@ -60,6 +61,8 @@ import Toast                  from "./components/Toast";
 
 function App() {
   const isMobile = useIsMobile();
+  // Hydrate cart & wishlist from backend on every authenticated session
+  useAppHydration();
 
   return (
     <div className={`flex flex-col min-h-screen bg-dark-900 ${isMobile ? "pb-16" : ""}`}>

@@ -1,19 +1,22 @@
 /**
  * ProductCard.jsx
  * Reusable card for displaying a product in grids and carousels.
- * Props: product, onWishlistToggle, isWishlisted
+ * Props: product, onWishlistToggle (optional legacy), isWishlisted (optional legacy)
  */
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiHeart, FiShoppingBag, FiStar } from "react-icons/fi";
 import { addToCart } from "../store/slices/cartSlice";
+import { addToWishlist, removeFromWishlist } from "../store/slices/wishlistSlice";
 import { getProductUrl } from "../utils/seo";
 
-export default function ProductCard({ product, isWishlisted = false, onWishlistToggle }) {
+export default function ProductCard({ product, isWishlisted: _isWishlistedProp = false, onWishlistToggle }) {
   const dispatch = useDispatch();
-  const [wishlisted, setWishlisted] = useState(isWishlisted);
+  const navigate = useNavigate();
+  const wishlistItems = useSelector((state) => state.wishlist.items);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [addedToCart, setAddedToCart] = useState(false);
 
   const {
@@ -35,12 +38,23 @@ export default function ProductCard({ product, isWishlisted = false, onWishlistT
 
   const image = images?.[0] || "https://placehold.co/400x500/1e1830/f0e8ff?text=AuraBella";
 
+  // Derive wishlist status from Redux store — always in sync across pages.
+  const wishlisted = wishlistItems.some((item) => item._id === _id);
+
   const handleWishlist = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const next = !wishlisted;
-    setWishlisted(next);
-    onWishlistToggle?.(_id, next);
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    if (wishlisted) {
+      dispatch(removeFromWishlist(_id));
+    } else {
+      dispatch(addToWishlist({ _id, name, price, discountPrice, images, brand, variants }));
+    }
+    // Fire optional parent callback for backwards compatibility
+    onWishlistToggle?.(_id, !wishlisted);
   };
 
   const handleAddToCart = (e) => {

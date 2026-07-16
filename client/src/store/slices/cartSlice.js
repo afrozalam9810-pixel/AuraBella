@@ -1,9 +1,117 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../api/axios";
+
+// Async thunk to fetch cart from backend
+export const fetchCart = createAsyncThunk(
+  "cart/fetchCart",
+  async (_, { dispatch }) => {
+    try {
+      const { data } = await api.get("/cart");
+      if (data && data.success) {
+        dispatch(setCart(data.data.items || []));
+      }
+    } catch (err) {
+      console.error("Failed to fetch cart", err);
+    }
+  }
+);
+
+// Thunk to add to cart
+export const addToCart = createAsyncThunk(
+  "cart/addToCart",
+  async ({ product, variant, qty = 1 }, { dispatch, getState }) => {
+    const { auth } = getState();
+    if (auth.isAuthenticated) {
+      try {
+        const { data } = await api.post("/cart", {
+          productId: product._id,
+          variant,
+          qty,
+        });
+        if (data && data.success) {
+          dispatch(setCart(data.data.items || []));
+        }
+      } catch (err) {
+        console.error("Failed to add to cart on server", err);
+        // Fallback to local update
+        dispatch(addToCartLocal({ product, variant, qty }));
+      }
+    } else {
+      dispatch(addToCartLocal({ product, variant, qty }));
+    }
+  }
+);
+
+// Thunk to remove from cart
+export const removeFromCart = createAsyncThunk(
+  "cart/removeFromCart",
+  async (itemId, { dispatch, getState }) => {
+    const { auth } = getState();
+    if (auth.isAuthenticated) {
+      try {
+        const { data } = await api.delete(`/cart/${itemId}`);
+        if (data && data.success) {
+          dispatch(setCart(data.data.items || []));
+        }
+      } catch (err) {
+        console.error("Failed to remove from cart on server", err);
+        // Fallback to local update
+        dispatch(removeFromCartLocal(itemId));
+      }
+    } else {
+      dispatch(removeFromCartLocal(itemId));
+    }
+  }
+);
+
+// Thunk to update quantity
+export const updateQty = createAsyncThunk(
+  "cart/updateQty",
+  async ({ itemId, qty }, { dispatch, getState }) => {
+    const { auth } = getState();
+    if (auth.isAuthenticated) {
+      try {
+        const { data } = await api.put(`/cart/${itemId}`, { qty });
+        if (data && data.success) {
+          dispatch(setCart(data.data.items || []));
+        }
+      } catch (err) {
+        console.error("Failed to update qty on server", err);
+        // Fallback to local update
+        dispatch(updateQtyLocal({ itemId, qty }));
+      }
+    } else {
+      dispatch(updateQtyLocal({ itemId, qty }));
+    }
+  }
+);
+
+// Thunk to clear cart
+export const clearCart = createAsyncThunk(
+  "cart/clearCart",
+  async (_, { dispatch, getState }) => {
+    const { auth } = getState();
+    if (auth.isAuthenticated) {
+      try {
+        const { data } = await api.delete("/cart");
+        if (data && data.success) {
+          dispatch(setCart([]));
+        }
+      } catch (err) {
+        console.error("Failed to clear cart on server", err);
+        dispatch(clearCartLocal());
+      }
+    } else {
+      dispatch(clearCartLocal());
+    }
+  }
+);
 
 const initialState = {
   items: [], // Array of { product: { _id, name, price, discountPrice, images }, variant: { size, color }, qty, itemId }
   totalQty: 0,
   totalAmount: 0,
+  loading: false,
 };
 
 const calculateTotals = (state) => {
@@ -24,8 +132,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // Add item (or increment qty if same product + variant exists)
-    addToCart(state, action) {
+    addToCartLocal(state, action) {
       const { product, variant, qty = 1 } = action.payload;
       
       const existingItem = state.items.find(
@@ -38,7 +145,6 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.qty += qty;
       } else {
-        // Generate a mock unique itemId if not already present
         const itemId = `${product._id}-${variant.size || "none"}-${variant.color || "none"}`;
         state.items.push({
           product,
@@ -54,15 +160,13 @@ const cartSlice = createSlice({
       calculateTotals(state);
     },
 
-    // Remove item by its combined itemId
-    removeFromCart(state, action) {
+    removeFromCartLocal(state, action) {
       const itemId = action.payload;
       state.items = state.items.filter((item) => item.itemId !== itemId);
       calculateTotals(state);
     },
 
-    // Update item quantity
-    updateQty(state, action) {
+    updateQtyLocal(state, action) {
       const { itemId, qty } = action.payload;
       const item = state.items.find((i) => i.itemId === itemId);
       if (item) {
@@ -71,14 +175,12 @@ const cartSlice = createSlice({
       calculateTotals(state);
     },
 
-    // Clear whole cart
-    clearCart(state) {
+    clearCartLocal(state) {
       state.items = [];
       state.totalQty = 0;
       state.totalAmount = 0;
     },
 
-    // Set cart items directly (e.g. when fetching from DB cart on login)
     setCart(state, action) {
       state.items = action.payload.map(item => {
         return {
@@ -89,9 +191,24 @@ const cartSlice = createSlice({
         };
       });
       calculateTotals(state);
+    },
+    setCartLoading(state, action) {
+      state.loading = action.payload;
     }
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCart.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCart.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(fetchCart.rejected, (state) => {
+        state.loading = false;
+      });
+  }
 });
 
-export const { addToCart, removeFromCart, updateQty, clearCart, setCart } = cartSlice.actions;
+export const { addToCartLocal, removeFromCartLocal, updateQtyLocal, clearCartLocal, setCart, setCartLoading } = cartSlice.actions;
 export default cartSlice.reducer;

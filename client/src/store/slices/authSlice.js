@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { resetHydration } from "../../hooks/useAppHydration";
 
 const getStoredAuth = () => {
   if (typeof window === "undefined") return { user: null, token: null };
@@ -51,6 +52,9 @@ const authSlice = createSlice({
         localStorage.removeItem("token");
         localStorage.removeItem("aurabella-user");
       }
+
+      // Allow next login to re-hydrate cart & wishlist from backend
+      resetHydration();
     },
     setLoading(state, action) {
       state.loading = action.payload;
