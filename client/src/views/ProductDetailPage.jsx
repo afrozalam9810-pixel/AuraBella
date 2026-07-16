@@ -355,7 +355,7 @@ export default function ProductDetailPage({ initialProduct, initialRelatedProduc
                 alt={product.name}
                 title={product.name}
                 loading="eager"
-                fetchpriority="high"
+                fetchPriority="high"
                 className="w-full h-full object-cover group-hover:opacity-0 transition-opacity duration-200"
               />
               

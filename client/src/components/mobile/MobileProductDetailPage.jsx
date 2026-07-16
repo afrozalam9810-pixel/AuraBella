@@ -37,22 +37,27 @@ export default function MobileProductDetailPage({
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, skipSnaps: false });
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const onSelect = useCallback(() => {
+  useEffect(() => {
     if (!emblaApi) return;
-    const currentIdx = emblaApi.selectedScrollSnap();
-    setSelectedIndex(currentIdx);
-    setActiveImageIdx(currentIdx);
+    
+    const onSelect = () => {
+      const currentIdx = emblaApi.selectedScrollSnap();
+      setSelectedIndex(currentIdx);
+      setActiveImageIdx(currentIdx);
+    };
+
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
   }, [emblaApi, setActiveImageIdx]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    // Sync initial index
-    emblaApi.scrollTo(activeImageIdx);
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi, onSelect, activeImageIdx]);
+    if (emblaApi.selectedScrollSnap() !== activeImageIdx) {
+      emblaApi.scrollTo(activeImageIdx);
+    }
+  }, [emblaApi, activeImageIdx]);
 
   const toggleAccordion = (name) => {
     if (activeAccordion === name) {
@@ -80,7 +85,7 @@ export default function MobileProductDetailPage({
                   src={img}
                   alt={`${product.name} - View ${i + 1}`}
                   loading={i === 0 ? "eager" : "lazy"}
-                  fetchpriority={i === 0 ? "high" : "low"}
+                  fetchPriority={i === 0 ? "high" : "low"}
                   decoding="async"
                   className="w-full h-full object-cover"
                 />
