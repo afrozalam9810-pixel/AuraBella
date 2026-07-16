@@ -19,7 +19,8 @@ let csrfToken = null;
 let csrfFetchPromise = null; // deduplicate concurrent fetches
 
 const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
+  (typeof import.meta !== "undefined" && import.meta.env ? import.meta.env.VITE_API_BASE_URL : null) ||
+  (typeof process !== "undefined" && process.env ? process.env.VITE_API_BASE_URL : null) ||
   "http://localhost:5000/api";
 
 const api = axios.create({
