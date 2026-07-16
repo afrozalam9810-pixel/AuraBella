@@ -74,7 +74,7 @@ export default function MobileProductDetailPage({
     : null;
 
   return (
-    <div className="bg-dark-950 min-h-screen text-white pb-24 md:hidden">
+    <div className="bg-dark-950 min-h-screen text-white pb-36 md:hidden">
       {/* 1. Swipeable Product Gallery */}
       <section className="relative w-full aspect-square bg-dark-900 border-b border-white/5" aria-label="Product Images Gallery">
         <div className="overflow-hidden h-full" ref={emblaRef}>
@@ -395,20 +395,39 @@ export default function MobileProductDetailPage({
         </section>
       )}
 
-      {/* 6. Sticky Bottom CTA Bar */}
-      <div className="fixed bottom-0 inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex gap-3 z-50 pb-[calc(14px+env(safe-area-inset-bottom,0px))] shadow-glow-dark md:hidden select-none">
+      {/* 6. Sticky Bottom CTA Bar
+           Positioned above MobileBottomNavigation (z-[90], ~52px tall) using
+           a safe-area-aware bottom offset so it is always visible above the tab bar. */}
+      <div className="fixed inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex gap-3 z-[80] shadow-glow-dark md:hidden select-none" style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}>
+        {currentCombinationStock <= 0 && (
+          <div className="absolute -top-7 inset-x-0 flex justify-center">
+            <span className="bg-dark-900 border border-white/10 text-rose-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+              Out of Stock
+            </span>
+          </div>
+        )}
         <button
           onClick={() => handleAddToCart(false)}
+          disabled={currentCombinationStock <= 0}
           aria-label="Add this product to shopping bag"
-          className="flex-1 py-3 border border-white/15 text-white/95 font-bold rounded-xl text-xs uppercase tracking-wider active:bg-white/5 flex items-center justify-center gap-1.5"
+          className={`flex-1 py-3 border font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-opacity ${
+            currentCombinationStock <= 0
+              ? "border-white/5 text-white/25 cursor-not-allowed opacity-40"
+              : "border-white/15 text-white/95 active:bg-white/5"
+          }`}
         >
           <FiShoppingBag className="text-sm" />
           <span>Add to Bag</span>
         </button>
         <button
           onClick={() => handleAddToCart(true)}
+          disabled={currentCombinationStock <= 0}
           aria-label="Buy this product now"
-          className="flex-1 py-3 bg-brand-gradient text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-glow-violet active:scale-[0.98] flex items-center justify-center gap-1.5"
+          className={`flex-1 py-3 font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-opacity ${
+            currentCombinationStock <= 0
+              ? "bg-white/5 text-white/25 cursor-not-allowed opacity-40"
+              : "bg-brand-gradient text-white shadow-glow-violet active:scale-[0.98]"
+          }`}
         >
           <span>Buy Now</span>
         </button>

@@ -22,7 +22,7 @@ export default function MobileCartPage({
   finalTotal,
 }) {
   return (
-    <div className="bg-dark-950 min-h-screen text-white pb-24 md:hidden">
+    <div className="bg-dark-950 min-h-screen text-white pb-36 md:hidden">
       {/* 1. Header banner */}
       <div className="px-4 py-3 bg-dark-900/60 border-b border-white/5 flex items-center justify-between">
         <h1 className="text-sm font-bold uppercase tracking-wider text-white">
@@ -193,9 +193,14 @@ export default function MobileCartPage({
         </div>
       )}
 
-      {/* 5. Sticky Bottom Place Order CTA */}
+      {/* 5. Sticky Bottom Checkout CTA
+           Positioned above MobileBottomNavigation (z-[90], ~52px tall) using
+           a safe-area-aware bottom offset so it is always visible above the tab bar. */}
       {items.length > 0 && (
-        <div className="fixed bottom-0 inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex items-center justify-between gap-4 z-50 pb-[calc(14px+env(safe-area-inset-bottom,0px))] shadow-glow-dark md:hidden select-none">
+        <div
+          className="fixed inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex items-center justify-between gap-4 z-[80] shadow-glow-dark md:hidden select-none"
+          style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}
+        >
           <div className="flex flex-col gap-0.5">
             <span className="text-[9px] uppercase tracking-wider text-white/50 font-sans">Total Payable</span>
             <span className="text-sm font-bold text-white font-sans">
@@ -204,10 +209,10 @@ export default function MobileCartPage({
           </div>
           <button
             onClick={handleCheckoutRedirect}
-            aria-label="Proceed to checkout placement"
+            aria-label="Proceed to checkout"
             className="py-3 px-6 bg-brand-gradient text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-glow-violet active:scale-[0.98]"
           >
-            Place Order
+            Proceed to Checkout
           </button>
         </div>
       )}
