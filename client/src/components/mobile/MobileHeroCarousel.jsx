@@ -84,7 +84,8 @@ export default function MobileHeroCarousel() {
               <img
                 src={slide.image}
                 alt={slide.badge}
-                loading="lazy"
+                loading={slide.id === 1 ? "eager" : "lazy"}
+                fetchpriority={slide.id === 1 ? "high" : "low"}
                 decoding="async"
                 className="w-full h-full object-cover object-top"
               />
