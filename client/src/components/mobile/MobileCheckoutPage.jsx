@@ -30,7 +30,7 @@ export default function MobileCheckoutPage({
   const finalTotal = Math.max(0, totalAmount - discount);
 
   return (
-    <div className="bg-dark-950 min-h-screen text-white pb-24 md:hidden select-none">
+    <div className="bg-dark-950 min-h-screen text-white pb-36 md:hidden select-none">
       {/* 1. Header banner */}
       <div className="px-4 py-3 bg-dark-900/60 border-b border-white/5 flex items-center justify-between">
         <h1 className="text-sm font-bold uppercase tracking-wider text-white">
@@ -318,9 +318,16 @@ export default function MobileCheckoutPage({
         </div>
       )}
 
-      {/* Sticky Bottom Place Order CTA */}
-      {selectedAddressIdx !== null && !loading && (
-        <div className="fixed bottom-0 inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex items-center justify-between gap-4 z-50 pb-[calc(14px+env(safe-area-inset-bottom,0px))] shadow-glow-dark md:hidden select-none">
+      {/* Sticky Bottom Order Action Bar
+           Positioned above MobileBottomNavigation (z-[90], ~52px tall) using
+           a safe-area-aware bottom offset so it is always visible.
+           handlePlaceOrder is the EXACT same handler from CheckoutPage —
+           no business logic is duplicated here. */}
+      {!loading && (
+        <div
+          className="fixed inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex items-center justify-between gap-4 z-[80] shadow-glow-dark md:hidden select-none"
+          style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}
+        >
           <div className="flex flex-col gap-0.5">
             <span className="text-[9px] uppercase tracking-wider text-white/50 font-sans">Total Payable</span>
             <span className="text-sm font-bold text-white font-sans">
@@ -329,10 +336,27 @@ export default function MobileCheckoutPage({
           </div>
           <button
             onClick={handlePlaceOrder}
-            disabled={submittingOrder}
-            className="py-3 px-6 bg-brand-gradient text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-glow-violet active:scale-[0.98] disabled:opacity-40"
+            disabled={selectedAddressIdx === null || !paymentMethod || submittingOrder || items.length === 0}
+            aria-label={
+              submittingOrder
+                ? "Processing your order"
+                : paymentMethod === "online"
+                ? "Pay now with Razorpay"
+                : "Place cash on delivery order"
+            }
+            className={`py-3 px-6 font-bold rounded-xl text-xs uppercase tracking-wider transition-opacity
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950
+              ${
+                selectedAddressIdx === null || !paymentMethod || submittingOrder || items.length === 0
+                  ? "bg-white/10 text-white/30 cursor-not-allowed opacity-50"
+                  : "bg-brand-gradient text-white shadow-glow-violet active:scale-[0.98]"
+              }`}
           >
-            {submittingOrder ? "Processing..." : paymentMethod === "online" ? "Pay Now" : "Confirm COD"}
+            {submittingOrder
+              ? "Processing..."
+              : paymentMethod === "online"
+              ? "Pay Now"
+              : "Place Order"}
           </button>
         </div>
       )}
