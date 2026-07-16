@@ -11,8 +11,7 @@ export default function MobileHeader() {
   const { totalQty } = useSelector((state) => state.cart);
   const { mobileMenuOpen } = useSelector((state) => state.ui);
   
-  // Search Overlay Toggle State
-  const [searchOpen, setSearchOpen] = useState(false);
+  // Search Query State
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchSubmit = (e) => {
@@ -20,7 +19,6 @@ export default function MobileHeader() {
     if (searchQuery.trim()) {
       navigate(`/category/all?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery("");
-      setSearchOpen(false);
     }
   };
 
