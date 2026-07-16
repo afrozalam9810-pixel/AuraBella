@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FiHeart, FiShoppingBag, FiStar } from "react-icons/fi";
 import { addToCart } from "../../store/slices/cartSlice";
 import { getProductUrl } from "../../utils/seo";
 
-export default function MobileProductCard({ product, isWishlisted = false, onWishlistToggle }) {
+const MobileProductCard = memo(function MobileProductCard({ product, isWishlisted = false, onWishlistToggle }) {
   const dispatch = useDispatch();
   const [wishlisted, setWishlisted] = useState(isWishlisted);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -140,4 +140,6 @@ export default function MobileProductCard({ product, isWishlisted = false, onWis
       </div>
     </Link>
   );
-}
+});
+
+export default MobileProductCard;
