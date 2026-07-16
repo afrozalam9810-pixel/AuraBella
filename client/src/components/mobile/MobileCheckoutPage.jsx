@@ -235,24 +235,20 @@ export default function MobileCheckoutPage({
                   {paymentMethod === "online" && <span className="w-2.5 h-2.5 rounded-full bg-primary-400" />}
                 </button>
 
-                {/* COD Payment */}
-                <button
-                  onClick={() => {
-                    setPaymentMethod("cod");
-                    setActiveAccordion("summary");
-                  }}
-                  className={`p-3.5 rounded-lg border text-left flex items-center justify-between transition-colors ${
-                    paymentMethod === "cod"
-                      ? "bg-primary-500/10 border-primary-500/30 text-white"
-                      : "bg-white/5 border-white/10 text-white/70"
-                  }`}
+                {/* COD Payment - Disabled / Coming Soon */}
+                <div
+                  className="p-3.5 rounded-lg border border-white/5 bg-white/5 text-white/40 flex items-center justify-between opacity-50 cursor-not-allowed select-none"
+                  aria-disabled="true"
+                  title="Cash on Delivery is currently unavailable"
                 >
                   <div className="flex flex-col gap-0.5">
                     <span className="font-semibold">Cash On Delivery</span>
                     <span className="text-[9px] text-[#9d8bbb] font-sans">Pay with cash upon receipt</span>
                   </div>
-                  {paymentMethod === "cod" && <span className="w-2.5 h-2.5 rounded-full bg-primary-400" />}
-                </button>
+                  <span className="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">
+                    Coming Soon
+                  </span>
+                </div>
               </div>
             </div>
           </div>

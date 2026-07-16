@@ -43,8 +43,8 @@ export default function CheckoutPage() {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [validatingCoupon, setValidatingCoupon] = useState(false);
 
-  // Payment State
-  const [paymentMethod, setPaymentMethod] = useState("cod"); // cod | online
+  // Payment State — COD is coming soon; default to and enforce online payment.
+  const [paymentMethod, setPaymentMethod] = useState("online"); // cod | online
 
   // General States
   const [loading, setLoading] = useState(false);
@@ -537,25 +537,25 @@ export default function CheckoutPage() {
                   <h3 className="font-sans font-bold text-sm uppercase tracking-wider border-b border-white/5 pb-3">Select Payment Method</h3>
                   
                   <div className="flex flex-col gap-3">
-                    <label
-                      onClick={() => setPaymentMethod("cod")}
-                      className={`flex items-start sm:items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all ${
-                        paymentMethod === "cod"
-                          ? "border-primary-400 bg-primary-500/10 text-white shadow-glow-violet"
-                          : "border-white/5 bg-white/5 hover:border-white/10 text-[#9d8bbb]"
-                      }`}
+                    {/* COD — disabled / coming soon. Structure preserved for future re-enablement. */}
+                    <div
+                      className="flex items-start sm:items-center gap-3.5 p-4 rounded-2xl border border-white/5 bg-white/5 opacity-50 cursor-not-allowed select-none"
+                      aria-disabled="true"
+                      title="Cash on Delivery is currently unavailable"
                     >
                       <input
                         type="radio"
                         name="payment"
-                        checked={paymentMethod === "cod"}
-                        onChange={() => setPaymentMethod("cod")}
-                        className="accent-primary-400 w-4 h-4 cursor-pointer"
+                        disabled
+                        className="accent-primary-400 w-4 h-4 cursor-not-allowed"
                       />
-                      <div className="flex items-center gap-2 font-sans text-xs font-semibold text-white leading-snug">
+                      <div className="flex items-center gap-2 font-sans text-xs font-semibold text-[#9d8bbb] leading-snug">
                         <FiTruck className="text-base" /> Cash on Delivery (COD)
                       </div>
-                    </label>
+                      <span className="ml-auto flex-shrink-0 text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">
+                        Coming Soon
+                      </span>
+                    </div>
 
                     <label
                       onClick={() => setPaymentMethod("online")}
@@ -585,7 +585,7 @@ export default function CheckoutPage() {
                   disabled={submittingOrder}
                   className="btn-primary w-full py-4 text-sm justify-center disabled:opacity-50"
                 >
-                  {submittingOrder ? "Processing Order..." : `Place Order (₹${finalTotal.toLocaleString("en-IN")})`}
+                  {submittingOrder ? "Processing..." : `Pay Now — ₹${finalTotal.toLocaleString("en-IN")}`}
                 </button>
 
               </div>
