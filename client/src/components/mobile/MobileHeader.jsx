@@ -24,7 +24,7 @@ export default function MobileHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full glass-card border-b border-white/5 rounded-none backdrop-blur-md md:hidden">
+      <header className="sticky top-0 z-50 w-full bg-white border-b border-slate-200 rounded-none md:hidden">
         {/* Promotion bar */}
         <div className="w-full bg-brand-gradient text-center py-1 text-[9px] font-sans font-medium tracking-widest text-white uppercase select-none">
           ✦ Use Code: AURA10 for 10% Off ✦
@@ -35,7 +35,7 @@ export default function MobileHeader() {
           <button
             onClick={() => dispatch(toggleMobileMenu())}
             aria-label="Toggle Navigation Drawer"
-            className="text-white text-2xl transition-colors hover:text-primary-400 p-1"
+            className="text-slate-900 text-2xl transition-colors hover:text-primary-400 p-1"
           >
             <FiMenu />
           </button>
@@ -47,13 +47,13 @@ export default function MobileHeader() {
             className="flex-shrink-0"
             aria-label="AuraBella homepage"
           >
-            <span className="font-display font-bold text-xl tracking-wider text-white gradient-text">
+            <span className="font-display font-bold text-xl tracking-wider text-slate-900 gradient-text">
               AuraBella
             </span>
           </Link>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-3.5 text-white text-xl">
+          <div className="flex items-center gap-3.5 text-slate-900 text-xl">
             {/* Wishlist Link */}
             <Link
               to="/wishlist"
@@ -82,19 +82,19 @@ export default function MobileHeader() {
         </div>
 
         {/* Permanent Search Bar */}
-        <div className="border-t border-white/5 bg-dark-950/40 p-3">
+        <div className="border-t border-slate-200 bg-white p-3">
           <form onSubmit={handleSearchSubmit} className="flex items-center relative">
             <input
               type="text"
               placeholder="Search for Dresses, Sarees, Jewellery..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-xs bg-white/5 border border-white/10 hover:border-white/20 focus:border-primary-400 focus:outline-none rounded-full py-2.5 pl-4 pr-10 text-white font-sans transition-all duration-300"
+              className="w-full text-xs bg-slate-100 border border-slate-200 hover:border-slate-300 focus:border-primary-400 focus:outline-none rounded-full py-2.5 pl-4 pr-10 text-slate-900 font-sans transition-all duration-300"
             />
             <button
               type="submit"
               aria-label="Submit search query"
-              className="absolute right-4 text-white/50 hover:text-primary-400 transition-colors flex items-center"
+              className="absolute right-4 text-slate-500 hover:text-primary-400 transition-colors flex items-center"
             >
               <FiSearch className="text-base" />
             </button>

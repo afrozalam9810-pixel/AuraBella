@@ -112,7 +112,7 @@ export default function MobileDrawer({ isOpen, onClose }) {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -123,7 +123,7 @@ export default function MobileDrawer({ isOpen, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation Drawer"
-        className={`absolute top-0 left-0 bottom-0 w-[290px] sm:w-[320px] bg-dark-950 border-r border-white/5 flex flex-col transition-transform duration-300 ease-out shadow-2xl ${
+        className={`absolute top-0 left-0 bottom-0 w-[290px] sm:w-[320px] bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 ease-out shadow-2xl ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -170,22 +170,22 @@ export default function MobileDrawer({ isOpen, onClose }) {
         {/* Navigation list */}
         <div className="flex-grow overflow-y-auto py-4 px-3 flex flex-col gap-0.5 custom-scrollbar">
           {/* Shop categories */}
-          <div className="text-[10px] uppercase tracking-widest text-[#9d8bbb] font-bold px-3 mb-2">
+          <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold px-3 mb-2">
             Shop Categories
           </div>
 
           {CATEGORIES_MENU.map((item) => {
             const isExpanded = expandedSection === item.name;
             return (
-              <div key={item.name} className="flex flex-col border-b border-white/5 pb-1">
+              <div key={item.name} className="flex flex-col border-b border-slate-100 pb-1">
                 <button
                   onClick={() => toggleExpand(item.name)}
                   aria-expanded={isExpanded}
-                  className="flex items-center justify-between w-full py-2.5 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-all text-left"
+                  className="flex items-center justify-between w-full py-2.5 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-all text-left"
                 >
                   <span>{item.name}</span>
                   <FiChevronDown
-                    className={`text-xs transition-transform duration-200 ${
+                    className={`text-xs transition-transform duration-200 text-slate-500 ${
                       isExpanded ? "rotate-180" : ""
                     }`}
                   />
@@ -203,7 +203,7 @@ export default function MobileDrawer({ isOpen, onClose }) {
                         key={subItem}
                         to={`/category/${item.name.toLowerCase()}?subCategory=${encodeURIComponent(subItem)}`}
                         onClick={handleLinkClick}
-                        className="py-2 px-3 text-xs text-white/60 hover:text-white rounded-md transition-colors"
+                        className="py-2 px-3 text-xs text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-md transition-colors"
                       >
                         {subItem}
                       </Link>
@@ -215,84 +215,84 @@ export default function MobileDrawer({ isOpen, onClose }) {
           })}
 
           {/* Quick Links */}
-          <div className="text-[10px] uppercase tracking-widest text-[#9d8bbb] font-bold px-3 mt-6 mb-2">
+          <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold px-3 mt-6 mb-2">
             Quick Links
           </div>
 
           <Link
             to="/wishlist"
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiHeart className="text-[#9d8bbb]" />
+            <FiHeart className="text-slate-500" />
             <span>Wishlist</span>
           </Link>
 
           <Link
             to={isAuthenticated ? "/account/orders" : "/login"}
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiShoppingBag className="text-[#9d8bbb]" />
+            <FiShoppingBag className="text-slate-500" />
             <span>My Orders</span>
           </Link>
 
           <Link
             to={isAuthenticated ? "/account" : "/login"}
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiUser className="text-[#9d8bbb]" />
+            <FiUser className="text-slate-500" />
             <span>My Profile</span>
           </Link>
 
-          <div className="text-[10px] uppercase tracking-widest text-[#9d8bbb] font-bold px-3 mt-6 mb-2">
+          <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold px-3 mt-6 mb-2">
             Support & Policies
           </div>
 
           <Link
             to="/contact"
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiMail className="text-[#9d8bbb]" />
+            <FiMail className="text-slate-500" />
             <span>Contact Support</span>
           </Link>
 
           <Link
             to="/about"
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiInfo className="text-[#9d8bbb]" />
+            <FiInfo className="text-slate-500" />
             <span>About AuraBella</span>
           </Link>
 
           <Link
             to="/return-policy"
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiFileText className="text-[#9d8bbb]" />
+            <FiFileText className="text-slate-500" />
             <span>Return Policy</span>
           </Link>
 
           <Link
             to="/privacy"
             onClick={handleLinkClick}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-[#f0e8ff]/90 font-medium hover:bg-white/5 transition-colors"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm text-slate-900 font-medium hover:bg-slate-50 transition-colors"
           >
-            <FiFileText className="text-[#9d8bbb]" />
+            <FiFileText className="text-slate-500" />
             <span>Privacy Policy</span>
           </Link>
         </div>
 
         {/* Footer section / Logout */}
         {isAuthenticated && (
-          <div className="p-4 border-t border-white/5 bg-black/10">
+          <div className="p-4 border-t border-slate-100 bg-slate-50">
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold text-rose-400 border border-rose-500/20 hover:bg-rose-500/10 transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors"
             >
               <FiLogOut />
               <span>Logout</span>

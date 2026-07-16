@@ -398,10 +398,10 @@ export default function MobileProductDetailPage({
       {/* 6. Sticky Bottom CTA Bar
            Positioned above MobileBottomNavigation (z-[90], ~52px tall) using
            a safe-area-aware bottom offset so it is always visible above the tab bar. */}
-      <div className="fixed inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex gap-3 z-[80] shadow-glow-dark md:hidden select-none" style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}>
+      <div className="fixed inset-x-0 bg-white border-t border-slate-200 p-3.5 flex gap-3 z-[80] shadow-glow-dark md:hidden select-none" style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}>
         {currentCombinationStock <= 0 && (
           <div className="absolute -top-7 inset-x-0 flex justify-center">
-            <span className="bg-dark-900 border border-white/10 text-rose-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+            <span className="bg-white border border-slate-200 text-rose-600 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
               Out of Stock
             </span>
           </div>
@@ -412,8 +412,8 @@ export default function MobileProductDetailPage({
           aria-label="Add this product to shopping bag"
           className={`flex-1 py-3 border font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-opacity ${
             currentCombinationStock <= 0
-              ? "border-white/5 text-white/25 cursor-not-allowed opacity-40"
-              : "border-white/15 text-white/95 active:bg-white/5"
+              ? "border-slate-100 text-slate-300 cursor-not-allowed opacity-40"
+              : "border-slate-300 text-slate-800 active:bg-slate-50"
           }`}
         >
           <FiShoppingBag className="text-sm" />
@@ -425,7 +425,7 @@ export default function MobileProductDetailPage({
           aria-label="Buy this product now"
           className={`flex-1 py-3 font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-opacity ${
             currentCombinationStock <= 0
-              ? "bg-white/5 text-white/25 cursor-not-allowed opacity-40"
+              ? "bg-slate-100 text-slate-400 cursor-not-allowed opacity-40"
               : "bg-brand-gradient text-white shadow-glow-violet active:scale-[0.98]"
           }`}
         >

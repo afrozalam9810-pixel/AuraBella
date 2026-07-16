@@ -321,12 +321,12 @@ export default function MobileCheckoutPage({
            no business logic is duplicated here. */}
       {!loading && (
         <div
-          className="fixed inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex items-center justify-between gap-4 z-[80] shadow-glow-dark md:hidden select-none"
+          className="fixed inset-x-0 bg-white border-t border-slate-200 p-3.5 flex items-center justify-between gap-4 z-[80] shadow-glow-dark md:hidden select-none"
           style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}
         >
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] uppercase tracking-wider text-white/50 font-sans">Total Payable</span>
-            <span className="text-sm font-bold text-white font-sans">
+            <span className="text-[9px] uppercase tracking-wider text-slate-500 font-sans">Total Payable</span>
+            <span className="text-sm font-bold text-slate-900 font-sans">
               ₹{finalTotal.toLocaleString("en-IN")}
             </span>
           </div>
@@ -341,10 +341,10 @@ export default function MobileCheckoutPage({
                 : "Place cash on delivery order"
             }
             className={`py-3 px-6 font-bold rounded-xl text-xs uppercase tracking-wider transition-opacity
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-950
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white
               ${
                 selectedAddressIdx === null || !paymentMethod || submittingOrder || items.length === 0
-                  ? "bg-white/10 text-white/30 cursor-not-allowed opacity-50"
+                  ? "bg-slate-100 text-slate-400 cursor-not-allowed opacity-50"
                   : "bg-brand-gradient text-white shadow-glow-violet active:scale-[0.98]"
               }`}
           >

@@ -27,13 +27,13 @@ export default function MobileBottomNavigation() {
   };
 
   return (
-    <div className="fixed bottom-0 inset-x-0 bg-dark-950/95 backdrop-blur-md border-t border-white/5 py-2 flex justify-around items-center text-[10px] text-white/50 z-[90] md:hidden pb-[calc(8px+env(safe-area-inset-bottom,0px))] shadow-glow-dark">
+    <div className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 py-2 flex justify-around items-center text-[10px] text-slate-500 z-[90] md:hidden pb-[calc(8px+env(safe-area-inset-bottom,0px))] shadow-glow-dark">
       {/* Home */}
       <Link
         to="/"
         onClick={handleTabClick}
         className={`flex flex-col items-center gap-1 w-16 transition-colors duration-200 ${
-          isActive("/") ? "text-primary-400 font-bold" : "hover:text-white"
+          isActive("/") ? "text-primary-400 font-bold" : "hover:text-slate-900"
         }`}
       >
         <FiHome className="text-lg" />
@@ -43,7 +43,7 @@ export default function MobileBottomNavigation() {
       {/* Categories */}
       <button
         onClick={handleCategoriesClick}
-        className="flex flex-col items-center gap-1 w-16 transition-colors duration-200 hover:text-white"
+        className="flex flex-col items-center gap-1 w-16 transition-colors duration-200 hover:text-slate-900"
       >
         <FiGrid className="text-lg" />
         <span>Categories</span>
@@ -54,7 +54,7 @@ export default function MobileBottomNavigation() {
         to="/wishlist"
         onClick={handleTabClick}
         className={`flex flex-col items-center gap-1 w-16 transition-colors duration-200 ${
-          isActive("/wishlist") ? "text-primary-400 font-bold" : "hover:text-white"
+          isActive("/wishlist") ? "text-primary-400 font-bold" : "hover:text-slate-900"
         }`}
       >
         <FiHeart className="text-lg" />
@@ -66,7 +66,7 @@ export default function MobileBottomNavigation() {
         to="/cart"
         onClick={handleTabClick}
         className={`flex flex-col items-center gap-1 w-16 transition-colors duration-200 relative ${
-          isActive("/cart") ? "text-primary-400 font-bold" : "hover:text-white"
+          isActive("/cart") ? "text-primary-400 font-bold" : "hover:text-slate-900"
         }`}
       >
         <FiShoppingBag className="text-lg" />
@@ -85,7 +85,7 @@ export default function MobileBottomNavigation() {
         className={`flex flex-col items-center gap-1 w-16 transition-colors duration-200 ${
           isActive("/account") || isActive("/login") || isActive("/register")
             ? "text-primary-400 font-bold"
-            : "hover:text-white"
+            : "hover:text-slate-900"
         }`}
       >
         <FiUser className="text-lg" />

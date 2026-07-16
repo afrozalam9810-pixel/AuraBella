@@ -198,12 +198,12 @@ export default function MobileCartPage({
            a safe-area-aware bottom offset so it is always visible above the tab bar. */}
       {items.length > 0 && (
         <div
-          className="fixed inset-x-0 bg-dark-950 border-t border-white/10 p-3.5 flex items-center justify-between gap-4 z-[80] shadow-glow-dark md:hidden select-none"
+          className="fixed inset-x-0 bg-white border-t border-slate-200 p-3.5 flex items-center justify-between gap-4 z-[80] shadow-glow-dark md:hidden select-none"
           style={{ bottom: 'calc(52px + env(safe-area-inset-bottom, 0px))' }}
         >
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] uppercase tracking-wider text-white/50 font-sans">Total Payable</span>
-            <span className="text-sm font-bold text-white font-sans">
+            <span className="text-[9px] uppercase tracking-wider text-slate-500 font-sans">Total Payable</span>
+            <span className="text-sm font-bold text-slate-900 font-sans">
               ₹{finalTotal.toLocaleString("en-IN")}
             </span>
           </div>

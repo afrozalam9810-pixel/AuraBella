@@ -175,20 +175,20 @@ export default function MobileProductListingPage({
       </div>
 
       {/* 2. Sticky Top Filter & Sort Bar */}
-      <div className="sticky top-[100px] z-40 bg-dark-900 border-b border-white/5 py-2.5 px-4 flex gap-3 text-xs font-semibold tracking-wider uppercase select-none">
+      <div className="sticky top-[116px] z-40 bg-white border-b border-slate-200 py-2.5 px-4 flex gap-3 text-xs font-semibold tracking-wider uppercase select-none">
         <button
           onClick={() => setSortOpen(true)}
           aria-label="Open Sort Options"
-          className="flex-1 py-1.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center gap-1 text-center"
+          className="flex-1 py-1.5 px-3 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg flex items-center justify-center gap-1 text-center text-slate-900"
         >
           <span>Sort: {activeSortLabel}</span>
-          <FiChevronDown className="text-sm text-white/60" />
+          <FiChevronDown className="text-sm text-slate-500" />
         </button>
 
         <button
           onClick={() => setFilterOpen(true)}
           aria-label="Open Filter Drawer"
-          className="flex-1 py-1.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg flex items-center justify-center gap-1.5 text-center"
+          className="flex-1 py-1.5 px-3 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg flex items-center justify-center gap-1.5 text-center text-slate-900"
         >
           <FiSliders className="text-sm text-primary-400" />
           <span>Filters</span>
