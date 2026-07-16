@@ -34,15 +34,24 @@ export default function MobileDrawer({ isOpen, onClose }) {
     };
   }, [isOpen]);
 
-  // Escape key close
+  // Escape key close & Focus return
   useEffect(() => {
+    if (!isOpen) return;
+    const previouslyFocused = document.activeElement;
+    
     const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === "Escape") {
         onClose();
       }
     };
+    
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      }
+    };
   }, [isOpen, onClose]);
 
   // Focus trap

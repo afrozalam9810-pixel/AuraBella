@@ -61,6 +61,28 @@ export default function MobileProductListingPage({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Sort sheet previously focused tracker
+  useEffect(() => {
+    if (!sortOpen) return;
+    const previouslyFocused = document.activeElement;
+    return () => {
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      }
+    };
+  }, [sortOpen]);
+
+  // Filter sheet previously focused tracker
+  useEffect(() => {
+    if (!filterOpen) return;
+    const previouslyFocused = document.activeElement;
+    return () => {
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      }
+    };
+  }, [filterOpen]);
+
   // Focus trap for bottom sheets
   const sortRef = useRef(null);
   const filterRef = useRef(null);
