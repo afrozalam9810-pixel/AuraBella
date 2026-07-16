@@ -1,10 +1,14 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, lazy, Suspense } from "react";
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import { FiSliders, FiX, FiChevronLeft, FiChevronRight, FiGrid, FiArrowUpRight } from "react-icons/fi";
 import api from "../api/axios";
 import ProductCard from "../components/ProductCard";
+import { useIsMobile } from "../hooks/useIsMobile";
+import MobileSkeletonLoader from "../components/mobile/MobileSkeletonLoader";
+
+const MobileProductListingPage = lazy(() => import("../components/mobile/MobileProductListingPage"));
 
 export default function ProductListingPage({
   initialCategories,
@@ -240,6 +244,32 @@ export default function ProductListingPage({
     }
     return [];
   }, [currentCategoryContext]);
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <Suspense fallback={<MobileSkeletonLoader type="list" />}>
+        <MobileProductListingPage
+          products={products}
+          categories={categories}
+          loading={loading}
+          total={total}
+          totalPages={totalPages}
+          activePage={activePage}
+          activeSort={activeSort}
+          activeMinPrice={activeMinPrice}
+          activeMaxPrice={activeMaxPrice}
+          activeSubCategories={activeSubCategories}
+          currentCategoryContext={currentCategoryContext}
+          availableSubCategories={availableSubCategories}
+          updateQueryParam={updateQueryParam}
+          handleSubCategoryToggle={handleSubCategoryToggle}
+          handleClearAll={handleClearAll}
+        />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-dark-900 text-white py-8 md:py-12 px-4 md:px-8">
